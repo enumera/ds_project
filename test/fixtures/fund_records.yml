@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sector: MyString
+  fund: MyString
+  d1: 1
+  d2: 1
+  d3: 1
+  d4: 1
+  d5: 1
+  d6: 1
+  d7: 1
+  d8: 1
+  d9: 1
+  d10: 1
+  d11: 1
+  d12: 1
+  wr4: 1.5
+  wr12: 1.5
+  wr26: 1.5
+  wd4: 1
+  wd12: 1
+  wd26: 1
+  fund_size: 1
+  isin: MyString
+
+two:
+  sector: MyString
+  fund: MyString
+  d1: 1
+  d2: 1
+  d3: 1
+  d4: 1
+  d5: 1
+  d6: 1
+  d7: 1
+  d8: 1
+  d9: 1
+  d10: 1
+  d11: 1
+  d12: 1
+  wr4: 1.5
+  wr12: 1.5
+  wr26: 1.5
+  wd4: 1
+  wd12: 1
+  wd26: 1
+  fund_size: 1
+  isin: MyString

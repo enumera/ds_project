@@ -1,0 +1,105 @@
+<%= form_for(@fund_record) do |f| %>
+  <% if @fund_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fund_record.errors.count, "error") %> prohibited this fund_record from being saved:</h2>
+
+      <ul>
+      <% @fund_record.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :sector %><br />
+    <%= f.text_field :sector %>
+  </div>
+  <div class="field">
+    <%= f.label :fund %><br />
+    <%= f.text_field :fund %>
+  </div>
+  <div class="field">
+    <%= f.label :d1 %><br />
+    <%= f.number_field :d1 %>
+  </div>
+  <div class="field">
+    <%= f.label :d2 %><br />
+    <%= f.number_field :d2 %>
+  </div>
+  <div class="field">
+    <%= f.label :d3 %><br />
+    <%= f.number_field :d3 %>
+  </div>
+  <div class="field">
+    <%= f.label :d4 %><br />
+    <%= f.number_field :d4 %>
+  </div>
+  <div class="field">
+    <%= f.label :d5 %><br />
+    <%= f.number_field :d5 %>
+  </div>
+  <div class="field">
+    <%= f.label :d6 %><br />
+    <%= f.number_field :d6 %>
+  </div>
+  <div class="field">
+    <%= f.label :d7 %><br />
+    <%= f.number_field :d7 %>
+  </div>
+  <div class="field">
+    <%= f.label :d8 %><br />
+    <%= f.number_field :d8 %>
+  </div>
+  <div class="field">
+    <%= f.label :d9 %><br />
+    <%= f.number_field :d9 %>
+  </div>
+  <div class="field">
+    <%= f.label :d10 %><br />
+    <%= f.number_field :d10 %>
+  </div>
+  <div class="field">
+    <%= f.label :d11 %><br />
+    <%= f.number_field :d11 %>
+  </div>
+  <div class="field">
+    <%= f.label :d12 %><br />
+    <%= f.number_field :d12 %>
+  </div>
+  <div class="field">
+    <%= f.label :wr4 %><br />
+    <%= f.text_field :wr4 %>
+  </div>
+  <div class="field">
+    <%= f.label :wr12 %><br />
+    <%= f.text_field :wr12 %>
+  </div>
+  <div class="field">
+    <%= f.label :wr26 %><br />
+    <%= f.text_field :wr26 %>
+  </div>
+  <div class="field">
+    <%= f.label :wd4 %><br />
+    <%= f.number_field :wd4 %>
+  </div>
+  <div class="field">
+    <%= f.label :wd12 %><br />
+    <%= f.number_field :wd12 %>
+  </div>
+  <div class="field">
+    <%= f.label :wd26 %><br />
+    <%= f.number_field :wd26 %>
+  </div>
+  <div class="field">
+    <%= f.label :fund_size %><br />
+    <%= f.number_field :fund_size %>
+  </div>
+  <div class="field">
+    <%= f.label :isin %><br />
+    <%= f.text_field :isin %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

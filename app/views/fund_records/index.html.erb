@@ -1,0 +1,86 @@
+
+<%=paginate @fund_records %>
+
+<h2>Number of records <%=@record_count %></h2>
+
+
+<h1>Listing fund_records</h1>
+
+<table class="table-bordered">
+  <tr>
+    <th>Creation Date</th>
+    <th>Sector</th>
+    <th>Fund</th>
+    <th>D1</th>
+    <th>D2</th>
+    <th>D3</th>
+    <th>D4</th>
+    <th>D5</th>
+    <th>D6</th>
+    <th>D7</th>
+    <th>D8</th>
+    <th>D9</th>
+    <th>D10</th>
+    <th>D11</th>
+    <th>D12</th>
+    <th>Wr4</th>
+    <th>Wr12</th>
+    <th>Wr26</th>
+    <th>Wd4</th>
+    <th>Wd12</th>
+    <th>Wd26</th>
+    <th>Fund size</th>
+    <th>Isin</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fund_records.each do |fund_record| %>
+  <tr>
+    <td><%= fund_record.creation_date %></td>
+    <td><%= fund_record.sector %></td>
+    <td><%= fund_record.fund %></td>
+    <td><%= fund_record.d1 %></td>
+    <td><%= fund_record.d2 %></td>
+    <td><%= fund_record.d3 %></td>
+    <td><%= fund_record.d4 %></td>
+    <td><%= fund_record.d5 %></td>
+    <td><%= fund_record.d6 %></td>
+    <td><%= fund_record.d7 %></td>
+    <td><%= fund_record.d8 %></td>
+    <td><%= fund_record.d9 %></td>
+    <td><%= fund_record.d10 %></td>
+    <td><%= fund_record.d11 %></td>
+    <td><%= fund_record.d12 %></td>
+    <td><%= fund_record.wr4 %></td>
+    <td><%= fund_record.wr12 %></td>
+    <td><%= fund_record.wr26 %></td>
+    <td><%= fund_record.wd4 %></td>
+    <td><%= fund_record.wd12 %></td>
+    <td><%= fund_record.wd26 %></td>
+    <td><%= fund_record.fund_size %></td>
+    <td><%= fund_record.isin %></td>
+    <td><%= link_to 'Show', fund_record %></td>
+    <td><%= link_to 'Edit', edit_fund_record_path(fund_record) %></td>
+    <td><%= link_to 'Destroy', fund_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Import Records</h2>
+
+<%= form_tag import_fund_records_path, multipart: true do %>
+    
+    <%=file_field_tag :file %>
+    <%=submit_tag "Import Records" %>
+<% end %>
+
+
+
+
+
+
+<br />
+
+<%= link_to 'New Fund record', new_fund_record_path %>
