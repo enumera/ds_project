@@ -4,10 +4,12 @@ class CountriesController < ApplicationController
   def index
     @countries = Country.page(params[:page]).per(20)
     @countries_count  = Country.count
+    @country_csv = Country.order("name")
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @countries }
+      format.csv {render text: @country_csv.to_csv}
     end
   end
 
