@@ -1,4 +1,13 @@
 DsInvest::Application.routes.draw do
+  
+
+  get "show_last_file", to: 'file_stats#show_last', as: "show_last_file"
+
+  resources :file_stats
+
+
+  
+
   resources :fund_records do
     collection {post :import}
   end
@@ -55,7 +64,7 @@ DsInvest::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  root :to => 'fund_records#index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,33 @@
+<%= form_for(@file_stat) do |f| %>
+  <% if @file_stat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@file_stat.errors.count, "error") %> prohibited this file_stat from being saved:</h2>
+
+      <ul>
+      <% @file_stat.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :records %><br />
+    <%= f.number_field :records %>
+  </div>
+  <div class="field">
+    <%= f.label :column_size %><br />
+    <%= f.number_field :column_size %>
+  </div>
+  <div class="field">
+    <%= f.label :creation_date %><br />
+    <%= f.text_field :creation_date %>
+  </div>
+  <div class="field">
+    <%= f.label :time_to_load %><br />
+    <%= f.text_field :time_to_load %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

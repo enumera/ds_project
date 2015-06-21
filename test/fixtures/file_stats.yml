@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  records: 1
+  column_size: 1
+  creation_date: MyString
+  time_to_load: 1.5
+
+two:
+  records: 1
+  column_size: 1
+  creation_date: MyString
+  time_to_load: 1.5

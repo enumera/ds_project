@@ -91,6 +91,7 @@ class FundRecord < ActiveRecord::Base
      c = b -a
      puts c
      # binding.pry
+     FileStat.create(column_size: columns.size, creation_date: creation_date, records: i, time_to_load: c)
    
   end
 

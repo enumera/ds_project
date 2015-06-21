@@ -1,0 +1,29 @@
+<h1>Listing file_stats</h1>
+
+<table>
+  <tr>
+    <th>Records</th>
+    <th>Column size</th>
+    <th>Creation date</th>
+    <th>Time to load</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @file_stats.each do |file_stat| %>
+  <tr>
+    <td><%= file_stat.records %></td>
+    <td><%= file_stat.column_size %></td>
+    <td><%= file_stat.creation_date %></td>
+    <td><%= file_stat.time_to_load %></td>
+    <td><%= link_to 'Show', file_stat %></td>
+    <td><%= link_to 'Edit', edit_file_stat_path(file_stat) %></td>
+    <td><%= link_to 'Destroy', file_stat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New File stat', new_file_stat_path %>

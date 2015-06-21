@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Records:</b>
+  <%= @file_stat.records %>
+</p>
+
+<p>
+  <b>Column size:</b>
+  <%= @file_stat.column_size %>
+</p>
+
+<p>
+  <b>Creation date:</b>
+  <%= @file_stat.creation_date %>
+</p>
+
+<p>
+  <b>Time to load:</b>
+  <%= @file_stat.time_to_load %>
+</p>
+
+
+<%= link_to 'Edit', edit_file_stat_path(@file_stat) %> |
+<%= link_to 'Back to import', fund_records_path %>

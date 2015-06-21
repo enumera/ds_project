@@ -58,7 +58,7 @@ class FundRecordsController < ApplicationController
     # binding.pry
     FundRecord.import(params[:file])
 
-    redirect_to root_url, notice: "records loaded !!"
+    redirect_to show_last_file_path, notice: "records loaded !!"
     
   end
 

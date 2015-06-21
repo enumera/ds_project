@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150620193356) do
+ActiveRecord::Schema.define(:version => 20150621083037) do
+
+  create_table "file_stats", :force => true do |t|
+    t.integer  "records"
+    t.integer  "column_size"
+    t.string   "creation_date"
+    t.float    "time_to_load"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "fund_records", :force => true do |t|
     t.string   "sector"
