@@ -7,6 +7,26 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<nav>
+  <ul>
+    <li>
+      <%=link_to "Countries", countries_path %>
+    </li>
+    <li>
+      <%=link_to "Fund Records", fund_records_path %>
+    </li>
+    <li>
+      <%=link_to  "Fund", funds_path %>
+    </li>
+    <li>
+      <%=link_to "File Stats", file_stats_path %>
+    </li>
+  </ul>
+</nav>
+
+
+
+
 
 <%= yield %>
 

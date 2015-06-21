@@ -37,7 +37,7 @@ class FundRecord < ActiveRecord::Base
   def self.import(file)
     reader = PDF::Reader.new(file.tempfile.path)
 
-    if !check_creation_date(reader)
+    unless check_creation_date(reader)
 
       creation_date = get_create_date(reader)
         max = find_max(reader)
@@ -48,8 +48,8 @@ class FundRecord < ActiveRecord::Base
             columns = find_columns(max)
         end
 
-        # read(columns, reader, creation_date)
-      binding.pry
+        read(columns, reader, creation_date)
+    
      puts columns
      true
    else
@@ -86,7 +86,7 @@ class FundRecord < ActiveRecord::Base
       end
     end
 
-  
+    
 
 
     def self.find_country(fund_name_string)
@@ -103,7 +103,7 @@ class FundRecord < ActiveRecord::Base
         a = search_country(fund_split)
         if a != "none"
 
-        country << a[0]["name"]
+        country << a[0]["alias"]
         country << a[0]["region"]
         end
       end
@@ -147,8 +147,18 @@ class FundRecord < ActiveRecord::Base
               puts fund_country
 
               if fund_country[0][0] == "none"
-                fund_details["country"] = "none"
-                fund_details["continent"] = "none"
+                fund_country=[]
+
+                fund_country << find_country(r[i]["sector"])
+
+                if fund_country[0][0] == "none"
+
+                  fund_details["country"] = "none"
+                  fund_details["continent"] = "none"
+                else
+                  fund_details["country"] = fund_country[0][0]
+                  fund_details["continent"] = fund_country[0][1]
+                end
 
               else
                 fund_details["country"] = fund_country[0][0]
