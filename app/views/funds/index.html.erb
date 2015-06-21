@@ -1,0 +1,35 @@
+
+
+<%=paginate @funds %>
+
+<h2>Number of records <%=@funds_count %></h2>
+
+<h1>Listing funds</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Sector</th>
+    <th>Country</th>
+    <th>Continent</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @funds.each do |fund| %>
+  <tr>
+    <td><%= fund.name %></td>
+    <td><%= fund.sector %></td>
+    <td><%= fund.country %></td>
+    <td><%= fund.continent %></td>
+    <td><%= link_to 'Show', fund %></td>
+    <td><%= link_to 'Edit', edit_fund_path(fund) %></td>
+    <td><%= link_to 'Destroy', fund, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fund', new_fund_path %>

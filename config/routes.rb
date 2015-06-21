@@ -1,6 +1,9 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :funds
+
+
   get "show_last_file", to: 'file_stats#show_last', as: "show_last_file"
 
     get "file_already_loaded", to: 'file_stats#file_already_loaded', as: "file_already_loaded"

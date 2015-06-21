@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @fund.name %>
+</p>
+
+<p>
+  <b>Sector:</b>
+  <%= @fund.sector %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @fund.country %>
+</p>
+
+<p>
+  <b>Continent:</b>
+  <%= @fund.continent %>
+</p>
+
+
+<%= link_to 'Edit', edit_fund_path(@fund) %> |
+<%= link_to 'Back', funds_path %>

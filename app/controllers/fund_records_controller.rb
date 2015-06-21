@@ -57,15 +57,11 @@ class FundRecordsController < ApplicationController
   def import
     # binding.pry
     unless FundRecord.check_creation_date(params[:file])
-
       FundRecord.import(params[:file])
-
-
-    redirect_to show_last_file_path, notice: "records loaded !!"
+      redirect_to show_last_file_path, notice: "records loaded !!"
     else
       redirect_to file_already_loaded_path, notice: "File has already been loaded"
     end
-
   end
 
   # PUT /fund_records/1

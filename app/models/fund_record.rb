@@ -79,7 +79,9 @@ class FundRecord < ActiveRecord::Base
         page.text.split("\n").each do |line|
           if line.scan(/\s{2}+/).size == columns.size - 1
             r[i] = Hash[columns.zip(line.gsub(/\s{2}+/m, '#').strip.split("#"))]
+            
             r[i]["creation_date"] = creation_date
+
             if !r[i]["fund_size"].nil?
               fs = r[i]["fund_size"]
               if fs[0] == "£"
@@ -87,7 +89,23 @@ class FundRecord < ActiveRecord::Base
                 r[i]["fund_size"] = fs
               end
             end
-             FundRecord.create(r[i])
+
+            unless Fund.where(name: r[i]["fund"]).exists?
+              if r[i]["isin"].nil?
+                Fund.create(name: r[i]["fund"], sector: r[i]["sector"])
+              else
+                Fund.create(name: r[i]["fund"], sector: r[i]["sector"], isin: r[i]["isin"].strip)
+              end
+
+            else
+              fund_to_check = Fund.where(name: r[i]["fund"])
+              if fund_to_check[0].isin.empty?
+                fund_to_check[0].isin = r[i]["isin"].strip
+              end
+            end
+            unless FundRecord.where(fund: r[i]["fund"], creation_date: r[i]["creation_date"] ).exists?
+              FundRecord.create(r[i])
+            end
             i += 1
           end
         end
@@ -100,7 +118,6 @@ class FundRecord < ActiveRecord::Base
      puts c
      # binding.pry
      FileStat.create(column_size: columns.size, creation_date: creation_date, records: i, time_to_load: c)
-   
   end
 
 end
