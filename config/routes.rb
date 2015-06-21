@@ -1,6 +1,12 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :countries do
+    collection {post :import}
+  end
+  
+
+
   resources :funds
 
 

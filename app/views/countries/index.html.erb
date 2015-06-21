@@ -1,0 +1,41 @@
+<h1 id="notice"><%= notice %></h1>
+<%=paginate @countries %>
+
+<h2>Number of records <%=@countries_count %></h2>
+
+
+
+<h1>Listing countries</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Region</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @countries.each do |country| %>
+  <tr>
+    <td><%= country.name %></td>
+    <td><%= country.region %></td>
+    <td><%= link_to 'Show', country %></td>
+    <td><%= link_to 'Edit', edit_country_path(country) %></td>
+    <td><%= link_to 'Destroy', country, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Country', new_country_path %>
+
+
+<h2>Import countries</h2>
+
+<%=form_tag import_countries_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import countries file" %>
+<% end %>
+

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150621103156) do
+ActiveRecord::Schema.define(:version => 20150621111630) do
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.string   "region"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "file_stats", :force => true do |t|
     t.integer  "records"
