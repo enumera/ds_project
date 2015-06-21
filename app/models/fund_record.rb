@@ -79,7 +79,6 @@ class FundRecord < ActiveRecord::Base
               fs.delete!("£,")
               r[i]["fund_size"] = fs
             end
-
              FundRecord.create(r[i])
             i += 1
           end
