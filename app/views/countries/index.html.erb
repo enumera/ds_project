@@ -3,17 +3,13 @@
 
 <h2>Number of records <%=@countries_count %></h2>
 
-
-
 <h1>Listing countries</h1>
 
-<table>
+<table  class="table-bordered">
   <tr>
     <th>Name</th>
     <th>Region</th>
-    <th></th>
-    <th></th>
-    <th></th>
+ 
   </tr>
 
 <% @countries.each do |country| %>

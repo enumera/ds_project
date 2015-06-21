@@ -66,6 +66,44 @@ class FundRecord < ActiveRecord::Base
     end
   end
 
+    def self.search_country(search_string)
+      if Country.where(name: search_string).exists?
+        return Country.where(name: search_string)
+      else
+        return "none"
+      end
+    end
+
+    def self.clean_words(word_to_clean)
+
+    end
+
+
+    def self.find_country(fund_name_string)
+      search_array = []
+      search_array = fund_name_string.split(" ")
+
+      search_array.each do |word|
+        word.delete!(".")
+        word.delete!(",")
+      end
+
+      country = []
+      search_array.each do |fund_split|
+        a = search_country(fund_split)
+        if a != "none"
+
+        country << a[0]["name"]
+        country << a[0]["region"]
+        end
+      end
+      if country.empty?
+        country << "none"
+      end
+      binding.pry
+      return country
+    end
+
 
 
   def self.read(columns, pdf_file, creation_date)
@@ -91,16 +129,34 @@ class FundRecord < ActiveRecord::Base
             end
 
             unless Fund.where(name: r[i]["fund"]).exists?
-              if r[i]["isin"].nil?
-                Fund.create(name: r[i]["fund"], sector: r[i]["sector"])
+              fund_details = {}
+              fund_country = []
+              fund_country << find_country(r[i]["fund"])
+
+              puts r[i]["fund"]
+              puts fund_country
+
+              if fund_country[0][0] == "none"
+                fund_details["country"] = "none"
+                fund_details["continent"] = "none"
+
               else
-                Fund.create(name: r[i]["fund"], sector: r[i]["sector"], isin: r[i]["isin"].strip)
+                fund_details["country"] = fund_country[0][0]
+                fund_details["continent"] = fund_country[0][1]
+              end
+
+
+              if r[i]["isin"].nil?
+                Fund.create(name: r[i]["fund"], sector: r[i]["sector"], country: fund_details["country"] , continent:fund_details["continent"] )
+              else
+                Fund.create(name: r[i]["fund"], sector: r[i]["sector"],country: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
               end
 
             else
               fund_to_check = Fund.where(name: r[i]["fund"])
               if fund_to_check[0].isin.empty?
                 fund_to_check[0].isin = r[i]["isin"].strip
+                fund_to_check[0].save
               end
             end
             unless FundRecord.where(fund: r[i]["fund"], creation_date: r[i]["creation_date"] ).exists?
