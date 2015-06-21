@@ -85,4 +85,9 @@ class FileStatsController < ApplicationController
     @file_stat = FileStat.order("created_at DESC").first
     
   end
+
+  def file_already_loaded
+    
+    
+  end
 end

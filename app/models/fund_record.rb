@@ -26,16 +26,22 @@ class FundRecord < ActiveRecord::Base
       return i
   end
 
+  def self.check_creation_date(file)
+       reader = PDF::Reader.new(file.tempfile.path)
+       creation_date = get_create_date(reader)
+       FileStat.where(creation_date: creation_date).exists?
+  end
 
 
 
   def self.import(file)
     reader = PDF::Reader.new(file.tempfile.path)
     creation_date = get_create_date(reader)
-    puts creation_date
-      max = find_max(reader)
-      columns = find_columns(max+1)
-      read(columns, reader, creation_date)
+
+        max = find_max(reader)
+        columns = find_columns(max+1)
+        read(columns, reader, creation_date)
+    
      puts columns
 
   end
@@ -63,7 +69,7 @@ class FundRecord < ActiveRecord::Base
 
 
   def self.read(columns, pdf_file, creation_date)
-  
+
       r = {}
       reader = pdf_file
       i = 0
@@ -74,10 +80,12 @@ class FundRecord < ActiveRecord::Base
           if line.scan(/\s{2}+/).size == columns.size - 1
             r[i] = Hash[columns.zip(line.gsub(/\s{2}+/m, '#').strip.split("#"))]
             r[i]["creation_date"] = creation_date
-             fs = r[i]["fund_size"]
-            if fs[0] == "£"
-              fs.delete!("£,")
-              r[i]["fund_size"] = fs
+            if !r[i]["fund_size"].nil?
+              fs = r[i]["fund_size"]
+              if fs[0] == "£"
+                fs.delete!("£,")
+                r[i]["fund_size"] = fs
+              end
             end
              FundRecord.create(r[i])
             i += 1
