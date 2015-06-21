@@ -27,7 +27,7 @@ class FundRecord < ActiveRecord::Base
   end
 
   def self.check_creation_date(file)
-       reader = PDF::Reader.new(file.tempfile.path)
+       reader = file
        creation_date = get_create_date(reader)
        FileStat.where(creation_date: creation_date).exists?
   end
@@ -36,13 +36,25 @@ class FundRecord < ActiveRecord::Base
 
   def self.import(file)
     reader = PDF::Reader.new(file.tempfile.path)
-    creation_date = get_create_date(reader)
 
+    if !check_creation_date(reader)
+
+      creation_date = get_create_date(reader)
         max = find_max(reader)
-        columns = find_columns(max+1)
-        read(columns, reader, creation_date)
-    
+
+        if max > 13
+            columns = find_columns(max+1)
+          else
+            columns = find_columns(max)
+        end
+
+        # read(columns, reader, creation_date)
+      binding.pry
      puts columns
+     true
+   else
+    false
+  end
 
   end
 
@@ -56,9 +68,9 @@ class FundRecord < ActiveRecord::Base
   def self.find_columns(max)
     case max.to_i
       when 13
-        c = ["sector", "fund", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "4WR","12WR", "26WR"]
+        c = ["sector", "fund", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "wr4","wr12", "wr26"]
       when 15
-        c = ["sector", "fund","4-wkd", "d1","d2", "d3","d4", "d5","d6", "d7","d8","4WR","12WR", "26WR", "isin"]
+        c = ["sector", "fund","wd4", "d1","d2", "d3","d4", "d5","d6", "d7","d8","wr4","wr12", "wr26", "isin"]
       when 21
         c = ["sector", "fund", "wd4", "wd12", "wd26", "wr4","wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "isin"]
       when 22
@@ -74,9 +86,7 @@ class FundRecord < ActiveRecord::Base
       end
     end
 
-    def self.clean_words(word_to_clean)
-
-    end
+  
 
 
     def self.find_country(fund_name_string)
@@ -100,7 +110,7 @@ class FundRecord < ActiveRecord::Base
       if country.empty?
         country << "none"
       end
-      binding.pry
+    
       return country
     end
 
