@@ -2,7 +2,9 @@ class FileStatsController < ApplicationController
   # GET /file_stats
   # GET /file_stats.json
   def index
-    @file_stats = FileStat.all
+    @file_stats = FileStat.page(params[:page]).per(20)
+    @file_stats_count  = FileStat.count
+   
 
     respond_to do |format|
       format.html # index.html.erb

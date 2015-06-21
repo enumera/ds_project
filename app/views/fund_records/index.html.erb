@@ -12,8 +12,10 @@
 
 <%=paginate @fund_records %>
 
-
+<% if !@last_file.nil? %>
 <h3><%=@last_file.creation_date %> </h3>
+<% end %>
+
 
 <h2>Number of records <%=@record_count %></h2>
 

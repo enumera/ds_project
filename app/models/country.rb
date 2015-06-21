@@ -1,6 +1,8 @@
 class Country < ActiveRecord::Base
   attr_accessible :name, :region, :alias
 
+  has_many :funds
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       a = row.to_hash
