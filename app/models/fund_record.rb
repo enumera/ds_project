@@ -13,15 +13,20 @@ class FundRecord < ActiveRecord::Base
    def self.find_max(pdf_reader)
       reader = pdf_reader
       i = 0
+      j = 0 
       a = Time.now
       puts a
+
       reader.pages.each do |page|
-        page.text.split("\n").each do |line|
-          if line.scan(/\s{2}+/).size > i
-            i = line.scan(/\s{2}+/).size
-            puts "line size is #{line.scan(/\s{2}+/).size}"
+        if j == 1
+          page.text.split("\n").each do |line|
+            if line.scan(/\s{2}+/).size > i
+              i = line.scan(/\s{2}+/).size
+              puts "line size is #{line.scan(/\s{2}+/).size}"
+            end
           end
         end
+        j=1
       end
       return i
   end
@@ -186,9 +191,9 @@ class FundRecord < ActiveRecord::Base
           end
         end
       end
-      puts "number of records added #{i}"
-      puts r[i-1]
-     puts "Column size #{columns.size} "
+      # puts "number of records added #{i}"
+      # puts r[i-1]
+     # puts "Column size #{columns.size} "
      b = Time.now
      c = b -a
      puts c

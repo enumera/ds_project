@@ -4,6 +4,7 @@ class FundRecordsController < ApplicationController
   def index
     @fund_records = FundRecord.page(params[:page]).per(20)
     @record_count  = FundRecord.count
+    @last_file =FileStat.order("created_at DESC").first
 
     respond_to do |format|
       format.html # index.html.erb
