@@ -4,6 +4,49 @@
 
 <h2>Number of records <%=@funds_count %></h2>
 
+<h1>Countries with investment funds</h1>
+
+<table class="table-bordered" >
+  <tr>
+    <th>Country</th>
+    <th>No. of funds</th>
+
+    
+  </tr>
+
+<% @fund_countries.each do |fund| %>
+  <tr>
+    <td><%= fund["country"] %></td>
+    <td><%= fund["country_funds"] %></td>
+
+
+  </tr>
+<% end %>
+</table>
+
+
+<h1>Countries with investment funds</h1>
+
+<table class="table-bordered" >
+  <tr>
+    <th>Region</th>
+    <th>No. of funds</th>
+  
+    
+  </tr>
+
+<% @fund_ias.each do |fund| %>
+  <tr>
+    <td><%= fund["region"] %></td>
+    <td><%= fund["region_funds"] %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+
+
 <h1>Listing funds</h1>
 
 <table class="table-bordered" >

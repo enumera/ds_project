@@ -2,7 +2,34 @@ class FundsController < ApplicationController
   # GET /funds
   # GET /funds.json
   def index
-   
+   countries = ["Brazil", "China", "Hong Kong", "India", "Japan", "Russia", "UK", "USA"]
+
+   regions = ["BRIC", "The Americas", "Asia", "Europe", "World"]
+
+   @fund_countries = []
+   @fund_ias = []
+
+
+   investment_areas = {}
+
+
+   countries.each do |country|
+     investment_areas = {}
+    investment_areas["country"] = country
+    investment_areas["country_funds"] = Fund.where(country_name: country).count
+    @fund_countries << investment_areas
+  end
+
+  regions.each do |region|
+    investment_areas = {}
+    investment_areas["region"] = region
+    investment_areas["region_funds"] = Fund.where(continent: region).count
+    @fund_ias << investment_areas
+  end
+    
+
+
+
     @funds = Fund.page(params[:page]).per(20)
     @funds_count  = Fund.count
 
