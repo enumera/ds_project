@@ -1,5 +1,5 @@
 class Country < ActiveRecord::Base
-  attr_accessible :name, :region, :alias
+  attr_accessible :name, :region, :alias, :fund_ids
 
   has_many :funds
 

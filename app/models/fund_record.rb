@@ -1,7 +1,7 @@
 class FundRecord < ActiveRecord::Base
-  attr_accessible :d1, :d10, :d11, :d12, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :fund, :fund_size, :isin, :sector, :wd12, :wd26, :wd4, :wr12, :wr26, :wr4, :creation_date, :fund_id
+  attr_accessible :d1, :d10, :d11, :d12, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :fund_name, :fund_size, :isin, :sector, :wd12, :wd26, :wd4, :wr12, :wr26, :wr4, :creation_date, :fund_id
 
-    has_one :fund
+    belongs_to :fund
 
 # c1 = ["sector", "fund", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "4WR","12WR", "26WR"]
 
@@ -75,13 +75,13 @@ class FundRecord < ActiveRecord::Base
   def self.find_columns(max)
     case max.to_i
       when 13
-        c = ["sector", "fund", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "wr4","wr12", "wr26"]
+        c = ["sector", "fund_name", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "wr4","wr12", "wr26"]
       when 15
-        c = ["sector", "fund","wd4", "d1","d2", "d3","d4", "d5","d6", "d7","d8","wr4","wr12", "wr26", "isin"]
+        c = ["sector", "fund_name","wd4", "d1","d2", "d3","d4", "d5","d6", "d7","d8","wr4","wr12", "wr26", "isin"]
       when 21
-        c = ["sector", "fund", "wd4", "wd12", "wd26", "wr4","wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "isin"]
+        c = ["sector", "fund_name", "wd4", "wd12", "wd26", "wr4","wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "isin"]
       when 22
-        c = ["sector", "fund", "wd4", "wd12", "wd26", "wr4", "wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "fund_size", "isin"]
+        c = ["sector", "fund_name", "wd4", "wd12", "wd26", "wr4", "wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "fund_size", "isin"]
     end
   end
 
@@ -145,12 +145,12 @@ class FundRecord < ActiveRecord::Base
               end
             end
 
-            unless Fund.where(name: r[i]["fund"]).exists?
+            unless Fund.where(name: r[i]["fund_name"]).exists?
               fund_details = {}
               fund_country = []
-              fund_country << find_country(r[i]["fund"])
+              fund_country << find_country(r[i]["fund_name"])
 
-              puts r[i]["fund"]
+              puts r[i]["fund_name"]
               puts fund_country
 
               if fund_country[0][0] == "none"
@@ -174,19 +174,19 @@ class FundRecord < ActiveRecord::Base
 
 
               if r[i]["isin"].nil?
-                Fund.create(name: r[i]["fund"], sector: r[i]["sector"], country: fund_details["country"] , continent:fund_details["continent"] )
+                Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country: fund_details["country"] , continent:fund_details["continent"] )
               else
-                Fund.create(name: r[i]["fund"], sector: r[i]["sector"],country: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
+                Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"],country: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
               end
 
             else
-              fund_to_check = Fund.where(name: r[i]["fund"])
+              fund_to_check = Fund.where(name: r[i]["fund_name"])
               if fund_to_check[0].isin.empty?
                 fund_to_check[0].isin = r[i]["isin"].strip
                 fund_to_check[0].save
               end
             end
-            unless FundRecord.where(fund: r[i]["fund"], creation_date: r[i]["creation_date"] ).exists?
+            unless FundRecord.where(fund_name: r[i]["fund_name"], creation_date: r[i]["creation_date"] ).exists?
               FundRecord.create(r[i])
             end
             i += 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150621111630) do
+ActiveRecord::Schema.define(:version => 20150621235932) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20150621111630) do
 
   create_table "fund_records", :force => true do |t|
     t.string   "sector"
-    t.string   "fund"
+    t.string   "fund_name"
     t.integer  "d1"
     t.integer  "d2"
     t.integer  "d3"
@@ -56,16 +56,18 @@ ActiveRecord::Schema.define(:version => 20150621111630) do
     t.string   "creation_date"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "fund_id"
   end
 
   create_table "funds", :force => true do |t|
     t.string   "name"
     t.string   "sector"
-    t.string   "country"
+    t.string   "country_name"
     t.string   "continent"
     t.string   "isin"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "country_id"
   end
 
 end
