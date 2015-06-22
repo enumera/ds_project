@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150621235932) do
+ActiveRecord::Schema.define(:version => 20150622175247) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20150621235932) do
     t.float    "time_to_load"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "time_point_id"
   end
 
   create_table "fund_records", :force => true do |t|
@@ -68,6 +69,12 @@ ActiveRecord::Schema.define(:version => 20150621235932) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "country_id"
+  end
+
+  create_table "time_points", :force => true do |t|
+    t.string   "time_period"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

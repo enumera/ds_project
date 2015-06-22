@@ -27,6 +27,11 @@
     <%= f.label :time_to_load %><br />
     <%= f.text_field :time_to_load %>
   </div>
+
+   <div class="field">
+    <%= f.label :time_point %><br />
+    <%= f.collection_select(:time_point_id, TimePoint.all, :id, :time_period) %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

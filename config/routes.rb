@@ -1,6 +1,9 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :time_points
+
+
   resources :countries do
     collection {post :import}
   end
