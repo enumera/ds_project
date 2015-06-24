@@ -1,10 +1,10 @@
 
-
+<h1> Funds Summary page </h1>
 <%=paginate @funds %>
 
 <h2>Number of records <%=@funds_count %></h2>
 
-<h1>Countries with investment funds</h1>
+<h2>Countries with investment funds</h2>
 
 <table class="table-bordered" >
   <tr>
@@ -25,7 +25,7 @@
 </table>
 
 
-<h1>Regions with investment funds</h1>
+<h2>Regions with investment funds</h2>
 
 <table class="table-bordered" >
   <tr>
@@ -47,7 +47,7 @@
 
 
 
-<h1>Listing funds</h1>
+<h2>List of funds with a country or region</h2>
 
 <table class="table-bordered" >
   <tr>
@@ -55,6 +55,7 @@
     <th>Sector</th>
     <th>Country</th>
     <th>Continent</th>
+    <th>ISIN</th>
     <th></th>
     <th></th>
     <th></th>
@@ -66,6 +67,8 @@
     <td><%= fund.sector %></td>
     <td><%= fund.country_name %></td>
     <td><%= fund.continent %></td>
+    <td><%= fund.isin %></td>
+
     <td><%= link_to 'Show', fund %></td>
     <td><%= link_to 'Edit', edit_fund_path(fund) %></td>
     <td><%= link_to 'Destroy', fund, method: :delete, data: { confirm: 'Are you sure?' } %></td>

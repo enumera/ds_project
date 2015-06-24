@@ -2,8 +2,12 @@ class CountriesController < ApplicationController
   # GET /countries
   # GET /countries.json
   def index
-    @countries = Country.page(params[:page]).per(20)
-    @countries_count  = Country.count
+   
+    
+    @countries = Country.joins(:funds).where('funds.country_name != ?', 'none').uniq.page(params[:page]).per(20)
+
+    # @countries = Country.page(params[:page]).per(20)
+    @countries_count  = @countries.count
     @country_csv = Country.order("name")
 
     respond_to do |format|

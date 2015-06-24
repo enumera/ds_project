@@ -2,7 +2,7 @@ class FileStatsController < ApplicationController
   # GET /file_stats
   # GET /file_stats.json
   def index
-    @file_stats = FileStat.page(params[:page]).per(20)
+    @file_stats = FileStat.order("creation_date ASC").page(params[:page]).per(20)
     @file_stats_count  = FileStat.count
    
 

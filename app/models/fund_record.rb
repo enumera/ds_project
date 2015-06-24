@@ -1,15 +1,19 @@
 class FundRecord < ActiveRecord::Base
-  attr_accessible :d1, :d10, :d11, :d12, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :fund_name, :fund_size, :isin, :sector, :wd12, :wd26, :wd4, :wr12, :wr26, :wr4, :creation_date, :fund_id
+  attr_accessible :d1, :d10, :d11, :d12, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :fund_name, :fund_size, :isin, :sector, :wd12, :wd26, :wd4, :wr12, :wr26, :wr4, :creation_date, :fund_id, :file_stat_id
 
     belongs_to :fund
+    belongs_to :file_stat
 
-# c1 = ["sector", "fund", "d1","d2", "d3","d4", "d5","d6", "d7","d8",  "4WR","12WR", "26WR"]
 
-# c2 = ["sector", "fund","4-wkd", "d1","d2", "d3","d4", "d5","d6", "d7","d8","4WR","12WR", "26WR", "isin"]
+    def self.to_csv
 
-# c4 = ["sector", "fund", "wd4", "wd12", "wd26", "wr4","wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "isin"]
-
-# c4 = ["sector", "fund", "wd4", "wd12", "wd26", "wr4", "wr12", "wr26","d1","d2", "d3","d4", "d5","d6", "d7","d8", "d9","d10","d11", "d12", "fund_size", "isin"]
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |fund_record|
+        csv << fund_record.attributes.values_at(*column_names)
+      end
+    end
+  end
 
 
    def self.find_max(pdf_reader)

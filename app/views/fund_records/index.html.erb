@@ -16,15 +16,15 @@
 <h3><%=@last_file.creation_date %> </h3>
 <% end %>
 
-
-<h2>Number of records <%=@record_count %></h2>
+<h2>Total number of records <%=@all_records %> </h2>
+<h2>Number of records with geographies <%=@record_count %></h2>
 
 
 <h1>Listing fund_records</h1>
 
 <table class="table-bordered">
   <tr>
-    <th>Creation Date</th>
+    <th>Year</th>
     <th>Sector</th>
     <th>Fund</th>
 
@@ -34,6 +34,7 @@
   
     <th>Fund size</th>
     <th>Isin</th>
+    <th>Time Period</th>
     <th></th>
     <th></th>
     <th></th>
@@ -41,16 +42,17 @@
 
 <% @fund_records.each do |fund_record| %>
   <tr>
-    <td><%= fund_record.creation_date %></td>
-    <td><%= fund_record.sector %></td>
-    <td><%= fund_record.fund_name %></td>
+    <td><%= fund_record.file_stat.year_period %></td>
+    <td><%= fund_record.fund.sector %></td>
+    <td><%= fund_record.fund.name %></td>
    
     <td><%= fund_record.wr4 %></td>
     <td><%= fund_record.wr12 %></td>
     <td><%= fund_record.wr26 %></td>
 
     <td><%= fund_record.fund_size %></td>
-    <td><%= fund_record.isin %></td>
+    <td><%= fund_record.fund.isin %></td>
+    <td><%= fund_record.file_stat.time_point.time_period %></td>
     <td><%= link_to 'Show', fund_record %></td>
     <td><%= link_to 'Edit', edit_fund_record_path(fund_record) %></td>
     <td><%= link_to 'Destroy', fund_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -30,8 +30,8 @@ class FundsController < ApplicationController
 
 
 
-    @funds = Fund.page(params[:page]).per(20)
-    @funds_count  = Fund.count
+    @funds = Fund.where("country_name !=?", "none").page(params[:page]).per(20)
+    @funds_count  = Fund.where("country_name !=?", "none").count
 
     respond_to do |format|
       format.html # index.html.erb

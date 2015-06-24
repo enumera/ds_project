@@ -2,13 +2,21 @@ class FundRecordsController < ApplicationController
   # GET /fund_records
   # GET /fund_records.json
   def index
-    @fund_records = FundRecord.page(params[:page]).per(20)
-    @record_count  = FundRecord.count
+
+    @fund_records = FundRecord.joins(:fund).where("funds.country_name != ?", "none").page(params[:page]).per(20)
+
+    # @fund_records_to_csv = FundRecord.order("creation_date")
+    @all_records = FundRecord.all.count
+    # @fund_records = FundRecord.page(params[:page]).per(20)
+    @record_count  = FundRecord.joins(:fund).where("funds.country_name != ?", "none").count
+    # @record_count = FundRecord.count
     @last_file =FileStat.order("created_at DESC").first
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fund_records }
+      # format.csv { render text: @fund_records_to_csv.to_csv }
+
     end
   end
 
