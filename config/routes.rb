@@ -1,6 +1,9 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :country_relevants
+
+
   resources :continents
 
 

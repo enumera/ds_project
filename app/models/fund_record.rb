@@ -1,6 +1,8 @@
 class FundRecord < ActiveRecord::Base
   attr_accessible :d1, :d10, :d11, :d12, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :fund_name, :fund_size, :isin, :sector, :wd12, :wd26, :wd4, :wr12, :wr26, :wr4, :creation_date, :fund_id, :file_stat_id, :continent_id, :country_id, :time_point_id, :region_id
 
+  #region id is the sector_id need to move this accross
+
     belongs_to :fund
     belongs_to :file_stat
 

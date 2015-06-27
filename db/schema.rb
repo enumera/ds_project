@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150627123150) do
+ActiveRecord::Schema.define(:version => 20150627164734) do
 
   create_table "continents", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(:version => 20150627123150) do
     t.string   "name"
     t.string   "region"
     t.string   "alias"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "country_relevants", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -62,14 +68,15 @@ ActiveRecord::Schema.define(:version => 20150627123150) do
     t.integer  "fund_size"
     t.string   "isin"
     t.string   "creation_date"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "fund_id"
     t.integer  "file_stat_id"
     t.integer  "region_id"
     t.integer  "time_point_id"
-    t.integer  "country_id"
+    t.integer  "country_rel_id"
     t.integer  "continent_id"
+    t.float    "next_wd_four"
   end
 
   create_table "funds", :force => true do |t|

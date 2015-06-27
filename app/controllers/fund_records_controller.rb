@@ -24,13 +24,10 @@ class FundRecordsController < ApplicationController
 
   def download
 
-      continents = Fund.where("funds.country_name !=?", "none")
-
-
-      @fund_records_to_csv = FundRecord.joins(:file_stat).where("file_stats.time_point_id = ?", 5)
+      @fund_records_to_csv = FundRecord.where(time_point_id: 6)
       respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @fund_records }
+      # format.json { render json: @fund_records }
       format.csv { render text: @fund_records_to_csv.to_csv }
 
     end
