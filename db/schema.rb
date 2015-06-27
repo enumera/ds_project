@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150623210212) do
+ActiveRecord::Schema.define(:version => 20150627123150) do
+
+  create_table "continents", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -60,6 +66,10 @@ ActiveRecord::Schema.define(:version => 20150623210212) do
     t.datetime "updated_at",    :null => false
     t.integer  "fund_id"
     t.integer  "file_stat_id"
+    t.integer  "region_id"
+    t.integer  "time_point_id"
+    t.integer  "country_id"
+    t.integer  "continent_id"
   end
 
   create_table "funds", :force => true do |t|
@@ -71,6 +81,13 @@ ActiveRecord::Schema.define(:version => 20150623210212) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "country_id"
+    t.integer  "region_id"
+  end
+
+  create_table "regions", :force => true do |t|
+    t.string   "region"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "time_points", :force => true do |t|

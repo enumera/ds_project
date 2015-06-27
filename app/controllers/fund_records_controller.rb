@@ -3,6 +3,8 @@ class FundRecordsController < ApplicationController
   # GET /fund_records.json
   def index
 
+    # FundRecord.joins(:filestat).where("filestats.time_point_id = ?", 5)
+
     @fund_records = FundRecord.joins(:fund).where("funds.country_name != ?", "none").page(params[:page]).per(20)
 
     # @fund_records_to_csv = FundRecord.order("creation_date")
@@ -18,6 +20,21 @@ class FundRecordsController < ApplicationController
       # format.csv { render text: @fund_records_to_csv.to_csv }
 
     end
+  end
+
+  def download
+
+      continents = Fund.where("funds.country_name !=?", "none")
+
+
+      @fund_records_to_csv = FundRecord.joins(:file_stat).where("file_stats.time_point_id = ?", 5)
+      respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @fund_records }
+      format.csv { render text: @fund_records_to_csv.to_csv }
+
+    end
+    
   end
 
   # GET /fund_records/1

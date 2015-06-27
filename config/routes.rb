@@ -1,12 +1,20 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :continents
+
+
+  resources :regions
+
+
   resources :time_points
 
 
   resources :countries do
     collection {post :import}
   end
+
+  get "fund_records/downloads", to: 'fund_records#download', as: "fund_records/downloads"
   
 
 

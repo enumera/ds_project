@@ -64,7 +64,7 @@
 <% @funds.each do |fund| %>
   <tr>
     <td><%= fund.name %></td>
-    <td><%= fund.sector %></td>
+    <td><%= fund.region.region %></td>
     <td><%= fund.country_name %></td>
     <td><%= fund.continent %></td>
     <td><%= fund.isin %></td>
