@@ -24,7 +24,7 @@ class FundRecordsController < ApplicationController
 
   def download
 
-      @fund_records_to_csv = FundRecord.where(time_point_id: 6)
+      @fund_records_to_csv = FundRecord.where{(next_wd_four != nil) & (file_stat_id==68)}
       respond_to do |format|
       format.html # index.html.erb
       # format.json { render json: @fund_records }

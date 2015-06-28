@@ -5,8 +5,9 @@ puts Time.now
 puts "Started processing...."
 
 funds = Fund.all
-
-
+funds_count = funds.count
+puts funds_count
+x = 0
 
   funds.each do |fun|
     a = []
@@ -22,7 +23,9 @@ funds = Fund.all
       h = fun.fund_records.where{(file_stat_id==73)}  
         a<<h[0]  
 
-      puts a
+        puts "Collected a funds details"
+        # binding.pry
+      puts "fund #{fun.name} being updated."
 
         d = a.sort_by {|hsh| hsh[:file_stat_id]}
       puts d
@@ -33,8 +36,11 @@ funds = Fund.all
 
         d[0].save
         d[1].save
-        puts d[0]
-        puts d[1]
+        d[2].save
+        x = x+1
+
+    puts "fund #{fun.name} being saved."
+     puts "fund #{fun.name} being saved. Funds #{x} of #{funds_count} completed"
     end  
   end
   puts "Finished processing"
