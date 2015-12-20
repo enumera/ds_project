@@ -10,6 +10,7 @@
 
 <table class="table-bordered" >
   <tr>
+    <th>id</th>
     <th>Records</th>
     <th>Column size</th>
     <th>Creation date</th>
@@ -22,6 +23,8 @@
 
 <% @file_stats.each do |file_stat| %>
   <tr>
+    <td><%= file_stat.id %></td>
+
     <td><%= file_stat.records %></td>
     <td><%= file_stat.column_size %></td>
     <td><%= file_stat.creation_date %></td>

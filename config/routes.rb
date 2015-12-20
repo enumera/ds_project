@@ -1,13 +1,16 @@
 DsInvest::Application.routes.draw do
   
 
+
+
+
   resources :country_relevants
 
 
   resources :continents
 
 
-  resources :regions
+
 
 
   resources :time_points
@@ -18,7 +21,12 @@ DsInvest::Application.routes.draw do
   end
 
   get "fund_records/downloads", to: 'fund_records#download', as: "fund_records/downloads"
-  
+
+    get "funds/downloads", to: 'funds#download', as: "funds/downloads"
+
+  get "regions/downloads", to: 'regions#download', as: "regions/downloads"
+
+    get "categorical_data/downloads", to: 'categorical_data#download', as: "categorical_data/downloads"
 
 
   resources :funds
@@ -31,14 +39,14 @@ DsInvest::Application.routes.draw do
   resources :file_stats
 
 
-  
+    resources :regions
 
   resources :fund_records do
     collection {post :import}
   end
 
 
-
+  resources :categorical_data
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

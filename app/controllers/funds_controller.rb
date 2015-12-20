@@ -39,6 +39,22 @@ class FundsController < ApplicationController
     end
   end
 
+
+
+  def download
+
+     # [4, 8, 9, 12, 17, 22, 26, 30, 35, 43, 48, 51, 55, 60, 64, 68, 73]
+
+    @funds_to_csv = Fund.order(:name)
+      respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @fund_to_csv }
+      format.csv { render text: @funds_to_csv.to_csv }
+
+    end
+    
+  end
+
   # GET /funds/1
   # GET /funds/1.json
   def show

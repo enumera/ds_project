@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  fund_name: MyString
+  sector: MyString
+  continent: MyString
+  country: MyString
+  deciles: MyString
+  next_wd_four: MyString
+
+two:
+  fund_name: MyString
+  sector: MyString
+  continent: MyString
+  country: MyString
+  deciles: MyString
+  next_wd_four: MyString

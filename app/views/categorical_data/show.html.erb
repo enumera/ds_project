@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Fund name:</b>
+  <%= @categorical_datum.fund_name %>
+</p>
+
+<p>
+  <b>Sector:</b>
+  <%= @categorical_datum.sector %>
+</p>
+
+<p>
+  <b>Continent:</b>
+  <%= @categorical_datum.continent %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @categorical_datum.country %>
+</p>
+
+<p>
+  <b>Deciles:</b>
+  <%= @categorical_datum.deciles %>
+</p>
+
+<p>
+  <b>Next wd four:</b>
+  <%= @categorical_datum.next_wd_four %>
+</p>
+
+
+<%= link_to 'Edit', edit_categorical_datum_path(@categorical_datum) %> |
+<%= link_to 'Back', categorical_data_path %>

@@ -1,0 +1,33 @@
+<h1>Listing categorical_data</h1>
+
+<table>
+  <tr>
+    <th>Fund name</th>
+    <th>Sector</th>
+    <th>Continent</th>
+    <th>Country</th>
+    <th>Deciles</th>
+    <th>Next wd four</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @categorical_data.each do |categorical_datum| %>
+  <tr>
+    <td><%= categorical_datum.fund_name %></td>
+    <td><%= categorical_datum.sector %></td>
+    <td><%= categorical_datum.continent %></td>
+    <td><%= categorical_datum.country %></td>
+    <td><%= categorical_datum.deciles %></td>
+    <td><%= categorical_datum.next_wd_four %></td>
+    <td><%= link_to 'Show', categorical_datum %></td>
+    <td><%= link_to 'Edit', edit_categorical_datum_path(categorical_datum) %></td>
+    <td><%= link_to 'Destroy', categorical_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Categorical datum', new_categorical_datum_path %>

@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150627164734) do
+ActiveRecord::Schema.define(:version => 20150716121728) do
+
+  create_table "categorical_data", :force => true do |t|
+    t.string   "fund_name"
+    t.string   "sector"
+    t.string   "continent"
+    t.string   "country"
+    t.string   "deciles"
+    t.string   "next_wd_four"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "file_stat_id"
+    t.integer  "d1"
+    t.integer  "d2"
+    t.integer  "d3"
+    t.integer  "d4"
+    t.float    "wr4"
+    t.float    "wr12"
+    t.float    "wr26"
+  end
 
   create_table "continents", :force => true do |t|
     t.string   "name"
@@ -77,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20150627164734) do
     t.integer  "country_rel_id"
     t.integer  "continent_id"
     t.float    "next_wd_four"
+    t.float    "rate_change"
   end
 
   create_table "funds", :force => true do |t|

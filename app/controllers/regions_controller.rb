@@ -21,6 +21,20 @@ class RegionsController < ApplicationController
     end
   end
 
+  def download
+
+     # [4, 8, 9, 12, 17, 22, 26, 30, 35, 43, 48, 51, 55, 60, 64, 68, 73]
+
+    @sector_to_csv = Region.order(:region)
+      respond_to do |format|
+      format.html # index.html.erb
+      # format.json { render json: @fund_records_to_csv }
+      format.csv { render text: @sector_to_csv.to_csv }
+
+    end
+    
+  end
+
   # GET /regions/new
   # GET /regions/new.json
   def new

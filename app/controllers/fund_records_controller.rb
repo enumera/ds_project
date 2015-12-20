@@ -24,10 +24,12 @@ class FundRecordsController < ApplicationController
 
   def download
 
-      @fund_records_to_csv = FundRecord.where{(next_wd_four != nil) & (file_stat_id==68)}
+     # [4, 8, 9, 12, 17, 22, 26, 30, 35, 43, 48, 51, 55, 60, 64, 68, 73]
+
+    @fund_records_to_csv = FundRecord.where{(next_wd_four != nil) & (file_stat_id==68)}
       respond_to do |format|
       format.html # index.html.erb
-      # format.json { render json: @fund_records }
+      format.json { render json: @fund_records_to_csv }
       format.csv { render text: @fund_records_to_csv.to_csv }
 
     end

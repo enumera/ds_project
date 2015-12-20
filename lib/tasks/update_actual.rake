@@ -10,7 +10,7 @@ funds_count = funds.count
 puts funds_count
 x = 0
 
-file_stat_array = [17, 22, 26, 30]
+file_stat_array = [60, 64, 68, 73]
 
   funds.each do |fun|
     a = []
