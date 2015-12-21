@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151221080631) do
+ActiveRecord::Schema.define(:version => 20151221141816) do
 
   create_table "categorical_data", :force => true do |t|
     t.string   "fund_name"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20151221080631) do
   create_table "file_stats", :force => true do |t|
     t.integer  "records"
     t.integer  "column_size"
-    t.string   "creation_date"
+    t.date     "creation_date"
     t.float    "time_to_load"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
@@ -89,14 +89,11 @@ ActiveRecord::Schema.define(:version => 20151221080631) do
     t.integer  "fund_size"
     t.string   "isin"
     t.string   "creation_date"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "fund_id"
     t.integer  "file_stat_id"
-    t.integer  "region_id"
     t.integer  "time_point_id"
-    t.integer  "country_rel_id"
-    t.integer  "continent_id"
     t.float    "next_wd_four"
     t.float    "rate_change"
   end

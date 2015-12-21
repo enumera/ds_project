@@ -83,6 +83,10 @@ class FundRecord < ActiveRecord::Base
     reader = file
     info_hash = reader.info
     creation_date = info_hash[:CreationDate][2..9]
+    year = creation_date[0..3]
+    month = creation_date[4..5]
+    day = creation_date[6..7]
+    actual_creation_date = Date.parse("#{year}-#{month}-#{day}")
   end
 
   # for the history of the record set from saltydog the columns have changed
@@ -139,7 +143,8 @@ class FundRecord < ActiveRecord::Base
 
 
   def self.read(columns, pdf_file, creation_date)
-
+      
+      file_stat_record = FileStat.create(column_size: columns.size, creation_date: creation_date)
       r = {}
       reader = pdf_file
       i = 0
@@ -227,6 +232,7 @@ class FundRecord < ActiveRecord::Base
               
               fund = Fund.find_by_name(r[i]["fund_name"])
               r[i]["fund_id"] = fund.id
+              r[i]["file_stat_id"] = file_stat_record.id
               # binding.pry
               FundRecord.create(r[i])
               # binding.pry
@@ -242,7 +248,10 @@ class FundRecord < ActiveRecord::Base
      c = b -a
      puts c
      # binding.pry
-     FileStat.create(column_size: columns.size, creation_date: creation_date, records: i, time_to_load: c)
+     # FileStat.create(column_size: columns.size, creation_date: creation_date, records: i, time_to_load: c)
+     file_stat_record.records = i
+     file_stat_record.time_to_load = c
+     file_stat_record.save
   end
 
 end

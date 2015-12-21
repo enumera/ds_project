@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-  def index
+  
+   def index
 
     @sectors = FundRecord.all.map {|t| t.sector}.uniq
 

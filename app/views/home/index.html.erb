@@ -7,7 +7,7 @@
 		<nav>
 			<ul>
 				<% @continents.each do |c| %>
-					<li><%= c %></li>
+					<li><%= link_to c, "#" %></li>
 				<% end %>
 			</ul>
 		</nav>
@@ -15,7 +15,7 @@
 		<nav>
 			<ul>
 				<% @sectors.each do |s| %>
-					<li><%=s %></li>
+					<li><%=link_to s, "#" %></li>
 				<% end %>
 			</ul>
 		</nav>
@@ -29,12 +29,12 @@
 		    </div>
 		 </div>
 	</div>
-	<div class= "col-md-4">
+	<div class= "col-md-4" >
 		<h2>Funds</h2>
-		<nav>
+		<nav style="height: 500px; overflow:scroll;">
 			<ul>
 			<% @fund_records.each do |fr| %>
-				<li><%= fr.fund_name %></li>
+				<li><%= link_to fr.fund_name, "#" %></li>
 			<% end %>
 			</ul>
 		</nav>

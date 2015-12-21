@@ -6,14 +6,6 @@ DsInvest::Application.routes.draw do
 
   get "home/index"
 
-  resources :country_relevants
-
-
-  resources :continents
-
-
-
-
 
   resources :time_points
 
@@ -48,7 +40,7 @@ DsInvest::Application.routes.draw do
   end
 
 
-  resources :categorical_data
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

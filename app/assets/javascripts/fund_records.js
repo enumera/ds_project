@@ -2,6 +2,15 @@
 $(function () {
 
 var items=[];
+var maps = [
+{"map" : Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
+{"map": Highcharts.maps['custom/world'], "matcher": "hc-key"},
+{"map" : Highcharts.maps['custom/asia'], "matcher": "hc-key"},
+{"map" : Highcharts.maps['custom/europe'], "matcher": "hc-key"},
+{"map" : Highcharts.maps['custom/north-america'], "matcher": "hc-key"}]
+
+var mapDataToUse = maps[0]["map"];
+var matcherToUse = maps[0]["matcher"]
 
 $.getJSON("/", function(data){
        $.each(data, function(i, item){
@@ -67,8 +76,8 @@ $.getJSON("/", function(data){
 
         series : [{
             data : items,
-            mapData: Highcharts.maps['custom/world-continents'],
-            joinBy: 'hc-key',
+            mapData: mapDataToUse,
+            joinBy: matcherToUse,
             name: 'Funds in D1 and WR4 > 0',
             states: {
                 hover: {
@@ -77,7 +86,7 @@ $.getJSON("/", function(data){
             },
             dataLabels: {
                 enabled: true,
-                format: '{point.name}'
+                format: '{point.count}'
             }
         }]
     });
