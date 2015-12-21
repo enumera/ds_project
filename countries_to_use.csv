@@ -66,7 +66,7 @@ Eritrea,Africa,Eritrea,,af
 Estonia,Europe,Estonia,,eu
 Ethiopia,Africa,Ethiopia,,af
 Europ,Europe,Europe,,eu
-Europe,Europe,Europe,,eu
+Europe,Europe,Europe,DE,eu
 European,Europe,Europe,,eu
 Faeroe Islands,Europe,Faeroe Islands,,eu
 Fiji,Oceania,Fiji,,oc
@@ -168,8 +168,8 @@ Portugal,Europe,Portugal,,eu
 Puerto Rico,South America,Puerto Rico,,sa
 Qatar,Middle East,Qatar,,
 Romania,Europe,Romania,,eu
-Russia,Europe,Russia,,eu
-Russian,Europ,Russia,,eu
+Russia,Europe,Russia,RU,eu
+Russian,Europ,Russia,RU,eu
 Russian Federation,Europe,Russian Federation,RU,eu
 Rwanda,Africa,Rwanda,,af
 Samoa,Oceania,Samoa,,oc
@@ -216,7 +216,7 @@ USA,North America,USA,US,na
 Uganda,Africa,Uganda,,af
 Ukraine,Europe,Ukraine,,eu
 United Arab Emirates,Middle East,United Arab Emirates,,
-United Kingdom,Europe,UK,UK,eu
+United Kingdom,Europe,UK,GB,eu
 United States,North America,United States,US,na
 Uruguay,South America,Uruguay,,sa
 Uzbekistan,Asia,Uzbekistan,,as

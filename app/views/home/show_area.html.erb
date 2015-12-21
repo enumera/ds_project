@@ -10,6 +10,7 @@
 
 		<nav>
 			<ul>
+			<li><%= link_to "Home", "/home/show_area?continent=home", class: "up" %></li>
 				<% if @continents.count == 1 %>
 					<li><%= link_to @continents[0], "#", class: @stats[@continents[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[@continents[0]][0] %><span>(<%= @stats[@continents[0]][1]%>)</span></li>
 				<% else %>

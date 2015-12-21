@@ -4,19 +4,25 @@ $(function () {
 
   $('[data-toggle="tooltip"]').tooltip()
 
+var viewItem = $("#map_to_use").val().toString();
+
+// alert(viewItem);
+
+
 
 var items=[];
 var maps = [
-{"map" : Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
+{"map": Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
 {"map": Highcharts.maps['custom/world'], "matcher": "hc-key"},
-{"map" : Highcharts.maps['custom/asia'], "matcher": "hc-key"},
-{"map" : Highcharts.maps['custom/europe'], "matcher": "hc-key"},
-{"map" : Highcharts.maps['custom/north-america'], "matcher": "hc-key"}]
+{"map": Highcharts.maps['custom/asia'], "matcher": "hc-key"},
+{"map": Highcharts.maps['custom/europe'], "matcher": "hc-key"},
+{"map": Highcharts.maps['custom/north-america-no-central'], "matcher": "hc-key"}]
 
-var mapDataToUse = maps[0]["map"];
-var matcherToUse = maps[0]["matcher"]
 
-$.getJSON("/", function(data){
+
+var items=[];
+
+$.getJSON("/home/show_area?continent="+viewItem, function(data){
        $.each(data, function(i, item){
          console.log(item);
          if(item.region != "none"){
@@ -25,9 +31,23 @@ $.getJSON("/", function(data){
         
        });
        console.log(items);
-    // });
+       // alert(viewItem);
+if(viewItem == "Asia"){
+    // debugger;
+        var mapDataToUse = maps[2]["map"];
+        var matcherToUse = maps[2]["matcher"];
+    }else if(viewItem == "Europe"){
+        var mapDataToUse = maps[3]["map"];
+        var matcherToUse = maps[3]["matcher"]
+    }else if(viewItem == "North America") {
+        var mapDataToUse = maps[4]["map"];
+        var matcherToUse = maps[4]["matcher"]
+    }else{
 
-
+        var mapDataToUse = maps[0]["map"];
+        var matcherToUse = maps[0]["matcher"]
+    };
+    console.log(mapDataToUse);
 
  // debugger;
     // Prepare demo data
@@ -65,9 +85,9 @@ $.getJSON("/", function(data){
             text : 'Highmaps basic demo'
         },
 
-        subtitle : {
-            text : 'Source map: <a href="https://code.highcharts.com/mapdata/custom/world-continents.js">World continents</a>'
-        },
+        // subtitle : {
+        //     text : 'Source map: <a href="https://code.highcharts.com/mapdata/custom/world-continents.js">World continents</a>'
+        // },
 
         mapNavigation: {
             enabled: true,
@@ -92,7 +112,7 @@ $.getJSON("/", function(data){
             },
             dataLabels: {
                 enabled: true,
-                format: '{point.count}'
+                format: '{point.mean}'
             }
         }]
     });
