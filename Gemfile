@@ -7,6 +7,8 @@ gem 'rails', '3.2.17'
 
 gem 'pg'
 
+gem 'rails_12factor', group: :production
+
 gem 'pdf-reader'
 gem 'kaminari'
 gem 'squeel'
