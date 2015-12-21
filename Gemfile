@@ -26,6 +26,8 @@ group :development, :test do
   gem "rspec-rails", ">= 2.8.1"
 end
 
+gem 'descriptive-statistics'
+
 
 group :development, :test do
   gem 'better_errors'
@@ -43,7 +45,7 @@ group :test do
   gem "cucumber-rails", ">= 1.2.1", :require => false
   gem 'capybara', ">=1.1.2"
   gem 'launchy'
-  gem 'pry-rails'
+ 
 
 end
 

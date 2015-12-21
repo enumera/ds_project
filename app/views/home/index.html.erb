@@ -7,7 +7,8 @@
 		<nav>
 			<ul>
 				<% @continents.each do |c| %>
-					<li><%= link_to c, "#" %></li>
+					<li><%= link_to c, "#", data:{toggle: "tooltip", placement: "right"}, title: @stats[c][0] %><span>(<%=@things[c]["value"] %>)</span></li>
+			
 				<% end %>
 			</ul>
 		</nav>
@@ -15,7 +16,7 @@
 		<nav>
 			<ul>
 				<% @sectors.each do |s| %>
-					<li><%=link_to s, "#" %></li>
+					<li><%=link_to s, "#",data:{toggle: "tooltip", placement: "right"}, title: @stats[s][0]  %><span>(<%=@stats[s][1]%>)</span></li>
 				<% end %>
 			</ul>
 		</nav>

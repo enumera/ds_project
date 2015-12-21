@@ -252,6 +252,16 @@ class FundRecord < ActiveRecord::Base
      file_stat_record.records = i
      file_stat_record.time_to_load = c
      file_stat_record.save
+     create_sectors(file_stat_record)
   end
 
+
+  def self.create_sectors(file_stat_record)
+    fr = FundRecord.where(file_stat_id: file_stat_record.id)
+    fr.each do |fr|
+      if Sector.find_by_name(fr.sector).nil?
+        Sector.create(name: fr.sector)
+      end
+    end
+  end
 end

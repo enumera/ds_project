@@ -4,6 +4,9 @@ DsInvest::Application.routes.draw do
 
 
 
+  resources :sectors
+
+
   get "home/index"
 
 
@@ -18,9 +21,9 @@ DsInvest::Application.routes.draw do
 
     get "funds/downloads", to: 'funds#download', as: "funds/downloads"
 
-  get "regions/downloads", to: 'regions#download', as: "regions/downloads"
 
-    get "categorical_data/downloads", to: 'categorical_data#download', as: "categorical_data/downloads"
+
+  
 
 
   resources :funds
@@ -33,7 +36,7 @@ DsInvest::Application.routes.draw do
   resources :file_stats
 
 
-    resources :regions
+
 
   resources :fund_records do
     collection {post :import}

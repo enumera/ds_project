@@ -1,6 +1,10 @@
 
 $(function () {
 
+
+  $('[data-toggle="tooltip"]').tooltip()
+
+
 var items=[];
 var maps = [
 {"map" : Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
@@ -15,7 +19,9 @@ var matcherToUse = maps[0]["matcher"]
 $.getJSON("/", function(data){
        $.each(data, function(i, item){
          console.log(item);
-         items.push(item)
+         if(item.region != "none"){
+            items.push(item)
+        };
         
        });
        console.log(items);
