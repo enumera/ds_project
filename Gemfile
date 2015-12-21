@@ -22,12 +22,32 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :development do
+group :development, :test do
+  gem "rspec-rails", ">= 2.8.1"
+end
+
+
+group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'pry-rails'
+  gem 'railroady'
 end
+
+
+group :test do
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', ">= 1.6.0"
+  gem "cucumber-rails", ">= 1.2.1", :require => false
+  gem 'capybara', ">=1.1.2"
+  gem 'launchy'
+  gem 'pry-rails'
+
+end
+
+
 
 
 gem 'jquery-rails'

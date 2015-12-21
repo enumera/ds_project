@@ -1,0 +1,42 @@
+    
+
+<div class="row">
+	<div class= "col-md-2">
+		<h2>Selection</h2>
+		<h3>Geographies</h3>
+		<nav>
+			<ul>
+				<% @continents.each do |c| %>
+					<li><%= c %></li>
+				<% end %>
+			</ul>
+		</nav>
+		<h3>Investment Sectors</h3>
+		<nav>
+			<ul>
+				<% @sectors.each do |s| %>
+					<li><%=s %></li>
+				<% end %>
+			</ul>
+		</nav>
+	</div>
+
+	<div class = "col-md-6">
+		<div id="container">
+		    <div class="loading">
+		        <i class="icon-spinner icon-spin icon-large"></i>
+		        Loading data from Google Spreadsheets...
+		    </div>
+		 </div>
+	</div>
+	<div class= "col-md-4">
+		<h2>Funds</h2>
+		<nav>
+			<ul>
+			<% @fund_records.each do |fr| %>
+				<li><%= fr.fund_name %></li>
+			<% end %>
+			</ul>
+		</nav>
+	</div>
+</div>

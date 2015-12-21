@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150716121728) do
+ActiveRecord::Schema.define(:version => 20151221080631) do
 
   create_table "categorical_data", :force => true do |t|
     t.string   "fund_name"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20150716121728) do
     t.string   "alias"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "iso"
+    t.string   "continent"
   end
 
   create_table "country_relevants", :force => true do |t|

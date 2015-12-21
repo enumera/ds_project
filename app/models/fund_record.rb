@@ -6,6 +6,7 @@ class FundRecord < ActiveRecord::Base
     belongs_to :fund
     belongs_to :file_stat
 
+    # download the fund records
 
     def self.to_csv
 
@@ -17,6 +18,7 @@ class FundRecord < ActiveRecord::Base
     end
   end
 
+  # find the number of records in the pdf
 
    def self.find_max(pdf_reader)
       reader = pdf_reader
@@ -39,13 +41,15 @@ class FundRecord < ActiveRecord::Base
       return i
   end
 
+  # check if the file has already been added
+
   def self.check_creation_date(file)
        reader = file
        creation_date = get_create_date(reader)
        FileStat.where(creation_date: creation_date).exists?
   end
 
-
+  # import script for the pdf
 
   def self.import(file)
     reader = PDF::Reader.new(file.tempfile.path)
@@ -61,6 +65,8 @@ class FundRecord < ActiveRecord::Base
             columns = find_columns(max)
         end
 
+        # send to the read the pdf
+
         read(columns, reader, creation_date)
     
      puts columns
@@ -71,12 +77,15 @@ class FundRecord < ActiveRecord::Base
 
   end
 
+  # get the creation date
+
   def self.get_create_date(file)
     reader = file
     info_hash = reader.info
     creation_date = info_hash[:CreationDate][2..9]
   end
 
+  # for the history of the record set from saltydog the columns have changed
 
   def self.find_columns(max)
     case max.to_i
@@ -91,16 +100,18 @@ class FundRecord < ActiveRecord::Base
     end
   end
 
+  # search for the country
+
     def self.search_country(search_string)
-      if Country.where(name: search_string).exists?
-        return Country.where(name: search_string)
+      if Country.where(alias: search_string).exists?
+        return Country.where(alias: search_string)
       else
         return "none"
       end
     end
 
     
-
+    # split the fund name and search for countries when found allocate the country and continent
 
     def self.find_country(fund_name_string)
       search_array = []
@@ -113,17 +124,15 @@ class FundRecord < ActiveRecord::Base
 
       country = []
       search_array.each do |fund_split|
-        a = search_country(fund_split)
-        if a != "none"
-
-        country << a[0]["alias"]
-        country << a[0]["region"]
-        end
+          a = search_country(fund_split)
+          unless a == "none"
+            country << a[0]["alias"]
+            country << a[0]["region"]
+          end
       end
       if country.empty?
         country << "none"
       end
-    
       return country
     end
 
@@ -143,6 +152,9 @@ class FundRecord < ActiveRecord::Base
             
             r[i]["creation_date"] = creation_date
 
+
+            # if there is a fund size then add it
+
             if !r[i]["fund_size"].nil?
               fs = r[i]["fund_size"]
               if fs[0] == "£"
@@ -151,18 +163,27 @@ class FundRecord < ActiveRecord::Base
               end
             end
 
+            # if the fund doesn't exit create it
+
             unless Fund.where(name: r[i]["fund_name"]).exists?
               fund_details = {}
               fund_country = []
+
+              # find the country in which the fund invests
+
               fund_country << find_country(r[i]["fund_name"])
 
               puts r[i]["fund_name"]
               puts fund_country
 
+              # if the fund country is not in the name then allocate the sector
+
               if fund_country[0][0] == "none"
                 fund_country=[]
 
                 fund_country << find_country(r[i]["sector"])
+
+                # if the fund country is none then allocate the fund details and continent as none
 
                 if fund_country[0][0] == "none"
 
@@ -172,7 +193,7 @@ class FundRecord < ActiveRecord::Base
                   fund_details["country"] = fund_country[0][0]
                   fund_details["continent"] = fund_country[0][1]
                 end
-
+                # if the fund already exits then add the fund country to the fund_details
               else
                 fund_details["country"] = fund_country[0][0]
                 fund_details["continent"] = fund_country[0][1]
@@ -180,9 +201,19 @@ class FundRecord < ActiveRecord::Base
 
 
               if r[i]["isin"].nil?
-                Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country: fund_details["country"] , continent:fund_details["continent"] )
+                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country_name: fund_details["country"] , continent:fund_details["continent"] )
+
+                c = Country.find_by_alias(f.country_name)
+
+                f.country = c
+
+
               else
-                Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"],country: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
+                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"],country_name: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
+              
+                 c = Country.find_by_alias(f.country_name)
+
+                 f.country = c
               end
 
             else
@@ -193,7 +224,12 @@ class FundRecord < ActiveRecord::Base
               end
             end
             unless FundRecord.where(fund_name: r[i]["fund_name"], creation_date: r[i]["creation_date"] ).exists?
+              
+              fund = Fund.find_by_name(r[i]["fund_name"])
+              r[i]["fund_id"] = fund.id
+              # binding.pry
               FundRecord.create(r[i])
+              # binding.pry
             end
             i += 1
           end
