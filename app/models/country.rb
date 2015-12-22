@@ -6,7 +6,7 @@ class Country < ActiveRecord::Base
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       a = row.to_hash
-      unless Country.where(name: a["name"]).exists?
+      unless Country.where(alias: a["alias"]).exists?
         Country.create! a
     #   else
     #     unless  a["iso"].nil?

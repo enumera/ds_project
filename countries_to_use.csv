@@ -65,9 +65,9 @@ Equatorial Guinea,Africa,Equatorial Guinea,,af
 Eritrea,Africa,Eritrea,,af
 Estonia,Europe,Estonia,,eu
 Ethiopia,Africa,Ethiopia,,af
-Europ,Europe,Europe,,eu
+Europe,Europe,Europ,DE,eu
 Europe,Europe,Europe,DE,eu
-European,Europe,Europe,,eu
+Europe,Europe,European,DE,eu
 Faeroe Islands,Europe,Faeroe Islands,,eu
 Fiji,Oceania,Fiji,,oc
 Finland,Europe,Finland,,eu
@@ -169,7 +169,7 @@ Puerto Rico,South America,Puerto Rico,,sa
 Qatar,Middle East,Qatar,,
 Romania,Europe,Romania,,eu
 Russia,Europe,Russia,RU,eu
-Russian,Europ,Russia,RU,eu
+Russian,Europe,Russia,RU,eu
 Russian Federation,Europe,Russian Federation,RU,eu
 Rwanda,Africa,Rwanda,,af
 Samoa,Oceania,Samoa,,oc
@@ -222,9 +222,23 @@ Uruguay,South America,Uruguay,,sa
 Uzbekistan,Asia,Uzbekistan,,as
 Vanuatu,Oceania,Vanuatu,,oc
 "Venezuela, RB",South America,"Venezuela, RB",,sa
-Vietnam,Asia,Vietnam,,as
+Vietnam,Asia,Vietnam,VN,as
 Virgin,South America,Virgin Islands,,sa
 Virgin Islands (U.S.),South America,Virgin Islands (U.S.),,sa
 "Yemen, Rep.",Middle East,"Yemen, Rep.",,
 Zambia,Africa,Zambia,,af
 Zimbabwe,Africa,Zimbabwe,,af
+UK,Europe,£,UK,eu
+United States,North America,N America,US,na
+Global,World,Gbl,,
+United States,North America,US ,US,na
+UK,Europe,FTSE,UK,eu
+United States,North America,America,US,na
+United States,North America,Amer,US,na
+BRIC,BRIC,Emerging,,
+BRIC,BRIC,Emerg,,
+Asia,Asia,Pacific,JP,as
+South America,South America,Latin America,BR,sa
+Africa,Africa,Africa,SA,af
+Vietnam,Asia,South East Asia,VN,as
+Global,World,Worldwide,ZA,

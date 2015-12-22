@@ -128,13 +128,33 @@ class FundRecord < ActiveRecord::Base
 
       country = []
       search_array.each do |fund_split|
+        # if fund_split == "BRIC"
+        #   binding.pry
+        # end
+
           a = search_country(fund_split)
           unless a == "none"
-            country << a[0]["alias"]
-            country << a[0]["region"]
+            if a[0]["name"] == a[0]["region"]
+              country << "none"
+              country << a[0]["region"]
+
+              # if fund_split == "BRIC"
+              #   binding.pry
+              # end
+            else
+
+              country << a[0]["name"]
+              country << a[0]["region"]
+              #  if fund_split == "BRIC"
+              #   binding.pry
+              # end
+
+
+            end
           end
       end
       if country.empty?
+        country << "none"
         country << "none"
       end
       return country
@@ -173,37 +193,71 @@ class FundRecord < ActiveRecord::Base
             unless Fund.where(name: r[i]["fund_name"]).exists?
               fund_details = {}
               fund_country = []
+              fund_country_name = []
+              fund_country_sector = []
 
               # find the country in which the fund invests
 
-              fund_country << find_country(r[i]["fund_name"])
+              fund_country_name << find_country(r[i]["fund_name"])
+              fund_country_sector << find_country(r[i]["sector"])
 
-              puts r[i]["fund_name"]
-              puts fund_country
+              if fund_country_name[0][0] == fund_country_sector[0][0] && fund_country_name[0][1] == fund_country_sector[0][1]
 
-              # if the fund country is not in the name then allocate the sector
+                fund_country << fund_country_sector[0][0]
+                fund_country << fund_country_sector[0][1]
 
-              if fund_country[0][0] == "none"
-                fund_country=[]
+               # binding.pry
 
-                fund_country << find_country(r[i]["sector"])
+                puts r[i]["fund_name"]
+                puts fund_country
+
+            
 
                 # if the fund country is none then allocate the fund details and continent as none
 
-                if fund_country[0][0] == "none"
+                if fund_country[0] == "none" && fund_country[1] == "none"
+                  # binding.pry
+                  fund_details["country"] = "UK"
+                  fund_details["continent"] = "Europe"
 
-                  fund_details["country"] = "none"
-                  fund_details["continent"] = "none"
+                elsif fund_country[0] == "none" && fund_country[1]!= "none"
+
+                  fund_details["country"] = fund_country[1]
+                  fund_details["continent"] = fund_country[1]
+
                 else
-                  fund_details["country"] = fund_country[0][0]
-                  fund_details["continent"] = fund_country[0][1]
+                  fund_details["country"] = fund_country[0]
+                  fund_details["continent"] = fund_country[1]
                 end
                 # if the fund already exits then add the fund country to the fund_details
               else
-                fund_details["country"] = fund_country[0][0]
-                fund_details["continent"] = fund_country[0][1]
+              
+                if fund_country_sector[0][0] == "none" && fund_country_sector[0][1] == "none"
+                    
+                  fund_details["country"] = fund_country_name[0][0]
+                  fund_details["continent"] = fund_country_name[0][1]
+
+                elsif fund_country_sector[0][0]== "Global" && fund_country_name[0][0] != "none" && fund_country_name[0][1] != "none"
+
+                  fund_details["country"] = fund_country_name[0][0]
+                  fund_details["continent"] = fund_country_name[0][1]
+
+                else
+
+
+
+                  fund_details["country"] = fund_country_sector[0][0]
+                  fund_details["continent"] = fund_country_sector[0][1]
+
+                end
               end
 
+
+                if fund_details["country"] == "none"
+                    fund_details["country"] = fund_details["continent"]
+                end
+
+              # binding.pry
 
               if r[i]["isin"].nil?
                 f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country_name: fund_details["country"] , continent:fund_details["continent"] )
@@ -221,6 +275,7 @@ class FundRecord < ActiveRecord::Base
                  f.country = c
               end
 
+
             else
               fund_to_check = Fund.where(name: r[i]["fund_name"])
               if fund_to_check[0].isin.empty?
@@ -228,6 +283,7 @@ class FundRecord < ActiveRecord::Base
                 fund_to_check[0].save
               end
             end
+
             unless FundRecord.where(fund_name: r[i]["fund_name"], creation_date: r[i]["creation_date"] ).exists?
               
               fund = Fund.find_by_name(r[i]["fund_name"])
@@ -253,6 +309,7 @@ class FundRecord < ActiveRecord::Base
      file_stat_record.time_to_load = c
      file_stat_record.save
      create_sectors(file_stat_record)
+     # sort_latin_america
   end
 
 
@@ -264,4 +321,24 @@ class FundRecord < ActiveRecord::Base
       end
     end
   end
+
+
+  # def self.sort_latin_america
+
+
+  #   puts "Sorting latin America..."
+  #   funds = Fund.where(continent: "North America")
+
+  #   funds.each do |f|
+  #     if f.name.include?("Latin America")
+  #       f.continent = "Latin America"
+  #       f.country_name = "Brazil"
+  #       f.save
+  #       puts "#{f.name} sorted !"
+  #     end
+  #   end
+
+  # end
+
+
 end

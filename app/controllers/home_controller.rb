@@ -40,12 +40,24 @@ class HomeController < ApplicationController
 
       @sectors = Sector.all
 
+
     if params["continent"] == "home"
-      @fund_records = FundRecord.all
+        @fund_records = FundRecord.all
        @view_item = params["continent"]
        @search_string = "/home/show_area?continent="+params["continent"]
 
       stuff = setdata(@fund_records, 1)
+
+    elsif params["continent"] == "World"
+
+      @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"])
+
+      @view_item = params["continent"]
+      @search_string = "/home/show_area?continent="+params["continent"]
+
+
+      stuff = setdata(@fund_records, 1)
+
     else
 
       @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"])
@@ -55,6 +67,7 @@ class HomeController < ApplicationController
 
 
       stuff = setdata(@fund_records, 0)
+
     end
 
       # binding.pry

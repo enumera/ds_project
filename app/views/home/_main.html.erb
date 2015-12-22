@@ -44,7 +44,7 @@
 		<nav style="height: 500px; overflow:scroll;">
 			<ul>
 			<% @fund_records.each do |fr| %>
-				<li><%= link_to fr.fund_name, "#" %><span><%=fr.wr4 %></span></li>
+				<li><%= link_to fr.fund_name, "#" %><span><%=fr.wr4 %> <%=fr.fund.country_name %><%=fr.fund.continent %></span></li>
 			<% end %>
 			</ul>
 		</nav>

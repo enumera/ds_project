@@ -1,9 +1,6 @@
 DsInvest::Application.routes.draw do
   
 
-
-
-
   resources :sectors
 
 
