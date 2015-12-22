@@ -5,6 +5,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 
 var viewItem = $("#map_to_use").val().toString();
+var searchString = $("#search_string").val().toString();
 
 // alert(viewItem);
 
@@ -22,7 +23,7 @@ var maps = [
 
 var items=[];
 
-$.getJSON("/home/show_area?continent="+viewItem, function(data){
+$.getJSON(searchString, function(data){
        $.each(data, function(i, item){
          console.log(item);
          if(item.region != "none"){

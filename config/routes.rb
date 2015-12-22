@@ -10,6 +10,7 @@ DsInvest::Application.routes.draw do
   get "home/index"
 
   get "home/show_area"
+  get "home/show_investment_sector"
 
   resources :time_points
 

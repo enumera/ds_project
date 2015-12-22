@@ -3,7 +3,7 @@ class HomeController < ApplicationController
    def index
 
     if @things.nil?
-
+  
       @sectors = Sector.all
 
     	@fund_records = FundRecord.order("WR4 DESC")
@@ -11,6 +11,7 @@ class HomeController < ApplicationController
 
 
       @view_item = "home"
+      @search_string = "/home/show_area?continent=home"
 
 
       stuff = setdata(@fund_records, 1)
@@ -42,6 +43,7 @@ class HomeController < ApplicationController
     if params["continent"] == "home"
       @fund_records = FundRecord.all
        @view_item = params["continent"]
+       @search_string = "/home/show_area?continent="+params["continent"]
 
       stuff = setdata(@fund_records, 1)
     else
@@ -49,6 +51,8 @@ class HomeController < ApplicationController
       @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"])
 
       @view_item = params["continent"]
+      @search_string = "/home/show_area?continent="+params["continent"]
+
 
       stuff = setdata(@fund_records, 0)
     end
@@ -67,6 +71,61 @@ class HomeController < ApplicationController
       format.json { render json: @things }
      
     end
+
+
+  end
+
+
+  def show_investment_sector
+
+     # binding.pry
+
+    # Find funds in the investment sector
+
+    @fund_records = FundRecord.where(sector: params["investment_sector"])
+
+    # Find all the continents and countries in the funds
+    # binding.pry
+     continents = @fund_records.map {|t| t.fund.continent}.uniq
+     countries = @fund_records.map {|t| t.fund.country_name}.uniq
+
+     # binding.pry
+
+      if continents.count == 1
+
+        # then show the world continent map 
+
+          # binding.pry
+
+         @view_item = continents[0]
+         @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
+
+        stuff = setdata(@fund_records, 0)
+
+      else
+
+         @view_item = "home"
+         @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
+        stuff = setdata(@fund_records, 1)
+
+        # then show the continent map with the countries
+
+      end
+
+      @stats = stuff[0]
+      @things = stuff[1]
+      @sectors = stuff[2]
+      @continents = stuff[3]
+
+    
+
+     respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @things }
+     
+    end
+
+    # Request the data
 
 
   end
