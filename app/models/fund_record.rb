@@ -25,7 +25,7 @@ class FundRecord < ActiveRecord::Base
       i = 0
       j = 0 
       a = Time.now
-      puts a
+   
 
       reader.pages.each do |page|
         if j == 1

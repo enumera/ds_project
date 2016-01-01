@@ -331,7 +331,7 @@ def setdata(fund_records, world_or_continent)
 
         sector_info = []
         sectors.each do |sector|
-          puts sector
+       
           a = Sector.find_by_name(sector)
           sector_info << [a.name, a.url_safe]
         end
