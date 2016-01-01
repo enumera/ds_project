@@ -39,6 +39,8 @@ group :development, :test do
   gem 'railroady'
 end
 
+gem 'bullet', group: :development
+
 
 group :test do
   # database_cleaner is not required, but highly recommended

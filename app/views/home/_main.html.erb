@@ -13,7 +13,7 @@
 			<ul>
 			<li><%= link_to "Home", "/home/show_area?continent=home", class: "up" %></li>
 				<% if @continents.count == 1 %>
-					<li><%= link_to @continents[0], "#", class: @stats[@continents[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[@continents[0]][0] %><span>(<%= @stats[@continents[0]][1]%>)</span></li>
+					<li><%= link_to @continents[0], "/home/show_area?continent="+@continents[0], class: @stats[@continents[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[@continents[0]][0] %><span>(<%= @stats[@continents[0]][1]%>)</span></li>
 				<% else %>
 					<% @continents.each do |c| %>
 						<li><%= link_to c, "/home/show_area?continent="+c, class: @stats[c][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[c][0] %><span>(<%=@things[c]["value"] %>)</span></li>
@@ -26,7 +26,7 @@
 		<nav>
 			<ul>
 				<% @sectors.each do |s| %>
-					<li><%=link_to s, "/home/show_investment_sector?investment_sector="+s,class: @stats[s][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[s][0]  %><span>(<%=@stats[s][1]%>)</span></li>
+					<li><%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1],class: @stats[s[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[s[0]][0]  %><span>(<%=@stats[s[0]][1]%>)</span></li>
 				<% end %>
 			</ul>
 		</nav>
@@ -36,7 +36,7 @@
 		<div id="container">
 		    <div class="loading">
 		        <i class="icon-spinner icon-spin icon-large"></i>
-		        Loading data from Google Spreadsheets...
+		        Loading data....
 		    </div>
 		 </div>
 	</div>

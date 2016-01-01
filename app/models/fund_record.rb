@@ -317,11 +317,35 @@ class FundRecord < ActiveRecord::Base
     fr = FundRecord.where(file_stat_id: file_stat_record.id)
     fr.each do |fr|
       if Sector.find_by_name(fr.sector).nil?
-        Sector.create(name: fr.sector)
+
+        url_safe_name = remove_special_characters(fr.sector)
+     
+
+        Sector.create(name: fr.sector, url_safe: url_safe_name)
       end
     end
   end
 
+
+  def self.remove_special_characters(sector)
+   
+    if sector.include?("%")
+        a = sector.delete("%")
+    
+    end
+
+    if sector.include?("&")
+        a = sector.delete("&")
+       
+    end
+
+      if a.nil?
+        return sector
+      else
+      
+        return a
+      end
+  end
 
   # def self.sort_latin_america
 
