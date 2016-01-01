@@ -42,9 +42,12 @@ class HomeController < ApplicationController
 
 
     if params["continent"] == "home"
-        @fund_records = FundRecord.all
+
+       @fund_records = FundRecord.order("WR4 DESC")
        @view_item = params["continent"]
        @search_string = "/home/show_area?continent="+params["continent"]
+       @title = "World View - All Funds"
+
 
       stuff = setdata(@fund_records, 1)
 
@@ -76,6 +79,7 @@ class HomeController < ApplicationController
       @things = stuff[1]
       @sectors = stuff[2]
       @continents = stuff[3]
+
 
     end
 
