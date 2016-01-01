@@ -24,14 +24,14 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :development, :test do
-  gem "rspec-rails", ">= 2.8.1"
-end
+
 
 gem 'descriptive-statistics'
 
 
 group :development, :test do
+  gem "bullet"
+  gem "rspec-rails", ">= 2.8.1"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener'

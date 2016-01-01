@@ -43,7 +43,7 @@ class HomeController < ApplicationController
 
     if params["continent"] == "home"
 
-       @fund_records = FundRecord.order("WR4 DESC")
+       @fund_records = FundRecord.order("WR4 DESC").includes(:fund)
        @view_item = params["continent"]
        @search_string = "/home/show_area?continent="+params["continent"]
        @title = "World View - All Funds"
