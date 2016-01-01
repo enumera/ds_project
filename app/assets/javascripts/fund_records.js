@@ -6,7 +6,7 @@ $(function () {
 
 var viewItem = $("#map_to_use").val().toString();
 var searchString = $("#search_string").val().toString();
-
+var mapTitle = $("#map_title").val().toString();
 // alert(viewItem);
 
 
@@ -83,7 +83,7 @@ if(viewItem == "Asia"){
     $('#container').highcharts('Map', {
 
         title : {
-            text : 'Highmaps basic demo'
+            text : mapTitle
         },
 
         // subtitle : {
@@ -105,7 +105,7 @@ if(viewItem == "Asia"){
             data : items,
             mapData: mapDataToUse,
             joinBy: matcherToUse,
-            name: 'Funds in D1 and WR4 > 0',
+            name: 'No. of fund in area',
             states: {
                 hover: {
                     color: '#BADA55'

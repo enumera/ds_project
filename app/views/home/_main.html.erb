@@ -1,12 +1,13 @@
     
 
 <div class="row">
-	<div class= "col-md-2">
+	<div class= "col-sm-2">
 		<h2>Selection</h2>
 		<h3>Continents</h3>
 
 		<%= hidden_field_tag "map_to_use", @view_item  %>
 		<%= hidden_field_tag "search_string", @search_string  %>
+		<%= hidden_field_tag "map_title", @title  %>
 
 		<nav>
 			<ul>
@@ -31,7 +32,7 @@
 		</nav>
 	</div>
 
-	<div class = "col-md-6">
+	<div class = "col-sm-6">
 		<div id="container">
 		    <div class="loading">
 		        <i class="icon-spinner icon-spin icon-large"></i>
@@ -39,14 +40,59 @@
 		    </div>
 		 </div>
 	</div>
-	<div class= "col-md-4" >
-		<h2>Funds</h2>
-		<nav style="height: 500px; overflow:scroll;">
-			<ul>
+	<div class= "col-sm-4" >
+		<h3>Funds and Performance last 4 weeks</h3>
+
+
+	<div id="table-wrapper">
+	  <div id="table-scroll">
+
+		<table class="table-bordered"  >
+		  <tr>
+		    <th>Name</th>
+		    <th>Rate Movement(4)</th>
+		    <th>Sector Performance</th>
+		  </tr>
+		 
 			<% @fund_records.each do |fr| %>
-				<li><%= link_to fr.fund_name, "#" %><span><%=fr.wr4 %> <%=fr.fund.country_name %><%=fr.fund.continent %></span></li>
+
+				<% if fr.wr4 > 0 %>
+				<% color = "up" %>
+				<% elsif fr.wr4 == 0 %>
+				<% color = "stable" %>
+				<% else %>
+				<% color = "down" %>
+				<% end %>
+
+				<% if fr.d1 > fr.d2 %>
+				<% sec_text = "Rising" %>
+				<% elsif fr.d1 == fr.d2 %>
+				<% sec_text = "Stable" %>
+				<% else %>
+				<% sec_text = "Falling" %>
+				<% end %>
+
+				
+				 <tr>
+				    <td><%= link_to fr.fund_name, "#", class: color %></td>
+				    <td><%=fr.wr4 %></td>
+				    <td><%= sec_text %></td>
+				  </tr>
+
+			<!-- 	<li>
+
+
+					<%= link_to fr.fund_name, "#", class: color %><span class= <%=color%> ><%=fr.wr4 %></span>
+
+
+
+
+				</li> -->
 			<% end %>
-			</ul>
-		</nav>
+	
+			<!-- </ul> -->
+		</table>
+	</div>
+</div>
 	</div>
 </div>

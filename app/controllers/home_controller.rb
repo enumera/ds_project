@@ -12,6 +12,7 @@ class HomeController < ApplicationController
 
       @view_item = "home"
       @search_string = "/home/show_area?continent=home"
+      @title = "World View - All Funds"
 
 
       stuff = setdata(@fund_records, 1)
@@ -42,31 +43,42 @@ class HomeController < ApplicationController
 
 
     if params["continent"] == "home"
+<<<<<<< HEAD
 
        @fund_records = FundRecord.order("WR4 DESC")
        @view_item = params["continent"]
        @search_string = "/home/show_area?continent="+params["continent"]
        @title = "World View - All Funds"
 
+=======
+        @fund_records = FundRecord.order("WR4 DESC")
+       @view_item = params["continent"]
+       @search_string = "/home/show_area?continent="+params["continent"]
+        @title = "World View - All Funds"
+>>>>>>> master
 
       stuff = setdata(@fund_records, 1)
 
     elsif params["continent"] == "World"
 
-      @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"])
+      @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"]).order("WR4 DESC")
 
       @view_item = params["continent"]
       @search_string = "/home/show_area?continent="+params["continent"]
+       @title = "World View - All Funds"
+      
+
 
 
       stuff = setdata(@fund_records, 1)
 
     else
 
-      @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"])
+      @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"]).order("WR4 DESC")
 
       @view_item = params["continent"]
       @search_string = "/home/show_area?continent="+params["continent"]
+       @title = "Fund in " + params["continent"]
 
 
       stuff = setdata(@fund_records, 0)
@@ -99,7 +111,7 @@ class HomeController < ApplicationController
 
     # Find funds in the investment sector
 
-    @fund_records = FundRecord.where(sector: params["investment_sector"])
+    @fund_records = FundRecord.where(sector: params["investment_sector"]).order("WR4 DESC")
 
     # Find all the continents and countries in the funds
     # binding.pry
@@ -116,7 +128,7 @@ class HomeController < ApplicationController
 
          @view_item = continents[0]
          @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
-
+          @title = "Funds in " + params["investment_sector"]
         stuff = setdata(@fund_records, 0)
 
       else
@@ -129,6 +141,7 @@ class HomeController < ApplicationController
 
       end
 
+       @title = "Funds in " + params["investment_sector"]
       @stats = stuff[0]
       @things = stuff[1]
       @sectors = stuff[2]
