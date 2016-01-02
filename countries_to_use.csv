@@ -211,7 +211,7 @@ Tunisia,Africa,Tunisia,,af
 Turkey,Europe,Turkey,,eu
 Turkmenistan,Asia,Turkmenistan,,as
 Turks and Caicos Islands,South America,Turks and Caicos Islands,,sa
-UK,Europe,UK,UK,eu
+UK,Europe,UK,GB,eu
 USA,North America,USA,US,na
 Uganda,Africa,Uganda,,af
 Ukraine,Europe,Ukraine,,eu
@@ -228,11 +228,11 @@ Virgin Islands (U.S.),South America,Virgin Islands (U.S.),,sa
 "Yemen, Rep.",Middle East,"Yemen, Rep.",,
 Zambia,Africa,Zambia,,af
 Zimbabwe,Africa,Zimbabwe,,af
-UK,Europe,£,UK,eu
+UK,Europe,£,GB,eu
 United States,North America,N America,US,na
 Global,World,Gbl,,
 United States,North America,US ,US,na
-UK,Europe,FTSE,UK,eu
+UK,Europe,FTSE,GB,eu
 United States,North America,America,US,na
 United States,North America,Amer,US,na
 BRIC,BRIC,Emerging,,
