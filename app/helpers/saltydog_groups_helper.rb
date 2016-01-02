@@ -1,0 +1,2 @@
+module SaltydogGroupsHelper
+end

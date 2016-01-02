@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160101153516) do
+ActiveRecord::Schema.define(:version => 20160102134538) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -73,9 +73,17 @@ ActiveRecord::Schema.define(:version => 20160101153516) do
     t.string   "country_name"
     t.string   "continent"
     t.string   "isin"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "country_id"
+    t.integer  "saltydog_group_id"
+  end
+
+  create_table "saltydog_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "sectors", :force => true do |t|

@@ -160,6 +160,13 @@ class FundRecord < ActiveRecord::Base
       return country
     end
 
+    def self.saltydog_group(name)
+
+      unless SaltydogGroup.find_by_name(name) 
+        SaltydogGroup.create(name: name)
+      end
+    end
+
 
 
   def self.read(columns, pdf_file, creation_date)
@@ -169,15 +176,20 @@ class FundRecord < ActiveRecord::Base
       reader = pdf_file
       i = 0
       a = Time.now
+      salty_dog_group = "None"
       puts a
       reader.pages.each do |page|
         page.text.split("\n").each do |line|
+
+          if line.scan(/\s{2}+/).size == 0 && line.size > 0
+              saltydog_group(line)
+              salty_dog_group = SaltydogGroup.find_by_name(line)
+              puts "this is the new group #{salty_dog_group}"
+          end
+
           if line.scan(/\s{2}+/).size == columns.size - 1
             r[i] = Hash[columns.zip(line.gsub(/\s{2}+/m, '#').strip.split("#"))]
-            
             r[i]["creation_date"] = creation_date
-
-
             # if there is a fund size then add it
 
             if !r[i]["fund_size"].nil?
@@ -260,7 +272,7 @@ class FundRecord < ActiveRecord::Base
               # binding.pry
 
               if r[i]["isin"].nil?
-                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country_name: fund_details["country"] , continent:fund_details["continent"] )
+                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"], country_name: fund_details["country"] , continent:fund_details["continent"], saltydog_group_id: salty_dog_group.id )
 
                 c = Country.find_by_alias(f.country_name)
 
@@ -268,7 +280,7 @@ class FundRecord < ActiveRecord::Base
 
 
               else
-                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"],country_name: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip)
+                f = Fund.create(name: r[i]["fund_name"], sector: r[i]["sector"],country_name: fund_details["country"] , continent: fund_details["continent"], isin: r[i]["isin"].strip, saltydog_group_id: salty_dog_group.id)
               
                  c = Country.find_by_alias(f.country_name)
 
@@ -294,6 +306,14 @@ class FundRecord < ActiveRecord::Base
               # binding.pry
             end
             i += 1
+
+          else
+         
+          if line.scan(/\s{2}+/).size == 0 && line.size > 0
+              puts "This line has a zero value #{line}"
+
+          end
+
           end
         end
       end

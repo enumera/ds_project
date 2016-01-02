@@ -1,6 +1,9 @@
 DsInvest::Application.routes.draw do
   
 
+  resources :saltydog_groups
+
+
   resources :sectors
 
 

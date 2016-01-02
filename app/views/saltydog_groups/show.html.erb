@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @saltydog_group.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @saltydog_group.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_saltydog_group_path(@saltydog_group) %> |
+<%= link_to 'Back', saltydog_groups_path %>
