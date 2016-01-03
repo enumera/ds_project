@@ -2,6 +2,12 @@
 $(function () {
 
 
+
+
+
+ 
+
+
   $('[data-toggle="tooltip"]').tooltip()
 
 var viewItem = $("#continent").val().toString();
@@ -47,36 +53,8 @@ if(viewItem == "Asia"){
         var mapDataToUse = maps[0]["map"];
         var matcherToUse = maps[0]["matcher"]
     };
-    // console.log(mapDataToUse);
 
- // debugger;
-    // Prepare demo data
-    // var data = [
-    //     {
-    //         "hc-key": "eu",
-    //         "value": 0
-    //     },
-    //     {
-    //         "hc-key": "oc",
-    //         "value": 1
-    //     },
-    //     {
-    //         "hc-key": "af",
-    //         "value": 2
-    //     },
-    //     {
-    //         "hc-key": "as",
-    //         "value": 3
-    //     },
-    //     {
-    //         "hc-key": "na",
-    //         "value": 4
-    //     },
-    //     {
-    //         "hc-key": "sa",
-    //         "value": 5
-    //     }
-    // ];
+  
 
     // Initiate the chart
     $('#container').highcharts('Map', {
@@ -116,7 +94,7 @@ if(viewItem == "Asia"){
             }
         }]
     });
-  // });
+
 });
 
 

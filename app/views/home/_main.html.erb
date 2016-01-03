@@ -1,4 +1,4 @@
-
+<%= debug params %>
 <div class="row">
 	<div class= "col-sm-2">
 		<h2 >Selection</h2>
@@ -7,6 +7,9 @@
 		<%= hidden_field_tag "search_string", @search_string  %>
 		<%= hidden_field_tag "map_title", @title  %>
 		<%= hidden_field_tag "continent", @view_item  %>
+	
+
+
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 		<nav>
@@ -47,21 +50,41 @@
 		<%= hidden_field_tag "investment_sector", @investment_sector  %>
 
 		 <h4>Salty dog groups</h4>
-		<% SaltydogGroup.all.each do |a| %>
-    		<%= check_box_tag("groups[]", a.id) %>
-    		<%=h a.name %>
+		<% @groups_selectable.each do |a| %>
+
+			<%= check_box_tag("groups[]", a[0], @groups.include?(a[0].to_s)) %>
+	
+    		<%=h "#{a[1]}(#{a[2]})" %>
 		<% end %>
 
 		<h4>Time selection</h4>
 
 		<% ["4", "12", "26"].each do |t| %>
-			<%=radio_button_tag "time", t %>
+
+			<% if @time == t %>
+
+	
+
+				<%=radio_button_tag "time", t, true %>
+
+			<% else %>
+
+				<%=radio_button_tag "time", t, false %>
+				
+			<% end %>
 			<%=h t %>
 		<% end %>
 
 		<h4>Rate or decile</h4>
 		<% ["Rate", "Decile"].each do |c| %>
-			<%=radio_button_tag "measure", c %>
+
+			<% if @measure.to_s == c %>
+			
+				<%=radio_button_tag "measure", c , true %>
+			<% else %>
+			
+				<%=radio_button_tag "measure", c , false %>
+			<% end %>
 			<%=h c %>
 		<% end %>
 		<br/>

@@ -384,15 +384,18 @@ class FundRecord < ActiveRecord::Base
 
   # end
 
-  def self.fund_records_search(time_period='4', measure='RATE', groups=[0], region="home", sector="All")
+
+
+  def self.fund_records_search(time_period='4', measure='Rate', groups=[0], region="home", sector="All")
 
   # binding.pry
+  order_string = ""
   
   case measure
 
-    when 'RATE'
+    when 'Rate'
       order_string = 'wr'
-    when 'DECILE'
+    when 'Decile'
       order_string = 'wd'
     end
 
@@ -406,7 +409,7 @@ class FundRecord < ActiveRecord::Base
       order_string = order_string + '26'
     end
 
-    if groups[0] == 0
+    if groups[0] == 1
       # binding.pry
       groups = SaltydogGroup.pluck(:id).drop(1)
 
@@ -431,7 +434,7 @@ class FundRecord < ActiveRecord::Base
 
       # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, region ).select(select_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, region ).select(select_string).order(order_string)
 
     elsif sector != "All"
 
@@ -439,14 +442,14 @@ class FundRecord < ActiveRecord::Base
 
       # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, sector ).select(select_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, sector ).select(select_string).order(order_string)
 
     else
         
 
     # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups ).select(select_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups ).select(select_string).order(order_string)
     end
 
   end

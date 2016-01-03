@@ -1,37 +1,26 @@
 class HomeController < ApplicationController
    def index
 
-    if @things.nil?
+    # if @things.nil?
   
       @sectors = Sector.all
 
+      basis_array = set_basis(params)
 
-      if params['time']
-          time = params['time']
-      else
-        time = '4'
-      end
-
-      if params['measure']
-        measure  = params['measure'].upcase
-      else
-        measure = 'RATE'
-      end
-
-      if params['groups']
-        groups = params['groups']
-      else
-        groups = [0]
-
-      end
-
+      @groups =  basis_array[2]
       sector = "All"
       region = "home"
 
+      @time = basis_array[0]
+      @measure = basis_array[1]
+      @groups =  basis_array[2]
+
+
+    	@fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+
+      @groups_selectable = sl_group_details(@fund_records)
+
       # binding.pry
-
-    	@fund_records = FundRecord.fund_records_search(time, measure, groups, region, sector)
-
 
 
       @view_item = "home"
@@ -40,9 +29,6 @@ class HomeController < ApplicationController
 
 
       stuff = setdata(@fund_records, 1)
-
-      # binding.pry
-      # @continents = stuff[3]
       @stats = stuff[0]
       @things = stuff[1].to_json
       @things_view = stuff[1]
@@ -50,8 +36,7 @@ class HomeController < ApplicationController
       # @sectors = stuff[2]
       @continents = stuff[3]
 
-      # binding.pry
-    end
+      binding.pry
 
   	 respond_to do |format|
       format.html # index.html.erb
@@ -63,38 +48,22 @@ class HomeController < ApplicationController
 
   def show_area
 
+    basis_array = set_basis(params)
 
-
-    if @things.nil?
+    @time = basis_array[0]
+    @measure = basis_array[1]
+    @groups =  basis_array[2]
 
       @sectors = Sector.all
 
-      if params['time']
-          time = params['time']
-      else
-        time = '4'
-      end
-
-      if params['measure']
-        measure  = params['measure'].upcase
-      else
-        measure = 'RATE'
-      end
-
-      if params['groups']
-        groups = params['groups']
-      else
-        groups = [0]
-
-      end
-
   
-
+  
       if params["continent"] == "home"
         region = "home"
         sector ="All"
 
-         @fund_records = FundRecord.fund_records_search(time, measure, groups, region, sector)
+         @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+         @groups_selectable = sl_group_details(@fund_records)
          @view_item = params["continent"]
          @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
@@ -108,8 +77,9 @@ class HomeController < ApplicationController
         region = params["continent"]
         sector ="All"
 
-        @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
+        @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
 
+        @groups_selectable = sl_group_details(@fund_records)
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
@@ -120,8 +90,8 @@ class HomeController < ApplicationController
         region = params["continent"]
         sector ="All"
 
-        @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
-
+        @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+        @groups_selectable = sl_group_details(@fund_records)
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "Fund in " + params["continent"]
@@ -131,8 +101,7 @@ class HomeController < ApplicationController
 
       end
 
-      # binding.pry
-      # @continents = stuff[3]
+  
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
@@ -141,7 +110,7 @@ class HomeController < ApplicationController
       @continents = stuff[3]
 
      
-    end
+    # end
 
      respond_to do |format|
       format.html # index.html.erb
@@ -157,25 +126,12 @@ class HomeController < ApplicationController
 
      @sectors = Sector.all
 
-      if params['time']
-          time = params['time']
-      else
-        time = '4'
-      end
+    basis_array = set_basis(params)
 
-      if params['measure']
-        measure  = params['measure'].upcase
-      else
-        measure = 'RATE'
-      end
-
-      if params['groups']
-        groups = params['groups']
-      else
-        groups = [0]
-
-      end
-
+    @time = basis_array[0]
+    @measure = basis_array[1]
+    @groups =  basis_array[2]
+   
       region = "home"
 
 
@@ -183,15 +139,19 @@ class HomeController < ApplicationController
 
     sector_name = Sector.where(url_safe: params["investment_sector"]).select("name")
 
-    # binding.pry
     sector = sector_name[0].name
 
-    @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
+    @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+    @groups_selectable = sl_group_details(@fund_records)
 
     # Find all the continents and countries in the funds
+
+    # continents_x = @fund_records.distinct(continent)
     
      continents = @fund_records.map {|t| t.continent}.uniq
      countries = @fund_records.map {|t| t.country_name}.uniq
+     
+
 
      # sector_url_safe = Sector.find_by_name(params["investment_sector"])
      # binding.pry
@@ -200,7 +160,6 @@ class HomeController < ApplicationController
 
         # then show the world continent map 
 
-          # binding.pry
 
          @investment_sector = params["investment_sector"]
          @view_item = continents[0]
@@ -209,7 +168,7 @@ class HomeController < ApplicationController
         stuff = setdata(@fund_records, 0)
 
       else
-        # binding.pry
+   
          @investment_sector = params["investment_sector"]
          @view_item = "home"
          @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
@@ -227,7 +186,7 @@ class HomeController < ApplicationController
       # @sectors = stuff[2]
       @continents = stuff[3]
 
-      # binding.pry
+
     
 
      respond_to do |format|
@@ -236,7 +195,7 @@ class HomeController < ApplicationController
      
     end
 
-    # Request the data
+
 
 
   end
@@ -264,6 +223,7 @@ def setdata(fund_records, world_or_continent)
   if world_or_continent == 1
     continents = fund_records.map {|t| t.continent}.uniq
     continents_stuff = get_details(continents,fund_records, stats, things,1, world_or_continent, 1)
+   
   else
     countries = fund_records.map {|t| t.country_name}.uniq
     countries_stuff = get_details(countries,fund_records, stats, things,1, world_or_continent, 0 )
@@ -293,6 +253,9 @@ def setdata(fund_records, world_or_continent)
       # if c_or_s == 0
       #   binding.pry
       # end
+      
+      sl_groups = []
+
 
       items.each do |f|
         count = 0
@@ -310,12 +273,17 @@ def setdata(fund_records, world_or_continent)
         end
 
         info_for_stats = []
+      
 
 
         if c_or_s == 1
 
           fund_records.each do |t|
+
+            
           
+            # binding.pry
+
             if w_or_c == 1
               # binding.pry
               if t.continent == f 
@@ -373,17 +341,7 @@ def setdata(fund_records, world_or_continent)
 
         stats[f] = ["mean:#{get_stats.mean.round(2)} range:#{get_stats.range.round(2)} max:#{get_stats.max.round(2)} min:#{get_stats.min.round(2)}", count, color_class ]
 
-        # if it is a country update it
-
-        # if it is an investment sector then don't update it
-
-        # if it is a continent with a country then dont update it
-
-        # if it 
-
-
-
-
+    
         if c_or_s == 1 
           data["mean"] = get_stats.mean.round(2)
           things[f] = data
@@ -398,6 +356,7 @@ def setdata(fund_records, world_or_continent)
       a.push(items)
       a
 
+    
 
     end
 
@@ -412,4 +371,59 @@ def setdata(fund_records, world_or_continent)
         sector_info
         # binding.pry
     end
+
+    def set_basis(params)
+
+
+
+      if params['time']
+          time = params['time']
+      else
+        time = '4'
+      end
+
+      if params['measure']
+        measure  = params['measure']
+      else
+        measure = 'Rate'
+      end
+
+      if params['groups']
+        groups = params['groups']
+      else
+        groups = ['1']
+
+      end
+
+      basis_array = [time, measure, groups]
+
+    end
+
+  def sl_group_details(fund_records)
+
+      fund_records = fund_records.order("saltydog_group")
+
+      all_sl_group = fund_records.count
+
+
+      saltydog_group_names = fund_records.all.map {|t| t.saltydog_group}.uniq
+
+      sl_groups = []
+
+     sl_groups << [1, "All", Fund.count]
+
+    saltydog_group_names.each do |sl|
+        
+       sl_group = SaltydogGroup.find_by_name(sl)
+
+       fund_record_count = fund_records.select {|t| t.saltydog_group == sl}.count
+
+       sl_groups << [sl_group.id, sl_group.name, fund_record_count]
+
+     end
+
+     sl_groups
+
+  end
+
 end
