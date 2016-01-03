@@ -11,6 +11,7 @@ DsInvest::Application.routes.draw do
 
   get "home/show_area"
   get "home/show_investment_sector"
+  get "home/apply_filters"
 
   resources :time_points
 

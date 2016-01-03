@@ -6,7 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Fund.delete_all
-FundRecord.delete_all
-FileStat.delete_all
+# Fund.delete_all
+# FundRecord.delete_all
+# FileStat.delete_all
 
+SaltydogGroup.create(name: "All")

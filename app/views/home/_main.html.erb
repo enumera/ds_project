@@ -1,13 +1,13 @@
-    
 
 <div class="row">
 	<div class= "col-sm-2">
 		<h2>Selection</h2>
 		<h3>Continents</h3>
 
-		<%= hidden_field_tag "map_to_use", @view_item  %>
 		<%= hidden_field_tag "search_string", @search_string  %>
 		<%= hidden_field_tag "map_title", @title  %>
+		<%= hidden_field_tag "continent", @view_item  %>
+		<div id="things", data-stats= "<%=@things%>" %></div>
 
 		<nav>
 			<ul>
@@ -16,7 +16,7 @@
 					<li><%= link_to @continents[0], "/home/show_area?continent="+@continents[0], class: @stats[@continents[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[@continents[0]][0] %><span>(<%= @stats[@continents[0]][1]%>)</span></li>
 				<% else %>
 					<% @continents.each do |c| %>
-						<li><%= link_to c, "/home/show_area?continent="+c, class: @stats[c][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[c][0] %><span>(<%=@things[c]["value"] %>)</span></li>
+						<li><%= link_to c, "/home/show_area?continent="+c, class: @stats[c][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[c][0] %><span>(<%=@things_view[c]["value"] %>)</span></li>
 				
 					<% end %>
 				<% end %>
@@ -39,6 +39,35 @@
 		        Loading data....
 		    </div>
 		 </div>
+
+
+	<%= form_for @search_string, :method => 'get' do  %>
+
+		<%= hidden_field_tag "continent", @view_item  %>
+		<%= hidden_field_tag "investment_sector", @investment_sector  %>
+
+		 <h4>Salty dog groups</h4>
+		<% SaltydogGroup.all.each do |a| %>
+    		<%= check_box_tag("groups[]", a.id) %>
+    		<%=h a.name %>
+		<% end %>
+
+		<h4>Time selection</h4>
+
+		<% ["4", "12", "26"].each do |t| %>
+			<%=radio_button_tag "time", t %>
+			<%=h t %>
+		<% end %>
+
+		<h4>Rate or decile</h4>
+		<% ["Rate", "Decile"].each do |c| %>
+			<%=radio_button_tag "measure", c %>
+			<%=h c %>
+		<% end %>
+		<br/>
+		<%= submit_tag "Apply filter", :name=> nil %>
+	<% end %>
+
 	</div>
 	<div class= "col-sm-4" >
 		<h3>Funds and Performance last 4 weeks</h3>
@@ -52,6 +81,7 @@
 		    <th>Name</th>
 		    <th>Rate Movement(4)</th>
 		    <th>Sector Performance</th>
+		    <th>SaltyDog Group</th>
 		  </tr>
 		 
 			<% @fund_records.each do |fr| %>
@@ -77,6 +107,7 @@
 				    <td><%= link_to fr.fund_name, "#", class: color %></td>
 				    <td><%=fr.wr4 %></td>
 				    <td><%= sec_text %></td>
+				    <td><%=fr.saltydog_group %></td>
 				  </tr>
 
 			<!-- 	<li>

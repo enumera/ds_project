@@ -4,11 +4,10 @@ $(function () {
 
   $('[data-toggle="tooltip"]').tooltip()
 
-var viewItem = $("#map_to_use").val().toString();
+var viewItem = $("#continent").val().toString();
 var searchString = $("#search_string").val().toString();
 var mapTitle = $("#map_title").val().toString();
-// alert(viewItem);
-
+var things = $("#things").data('stats');
 
 
 var items=[];
@@ -23,9 +22,9 @@ var maps = [
 
 var items=[];
 
-$.getJSON(searchString, function(data){
-       $.each(data, function(i, item){
-         console.log(item);
+
+       $.each(things, function(i, item){
+         // console.log(item);
          if(item.region != "none"){
             items.push(item)
         };
@@ -48,7 +47,7 @@ if(viewItem == "Asia"){
         var mapDataToUse = maps[0]["map"];
         var matcherToUse = maps[0]["matcher"]
     };
-    console.log(mapDataToUse);
+    // console.log(mapDataToUse);
 
  // debugger;
     // Prepare demo data
@@ -117,7 +116,7 @@ if(viewItem == "Asia"){
             }
         }]
     });
-  });
+  // });
 });
 
 

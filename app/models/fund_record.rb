@@ -384,5 +384,72 @@ class FundRecord < ActiveRecord::Base
 
   # end
 
+  def self.fund_records_search(time_period='4', measure='RATE', groups=[0], region="home", sector="All")
+
+  # binding.pry
+  
+  case measure
+
+    when 'RATE'
+      order_string = 'wr'
+    when 'DECILE'
+      order_string = 'wd'
+    end
+
+
+  case time_period
+    when '4'
+       order_string = order_string + '4'
+    when '12'
+      order_string = order_string + '12'
+    when '26'
+      order_string = order_string + '26'
+    end
+
+    if groups[0] == 0
+      # binding.pry
+      groups = SaltydogGroup.pluck(:id).drop(1)
+
+    else
+
+      sl_first = SaltydogGroup.find(groups[0])
+      # binding.pry
+      if sl_first.name == "All"
+         groups = SaltydogGroup.pluck(:id).drop(1)
+      end
+    end
+
+    select_string = order_string
+    order_string = order_string+" DESC"
+   
+    conditions_string = "funds.saltydog_group_id in (?)"
+    select_string = select_string + " as wr4, fund_name, funds.country_name as country_name, funds.sector as sector, funds.continent as continent, d1, d2, saltydog_groups.name as saltydog_group"
+
+    if region != "home"
+
+      conditions_string = conditions_string+" and funds.continent= ?"
+
+      # binding.pry
+
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, region ).select(select_string)
+
+    elsif sector != "All"
+
+      conditions_string = conditions_string+" and funds.sector =?"
+
+      # binding.pry
+
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, sector ).select(select_string)
+
+    else
+        
+
+    # binding.pry
+
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups ).select(select_string)
+    end
+
+  end
+
 
 end

@@ -1,12 +1,36 @@
 class HomeController < ApplicationController
-  
    def index
 
     if @things.nil?
   
       @sectors = Sector.all
 
-    	@fund_records = FundRecord.order("WR4 DESC").includes(:fund)
+
+      if params['time']
+          time = params['time']
+      else
+        time = '4'
+      end
+
+      if params['measure']
+        measure  = params['measure'].upcase
+      else
+        measure = 'RATE'
+      end
+
+      if params['groups']
+        groups = params['groups']
+      else
+        groups = [0]
+
+      end
+
+      sector = "All"
+      region = "home"
+
+      # binding.pry
+
+    	@fund_records = FundRecord.fund_records_search(time, measure, groups, region, sector)
 
 
 
@@ -20,7 +44,8 @@ class HomeController < ApplicationController
       # binding.pry
       # @continents = stuff[3]
       @stats = stuff[0]
-      @things = stuff[1]
+      @things = stuff[1].to_json
+      @things_view = stuff[1]
       @sectors = get_sector_information(stuff[2])
       # @sectors = stuff[2]
       @continents = stuff[3]
@@ -39,17 +64,37 @@ class HomeController < ApplicationController
   def show_area
 
 
+
     if @things.nil?
-
-
 
       @sectors = Sector.all
 
+      if params['time']
+          time = params['time']
+      else
+        time = '4'
+      end
+
+      if params['measure']
+        measure  = params['measure'].upcase
+      else
+        measure = 'RATE'
+      end
+
+      if params['groups']
+        groups = params['groups']
+      else
+        groups = [0]
+
+      end
+
+  
 
       if params["continent"] == "home"
+        region = "home"
+        sector ="All"
 
-
-         @fund_records = FundRecord.order("WR4 DESC").includes(:fund)
+         @fund_records = FundRecord.fund_records_search(time, measure, groups, region, sector)
          @view_item = params["continent"]
          @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
@@ -60,20 +105,22 @@ class HomeController < ApplicationController
 
       elsif params["continent"] == "World"
 
-        @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"]).order("WR4 DESC").includes(:fund)
+        region = params["continent"]
+        sector ="All"
+
+        @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
 
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
-        
-
-
 
         stuff = setdata(@fund_records, 1)
 
       else
+        region = params["continent"]
+        sector ="All"
 
-        @fund_records = FundRecord.joins(:fund).where("funds.continent = ?", params["continent"]).order("WR4 DESC").includes(:fund)
+        @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
 
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
@@ -87,7 +134,8 @@ class HomeController < ApplicationController
       # binding.pry
       # @continents = stuff[3]
       @stats = stuff[0]
-      @things = stuff[1]
+      @things = stuff[1].to_json
+       @things_view = stuff[1]
        @sectors = get_sector_information(stuff[2])
       # @sectors = stuff[2]
       @continents = stuff[3]
@@ -107,16 +155,43 @@ class HomeController < ApplicationController
 
   def show_investment_sector
 
+     @sectors = Sector.all
+
+      if params['time']
+          time = params['time']
+      else
+        time = '4'
+      end
+
+      if params['measure']
+        measure  = params['measure'].upcase
+      else
+        measure = 'RATE'
+      end
+
+      if params['groups']
+        groups = params['groups']
+      else
+        groups = [0]
+
+      end
+
+      region = "home"
+
+
+
+
     sector_name = Sector.where(url_safe: params["investment_sector"]).select("name")
 
     # binding.pry
+    sector = sector_name[0].name
 
-    @fund_records = FundRecord.where(sector: sector_name[0].name).order("WR4 DESC")
+    @fund_records = FundRecord.fund_records_search(time, measure, groups,region, sector)
 
     # Find all the continents and countries in the funds
     
-     continents = @fund_records.map {|t| t.fund.continent}.uniq
-     countries = @fund_records.map {|t| t.fund.country_name}.uniq
+     continents = @fund_records.map {|t| t.continent}.uniq
+     countries = @fund_records.map {|t| t.country_name}.uniq
 
      # sector_url_safe = Sector.find_by_name(params["investment_sector"])
      # binding.pry
@@ -127,8 +202,7 @@ class HomeController < ApplicationController
 
           # binding.pry
 
-       
-
+         @investment_sector = params["investment_sector"]
          @view_item = continents[0]
          @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
           @title = "Funds in " + params["investment_sector"]
@@ -136,6 +210,7 @@ class HomeController < ApplicationController
 
       else
         # binding.pry
+         @investment_sector = params["investment_sector"]
          @view_item = "home"
          @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
         stuff = setdata(@fund_records, 1)
@@ -146,7 +221,8 @@ class HomeController < ApplicationController
 
        @title = "Funds in " + params["investment_sector"]
       @stats = stuff[0]
-      @things = stuff[1]
+      @things = stuff[1].to_json
+       @things_view = stuff[1]
        @sectors = get_sector_information(stuff[2])
       # @sectors = stuff[2]
       @continents = stuff[3]
@@ -168,8 +244,6 @@ class HomeController < ApplicationController
 
 
 
-
-
 private
 
   def descriptive_stats(records)
@@ -178,8 +252,8 @@ private
   end
 
 def setdata(fund_records, world_or_continent)
-  continents = fund_records.map {|t| t.fund.continent}.uniq
-  sectors = fund_records.map {|t| t.fund.sector}.uniq
+  continents = fund_records.map {|t| t.continent}.uniq
+  sectors = fund_records.map {|t| t.sector}.uniq
 
 
     return_array = []
@@ -188,10 +262,10 @@ def setdata(fund_records, world_or_continent)
 
 
   if world_or_continent == 1
-    continents = fund_records.map {|t| t.fund.continent}.uniq
+    continents = fund_records.map {|t| t.continent}.uniq
     continents_stuff = get_details(continents,fund_records, stats, things,1, world_or_continent, 1)
   else
-    countries = fund_records.map {|t| t.fund.country_name}.uniq
+    countries = fund_records.map {|t| t.country_name}.uniq
     countries_stuff = get_details(countries,fund_records, stats, things,1, world_or_continent, 0 )
     continents_stuff = get_details(continents,fund_records, countries_stuff[0], countries_stuff[1], 1, 1, 0)
    
@@ -244,12 +318,12 @@ def setdata(fund_records, world_or_continent)
           
             if w_or_c == 1
               # binding.pry
-              if t.fund.continent == f 
+              if t.continent == f 
                 count = count + 1
                 info_for_stats << t.wr4
               end
             else
-              if t.fund.country_name == f 
+              if t.country_name == f 
                 count = count + 1
                 info_for_stats << t.wr4
               end
@@ -279,7 +353,7 @@ def setdata(fund_records, world_or_continent)
 
         else
           fund_records.each do |t|
-            if t.fund.sector == f 
+            if t.sector == f 
               count = count + 1
               info_for_stats << t.wr4
             end
