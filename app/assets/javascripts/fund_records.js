@@ -2,10 +2,28 @@
 $(function () {
 
 
+$(document.body).on("change", ".sl_group", function(){
+    // console.log($(this))
+    // alert($(this).val())
+    // alert($(this).is(':checked'))
 
 
+    if($(this).val()!= "1" && $(this).is(':checked')){
+        if($(".sl_group[value='1']").is(':checked')){
+  
+            $(".sl_group[value='1']").attr("checked", false);
+        };
+    }else if($(this).val()== "1" && $(this).is(':checked')){
+            // $(".sl_group").attr("checked", false);
+            $(".sl_group[value='2']").attr("checked", false);
+            $(".sl_group[value='3']").attr("checked", false);
+            $(".sl_group[value='4']").attr("checked", false);
+            $(".sl_group[value='5']").attr("checked", false);
+            $(".sl_group[value='6']").attr("checked", false);
+            $(".sl_group[value='7']").attr("checked", false);
+    };
+})
 
- 
 
 
   $('[data-toggle="tooltip"]').tooltip()

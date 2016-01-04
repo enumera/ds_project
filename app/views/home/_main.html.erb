@@ -52,7 +52,7 @@
 		 <h4>Salty dog groups</h4>
 		<% @groups_selectable.each do |a| %>
 
-			<%= check_box_tag("groups[]", a[0], @groups.include?(a[0].to_s)) %>
+			<%= check_box_tag("groups[]", a[0], @groups.include?(a[0].to_s), class: "sl_group") %>
 	
     		<%=h "#{a[1]}(#{a[2]})" %>
 		<% end %>

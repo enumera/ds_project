@@ -36,7 +36,7 @@ class HomeController < ApplicationController
       # @sectors = stuff[2]
       @continents = stuff[3]
 
-      binding.pry
+    
 
   	 respond_to do |format|
       format.html # index.html.erb
