@@ -1,32 +1,62 @@
 .down {
-	color: #FF0000;
+	background-color: #f2dede;
 
 }
 
+.navbar-default{
+  background-color: orange;
+}
+
 .up{
-	color: #98FB98;
+	background-color: #dff0d8;
 
 }
 
 .stable{
-	color: #0000FF;
+	background-color: #d9edf7;
 }
 
 body{
-	background-color: black;
-	color: white;
+	background-color: white;
+	color: black;
 }
 
-#table-wrapper {
+.blank-star{
+  
+  color: black;
+
+}
+
+.chosen-star{
+  
+  color: #DAA520;
+}
+
+.brand-first{
+  color:red;
+}
+
+.brand-second{
+  
+  color: white;
+}
+
+.selected {
+    background-color: yellow;
+}
+
+
+
+.table-wrapper {
   position:relative;
 }
-#table-scroll {
+.table-scroll {
   height:500px;
   overflow:auto;  
   margin-top:20px;
 }
 
-#table-wrapper table {
+.table-wrapper table {
   width:100%;
     
 }
@@ -41,4 +71,9 @@ body{
 }
 ul>li{
   list-style: none;
+}
+
+.clickable-div{
+    cursor: pointer;
+
 }

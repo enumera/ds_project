@@ -88,7 +88,7 @@
 			<%=h c %>
 		<% end %>
 		<br/>
-		<%= submit_tag "Apply filter", :name=> nil %>
+		<%= submit_tag "Apply filter", :name=> nil, class: "btn btn-info" %>
 	<% end %>
 
 	</div>
@@ -96,57 +96,77 @@
 		<h3>Funds and Performance last 4 weeks</h3>
 
 
-	<div id="table-wrapper">
-	  <div id="table-scroll">
+				<div class="table-wrapper">
+				  <div class="table-scroll">
 
-		<table class="table-bordered"  >
-		  <tr>
-		    <th>Name</th>
-		    <th>Rate Movement(4)</th>
-		    <th>Sector Performance</th>
-		    <th>SaltyDog Group</th>
-		  </tr>
-		 
-			<% @fund_records.each do |fr| %>
+					<table class="table-bordered"  >
+					  <tr>
+					    <th>Name</th>
+					    <th>Rate Movement(4)</th>
+					    <th>Sector Performance</th>
+					    <th>SaltyDog Group</th>
+					  </tr>
+					 
+						<% @fund_records.each do |fr| %>
 
-				<% if fr.wr4 > 0 %>
-				<% color = "up" %>
-				<% elsif fr.wr4 == 0 %>
-				<% color = "stable" %>
-				<% else %>
-				<% color = "down" %>
-				<% end %>
+							<% if fr.wr4 > 0 %>
+							<% color = "up" %>
+							<% elsif fr.wr4 == 0 %>
+							<% color = "stable" %>
+							<% else %>
+							<% color = "down" %>
+							<% end %>
 
-				<% if fr.d1 > fr.d2 %>
-				<% sec_text = "Rising" %>
-				<% elsif fr.d1 == fr.d2 %>
-				<% sec_text = "Stable" %>
-				<% else %>
-				<% sec_text = "Falling" %>
-				<% end %>
+							<% if fr.d1 > fr.d2 %>
+							<% sec_text = "Rising" %>
+							<% elsif fr.d1 == fr.d2 %>
+							<% sec_text = "Stable" %>
+							<% else %>
+							<% sec_text = "Falling" %>
+							<% end %>
 
+							
+							 <tr class= "<%=color %>" >
+							 	<td style="display:none;"><%=fr.fund_id %></td>
+							    <td><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span><%= link_to fr.fund_name, "#" %></td>
+							    <td class="text-center"><%=fr.wr4 %>%</td>
+							    <td><%= sec_text %></td>
+							    <td><%=fr.saltydog_group %></td>
+							  </tr>
+
+						<% end %>
 				
-				 <tr>
-				    <td><%= link_to fr.fund_name, "#", class: color %></td>
-				    <td><%=fr.wr4 %></td>
-				    <td><%= sec_text %></td>
-				    <td><%=fr.saltydog_group %></td>
-				  </tr>
+						<!-- </ul> -->
+					</table>
+				</div>
+			</div>
 
-			<!-- 	<li>
+			<h3>Selected funds</h3>
+			
+			<div class="table-wrapper">
+				  <div class="table-scroll">
 
+					<table class="table-bordered" id="selected_funds" >
+					  <tr>
+					    <th>Name</th>
+					    <th>Rate Movement(4)</th>
+					    <th>Sector Performance</th>
+					    <th>SaltyDog Group</th>
+					  </tr>
+					 
+							
+							 
 
-					<%= link_to fr.fund_name, "#", class: color %><span class= <%=color%> ><%=fr.wr4 %></span>
+					
+				
+						<!-- </ul> -->
+					</table>
+				</div>
+			</div>
 
-
-
-
-				</li> -->
-			<% end %>
 	
-			<!-- </ul> -->
-		</table>
-	</div>
-</div>
+
+
+
 	</div>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DsInvest</title>
+  <title>Momentum Fund Investing</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <script src="https://code.highcharts.com/maps/highmaps.js"></script>
@@ -15,26 +15,8 @@
 </head>
 <body>
 
-<nav>
-  <ul>
-    <li>
-      <%=link_to "Countries", countries_path %>
-    </li>
-    <li>
-      <%=link_to "Fund Records", fund_records_path %>
-    </li>
-    <li>
-      <%=link_to  "Fund", funds_path %>
-    </li>
-    <li>
-      <%=link_to "File Stats", file_stats_path %>
-    </li>
-  </ul>
-</nav>
 
-
-
-
+<%=render "shared/navbar" %>
 
 <%= yield %>
 

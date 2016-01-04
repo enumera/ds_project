@@ -2,6 +2,53 @@
 $(function () {
 
 
+
+
+$(document.body).on("click", ".glyphicon-star-empty", function(){
+    if($(this).hasClass("blank-star")){
+        $(this).removeClass("blank-star");
+        $(this).addClass("chosen-star");
+
+    }else{
+        $(this).removeClass("chosen-star");
+        $(this).addClass("blank-star");
+
+    };
+});
+
+
+    // Manages the selection of funds by the user
+
+    $(document.body).on("click",'tr', function () {
+        $(this).toggleClass('selected');
+        var  selectedRow = $(this);
+        var td = $(selectedRow).children('td');
+        var fundDetails = [];
+
+           for (var i = 0; i < td.length; ++i) {
+            fundDetails.push(td[i].innerText);
+            // alert(i + ': ' + td[i].innerText);
+            }
+
+        if($(this).hasClass('selected')){
+     
+        $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td>' + fundDetails[4] +'</td></tr>)')
+
+
+        }else{
+         
+            var tableRow = $("table#selected_funds td").filter(function() {
+                return $(this).text() == fundDetails[0];
+                }).closest("tr").remove();       
+        };
+    });
+
+
+
+
+
+
+
 $(document.body).on("change", ".sl_group", function(){
     // console.log($(this))
     // alert($(this).val())

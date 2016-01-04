@@ -426,7 +426,7 @@ class FundRecord < ActiveRecord::Base
     order_string = order_string+" DESC"
    
     conditions_string = "funds.saltydog_group_id in (?)"
-    select_string = select_string + " as wr4, fund_name, funds.country_name as country_name, funds.sector as sector, funds.continent as continent, d1, d2, saltydog_groups.name as saltydog_group"
+    select_string = select_string + " as wr4, fund_name, funds.country_name as country_name, funds.sector as sector, funds.id as fund_id, funds.continent as continent, d1, d2, saltydog_groups.name as saltydog_group"
 
     if region != "home"
 
