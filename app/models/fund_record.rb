@@ -424,8 +424,10 @@ class FundRecord < ActiveRecord::Base
 
     select_string = order_string
     order_string = order_string+" DESC"
+
+    file_stat = FileStat.last
    
-    conditions_string = "funds.saltydog_group_id in (?)"
+    conditions_string = "file_stat_id=? and funds.saltydog_group_id in (?)"
     select_string = select_string + " as wr4, fund_name, funds.country_name as country_name, funds.sector as sector, funds.id as fund_id, funds.continent as continent, d1, d2, saltydog_groups.name as saltydog_group"
 
     if region != "home"
@@ -434,7 +436,7 @@ class FundRecord < ActiveRecord::Base
 
       # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, region ).select(select_string).order(order_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region ).select(select_string).order(order_string)
 
     elsif sector != "All"
 
@@ -442,14 +444,14 @@ class FundRecord < ActiveRecord::Base
 
       # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups, sector ).select(select_string).order(order_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, sector ).select(select_string).order(order_string)
 
     else
         
 
     # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, groups ).select(select_string).order(order_string)
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups ).select(select_string).order(order_string)
     end
 
   end
