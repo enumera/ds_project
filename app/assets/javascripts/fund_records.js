@@ -134,9 +134,11 @@ if(viewItem == "Asia"){
 
         mapNavigation: {
             enabled: true,
-            buttonOptions: {
-                verticalAlign: 'bottom'
-            }
+            enableButtons: false,
+            enableMouseWheelZoom: false,
+            enableTouchZoom: false,
+            enableDoubleClickZoomTo: false,
+            enableDoubleClickZoom: false
         },
 
         colorAxis: {
