@@ -1,4 +1,4 @@
-
+<%= debug params %>
 <div class="row">
 	<div class= "col-sm-2">
 		<h2 >Selection</h2>
@@ -42,6 +42,18 @@
 		        Loading data....
 		    </div>
 		 </div>
+
+			<%= link_to "Home", "/home/show_area?continent=home", class: "up" %></li>
+				<% if @continents.count == 1 %>
+					<%= link_to @continents[0], "/home/show_area?continent="+@continents[0], class: @stats[@continents[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[@continents[0]][0] %><span>(<%= @stats[@continents[0]][1]%>)</span>
+				<% else %>
+					<% @continents.each do |c| %>
+						<%= link_to c, "/home/show_area?continent="+c, class: @stats[c][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[c][0] %><span>(<%=@things_view[c]["value"] %>)</span>
+				
+					<% end %>
+				<% end %>
+			
+
 
 
 	<%= form_for @search_string, :method => 'get' do  %>

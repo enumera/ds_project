@@ -432,7 +432,17 @@ class FundRecord < ActiveRecord::Base
 
     if region != "home"
 
-      conditions_string = conditions_string+" and funds.continent= ?"
+      areas = Fund.uniq.pluck(:continent)
+
+      if areas.include?(region)
+
+        conditions_string = conditions_string+" and funds.continent= ?"
+
+      else
+
+        conditions_string = conditions_string+" and funds.country_name= ?"
+
+      end
 
       # binding.pry
 

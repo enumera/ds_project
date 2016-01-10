@@ -4,6 +4,7 @@ class HomeController < ApplicationController
     # if @things.nil?
   
       @sectors = Sector.all
+      areas = Fund.uniq.pluck(:country_name)
 
       basis_array = set_basis(params)
 
@@ -18,6 +19,7 @@ class HomeController < ApplicationController
 
     	@fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
 
+
       @groups_selectable = sl_group_details(@fund_records)
 
       # binding.pry
@@ -28,16 +30,18 @@ class HomeController < ApplicationController
       @title = "World View - All Funds"
 
 
-      stuff = setdata(@fund_records, 1)
-      @stats = stuff[0]
-      @things = stuff[1].to_json
-      @things_view = stuff[1]
-      @sectors = get_sector_information(stuff[2])
-      # @sectors = stuff[2]
-      @continents = stuff[3]
+        stuff = setdata(@fund_records, 1)
+        @stats = stuff[0]
+        @things = stuff[1].to_json
+        @things_view = stuff[1]
+        @sectors = get_sector_information(stuff[2])
+        # @sectors = stuff[2]
+        @continents = stuff[3]
+        @countries = areas - @continents
+        @countries.delete("Global")
+        
 
-    
-
+      binding.pry
   	 respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @things }
@@ -213,6 +217,7 @@ private
 def setdata(fund_records, world_or_continent)
   continents = fund_records.map {|t| t.continent}.uniq
   sectors = fund_records.map {|t| t.sector}.uniq
+  countries = fund_records.map {|t| t.country_name}.uniq
 
 
     return_array = []
@@ -221,11 +226,11 @@ def setdata(fund_records, world_or_continent)
 
 
   if world_or_continent == 1
-    continents = fund_records.map {|t| t.continent}.uniq
+
     continents_stuff = get_details(continents,fund_records, stats, things,1, world_or_continent, 1)
    
   else
-    countries = fund_records.map {|t| t.country_name}.uniq
+    
     countries_stuff = get_details(countries,fund_records, stats, things,1, world_or_continent, 0 )
     continents_stuff = get_details(continents,fund_records, countries_stuff[0], countries_stuff[1], 1, 1, 0)
    
