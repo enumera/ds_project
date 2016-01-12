@@ -39,9 +39,9 @@ class HomeController < ApplicationController
         @continents = stuff[3]
         @countries = areas - @continents
         @countries.delete("Global")
-        
 
-      binding.pry
+
+      # binding.pry
   	 respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @things }
@@ -51,8 +51,17 @@ class HomeController < ApplicationController
 
 
   def show_area
+     # binding.pry
+    old_url = request.env["HTTP_REFERER"]
+
+    old_params = Rack::Utils.parse_query URI(old_url).query
+
+    binding.pry
 
     basis_array = set_basis(params)
+    new_params = dedup_params(old_params, params)
+
+    binding.pry
 
     @time = basis_array[0]
     @measure = basis_array[1]
@@ -128,7 +137,19 @@ class HomeController < ApplicationController
 
   def show_investment_sector
 
-     @sectors = Sector.all
+      old_url = request.env["HTTP_REFERER"]
+
+    old_params = Rack::Utils.parse_query URI(old_url).query
+
+    binding.pry
+
+    basis_array = set_basis(params)
+    new_params = dedup_params(old_params, params)
+
+    binding.pry
+
+
+    @sectors = Sector.all
 
     basis_array = set_basis(params)
 
@@ -136,17 +157,25 @@ class HomeController < ApplicationController
     @measure = basis_array[1]
     @groups =  basis_array[2]
    
-      region = "home"
+    if new_params["continent"]
 
+      region = new_params["continent"]
 
+    else
 
+        region = "home"
+    end
 
     sector_name = Sector.where(url_safe: params["investment_sector"]).select("name")
 
     sector = sector_name[0].name
 
+    binding.pry
+
     @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
     @groups_selectable = sl_group_details(@fund_records)
+
+    binding.pry
 
     # Find all the continents and countries in the funds
 
@@ -166,10 +195,22 @@ class HomeController < ApplicationController
 
 
          @investment_sector = params["investment_sector"]
-         @view_item = continents[0]
-         @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
+         if region = "home"
+            @view_item = continents[0]
+            @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
+
+         else
+           @view_item = region
+           @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]+new_params["continent"]
+         end
+       
           @title = "Funds in " + params["investment_sector"]
-        stuff = setdata(@fund_records, 0)
+
+          if new_params["continent"]
+            stuff = setdata(@fund_records, 1)
+          else
+            stuff = setdata(@fund_records, 0)
+          end
 
       else
    
@@ -246,6 +287,57 @@ def setdata(fund_records, world_or_continent)
     return_array << continents 
 
  
+  end
+
+  def calculate_stats(fund_records, measure)
+
+    info_for_stats = []
+
+
+    fund_records.each do |t|
+      info_for_stats << t.wr4
+      end
+  
+
+
+    get_stats = DescriptiveStatistics::Stats.new(info_for_stats)
+
+        if get_stats.mean < 0
+          color_class = "down"
+        elsif get_stats.mean == 0
+          color_class = "stable"
+        else
+          color_class = "up"
+        end
+
+    ["mean:#{get_stats.mean.round(2)} range:#{get_stats.range.round(2)} max:#{get_stats.max.round(2)} min:#{get_stats.min.round(2)}", get_stats.count, color_class ]
+
+
+  end
+
+  def find_info_for_item(item, item_type, count)
+
+    if item_type == "continent"
+      c = Country.find_by_region(item)
+       data["region"] = item
+        unless f== "none"
+          data["hc-key"] = c.continent
+        end
+        data["value"] = count
+            
+    elsif item_type == "country"
+      c = Country.find_by_name(item)
+
+        data["country"] = f
+        data["hc-key"] = c.iso.downcase
+        data["value"] = count
+    
+    elsif item_type == "sector"
+      c = Sector.find_by_name(item)
+
+    end
+
+
   end
 
 
@@ -336,6 +428,8 @@ def setdata(fund_records, world_or_continent)
        
         get_stats = DescriptiveStatistics::Stats.new(info_for_stats)
 
+       
+
         if get_stats.mean < 0
           color_class = "down"
         elsif get_stats.mean == 0
@@ -352,9 +446,6 @@ def setdata(fund_records, world_or_continent)
           things[f] = data
         end
       end
-
-      # binding.pry
-
       a = []
       a.push(stats)
       a.push(things)
@@ -428,6 +519,24 @@ def setdata(fund_records, world_or_continent)
      end
 
      sl_groups
+
+  end
+
+  def dedup_params(old_params, params)
+
+    old_params_keys = old_params.keys
+    old_params_values = old_params.values
+
+    old_params_keys.each do |o_params|
+      unless params[o_params]
+        params[o_params] = old_params[o_params]
+      end
+    end
+    
+    binding.pry
+    params
+    
+
 
   end
 
