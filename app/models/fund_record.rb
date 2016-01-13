@@ -446,7 +446,7 @@ class FundRecord < ActiveRecord::Base
 
       conditions_string = conditions_string+" and funds.sector =?"
 
-      binding.pry
+      # binding.pry
 
 
       joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region, sector ).select(select_string).order(order_string)

@@ -56,12 +56,12 @@ class HomeController < ApplicationController
 
     old_params = Rack::Utils.parse_query URI(old_url).query
 
-    binding.pry
+    # binding.pry
 
     basis_array = set_basis(params)
     new_params = dedup_params(old_params, params)
 
-    binding.pry
+    # binding.pry
 
     @time = basis_array[0]
     @measure = basis_array[1]
@@ -81,7 +81,7 @@ class HomeController < ApplicationController
          @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
 
-
+         # world_or_continent =1
 
         stuff = setdata(@fund_records, 1)
 
@@ -97,6 +97,7 @@ class HomeController < ApplicationController
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
 
+          # world_or_continent =1
         stuff = setdata(@fund_records, 1)
 
       else
@@ -152,12 +153,12 @@ class HomeController < ApplicationController
 
     old_params = Rack::Utils.parse_query URI(old_url).query
 
-    binding.pry
+    # binding.pry
 
     basis_array = set_basis(params)
     new_params = dedup_params(old_params, params)
 
-    binding.pry
+    # binding.pry
 
 
     @sectors = Sector.all
@@ -186,20 +187,13 @@ class HomeController < ApplicationController
 
     @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
     @groups_selectable = sl_group_details(@fund_records)
-
-   
-
-    # Find all the continents and countries in the funds
-
-    # continents_x = @fund_records.distinct(continent)
-    
+ 
      continents = @fund_records.map {|t| t.continent}.uniq
      countries = @fund_records.map {|t| t.country_name}.uniq
      
 
 
-     # sector_url_safe = Sector.find_by_name(params["investment_sector"])
-     # binding.pry
+
 
       if continents.count == 1
 
@@ -207,11 +201,12 @@ class HomeController < ApplicationController
 
 
          @investment_sector = params["investment_sector"]
-         if region = "home"
+         if region == "home"
             @view_item = continents[0]
             @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
 
          else
+          # binding.pry
            @view_item = region
            @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]+new_params["continent"]
          end
@@ -219,9 +214,9 @@ class HomeController < ApplicationController
           @title = "Funds in " + params["investment_sector"]
 
           if new_params["continent"]
-            stuff = setdata(@fund_records, 1)
-          else
             stuff = setdata(@fund_records, 0)
+          else
+            stuff = setdata(@fund_records, 1)
           end
 
       else
@@ -251,10 +246,6 @@ class HomeController < ApplicationController
       format.json { render json: @things }
      
     end
-
-
-
-
   end
 
 
@@ -545,7 +536,7 @@ def setdata(fund_records, world_or_continent)
       end
     end
     
-    binding.pry
+    # binding.pry
     params
     
 
