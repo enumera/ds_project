@@ -101,7 +101,18 @@ class HomeController < ApplicationController
 
       else
         region = params["continent"]
-        sector ="All"
+
+        if params["investment_sector"]
+          if params["investment_sector"] != ""
+            sector = sector = select_sector(params["investment_sector"])
+            @search_string = "/home/show_area?continent="+params["continent"] + params["investment_sector"]
+
+          else
+            sector ="All"
+          end
+        else
+          sector ="All"
+        end
 
         @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
         @groups_selectable = sl_group_details(@fund_records)
@@ -166,16 +177,17 @@ class HomeController < ApplicationController
         region = "home"
     end
 
-    sector_name = Sector.where(url_safe: params["investment_sector"]).select("name")
+    # sector_name = Sector.where(url_safe: params["investment_sector"]).select("name")
 
-    sector = sector_name[0].name
+    # sector = sector_name[0].name
 
-    binding.pry
+    sector = select_sector(params["investment_sector"])
+
 
     @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
     @groups_selectable = sl_group_details(@fund_records)
 
-    binding.pry
+   
 
     # Find all the continents and countries in the funds
 
@@ -538,6 +550,14 @@ def setdata(fund_records, world_or_continent)
     
 
 
+  end
+
+  def select_sector(url_safe_param)
+
+    sector_name = Sector.where(url_safe: url_safe_param).select("name")
+
+    sector_name[0].name
+    
   end
 
 end

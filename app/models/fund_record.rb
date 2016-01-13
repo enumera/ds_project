@@ -430,7 +430,29 @@ class FundRecord < ActiveRecord::Base
     conditions_string = "file_stat_id=? and funds.saltydog_group_id in (?)"
     select_string = select_string + " as wr4, fund_name, funds.country_name as country_name, funds.sector as sector, funds.id as fund_id, funds.continent as continent, d1, d2, saltydog_groups.name as saltydog_group"
 
-    if region != "home"
+
+    if region != "home" && sector != "All"
+       areas = Fund.uniq.pluck(:continent)
+
+      if areas.include?(region)
+
+        conditions_string = conditions_string+" and funds.continent= ?"
+
+      else
+
+        conditions_string = conditions_string+" and funds.country_name= ?"
+
+      end
+
+      conditions_string = conditions_string+" and funds.sector =?"
+
+      binding.pry
+
+
+      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region, sector ).select(select_string).order(order_string)
+
+
+    elsif region != "home" && sector == "All"
 
       areas = Fund.uniq.pluck(:continent)
 
@@ -448,7 +470,7 @@ class FundRecord < ActiveRecord::Base
 
       joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region ).select(select_string).order(order_string)
 
-    elsif sector != "All"
+    elsif sector != "All" && region == "home"
 
       conditions_string = conditions_string+" and funds.sector =?"
 
@@ -465,6 +487,7 @@ class FundRecord < ActiveRecord::Base
     end
 
   end
+
 
 
 end
