@@ -32,7 +32,7 @@ $(document.body).on("click", ".glyphicon-star-empty", function(){
 
         if($(this).hasClass('selected')){
      
-        $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td>' + fundDetails[4] +'</td></tr>)')
+        $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
 
 
         }else{

@@ -10,7 +10,7 @@
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 
-		<h3 class="text-center">Investment Sectors</h3>
+		<h4 class="text-center">Investment Sectors</h3>
 		<nav>
 			<ul>
 				<% @sectors.each do |s| %>
@@ -92,18 +92,20 @@
 	<div class= "col-sm-4" >
 		<h3>Funds and Performance last 4 weeks</h3>
 
+			<div id="constrainer">
+    			<div class="scrolltable">
+				
 
-				<div class="table-wrapper">
-				  <div class="table-scroll">
-
-					<table class="table-bordered"  >
+					<table class="table-bordered header"  >
 					  <tr>
-					    <th>Name</th>
-					    <th>Rate Movement(4)</th>
-					    <th>Sector Performance</th>
-					    <th>SaltyDog Group</th>
+					    <th width="30%">Name</th>
+					    <th width="15%">Rate Change(4)</th>
+					    <th width="20%">Sector Perf.</th>
+					    <th width="25%">SaltyDog Grp</th>
 					  </tr>
-					 
+					</table>
+					  <div class="body">
+					  	<table class="table-bordered body">
 						<% @fund_records.each do |fr| %>
 
 							<% if fr.wr4 > 0 %>
@@ -125,32 +127,35 @@
 							
 							 <tr class= "<%=color %>" >
 							 	<td style="display:none;"><%=fr.fund_id %></td>
-							    <td><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span><%= link_to fr.fund_name, "#" %></td>
-							    <td class="text-center"><%=fr.wr4 %>%</td>
-							    <td><%= sec_text %></td>
-							    <td><%=fr.saltydog_group %></td>
+							    <td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span><%= link_to fr.fund_name, "#" %></td>
+							    <td class="text-center" width="15%"><%=fr.wr4 %>%</td>
+							    <td width="20%"><%= sec_text %></td>
+							    <td  width="25%"><%=fr.saltydog_group %></td>
 							  </tr>
 
 						<% end %>
 				
 						<!-- </ul> -->
 					</table>
+					</div>
 				</div>
 			</div>
 
 			<h3>Selected funds</h3>
 			
-			<div class="table-wrapper">
-				  <div class="table-scroll">
+			<div id="constrainer">
+    			<div class="scrolltable">
 
-					<table class="table-bordered" id="selected_funds" >
+					<table class="table-bordered" >
 					  <tr>
-					    <th>Name</th>
-					    <th>Rate Movement(4)</th>
-					    <th>Sector Performance</th>
-					    <th>SaltyDog Group</th>
+					    <th width="30%">Name</th>
+					    <th width="15%">Rate Change(4)</th>
+					    <th width="20%">Sector Perf.</th>
+					    <th width="25%">SaltyDog Grp</th>
 					  </tr>
-					 
+					 </table>
+					  <div class="body">
+					 <table id="selected_funds">
 							
 							 
 
@@ -158,6 +163,7 @@
 				
 						<!-- </ul> -->
 					</table>
+				</div>
 				</div>
 			</div>
 
