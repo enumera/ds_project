@@ -20,6 +20,7 @@
 	background-color: red;
 
 	display: none;
+	border-radius: 20px;
 }
 
 .fund_details_text{
@@ -28,6 +29,19 @@
 	width: 100%;
 	background-color: blue;
 	margin: 20px;
+	border-radius: 20px;
+
+
+
+}
+
+.fund_details_gauges{
+
+	height: 250px;
+	width: 100%;
+	background-color: green;
+	margin: 20px;
+	border-radius: 20px;
 
 
 

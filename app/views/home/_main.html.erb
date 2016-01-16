@@ -24,8 +24,77 @@
 	<div id="fund_details_show" >
 		<div class="col-sm-6">
 			<div class="fund_details_text">
+				<table class="table">
+					<tr>
+						<td>Name : </td>
+						<td><p style="text-align: left;"><%=@fund_records[0].fund_name%></p></td>
+					</tr>
+					<tr>
+						<td>Sector : </td>
+						<td><p style="text-align: left;"><%=@fund_records[0].sector %></p></td>
+					</tr>
+					<tr>
+						<td>Area</td>
+						<td><p style="text-align: left;"><%=@fund_records[0].continent %></p></td>
+
+					</tr>
+				</table>
+				<br />
+					<h4 style="text-align: left;">Measures</h4>
+				</table>
+
+				<table class="table-bordered header">
+				  <tr>
+				    <th width="15%" class="text-center">Measures</th>
+				    <th width="20%" class="text-center">Rate Change</th>
+				    <th width="25%" class="text-center">Decile</th>
+				  </tr>
+				  <tr>
+				  	<td>Last 4 weeks</td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  </tr>
+
+				   <tr>
+				  	<td>Last Quarter</td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  </tr>
+				  <tr>
+				  	<td>Last 1/2 Year</td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td><%=@fund_records[0].wr4 %></td>
+				  </tr>
+
+				</table>
 			</div>
 		</div>
+		<div class= "col-sm-5">
+			<div class="fund_details_gauges">
+				<div class="gauges col-sm-6">
+					This week decile
+					<section>
+					  <div data-fill="0" class="step-gauge"></div>
+					  <div data-fill="10" class="step-gauge"></div>
+					  <div data-fill="20" class="step-gauge"></div>
+					
+					</section>
+					Fund Sector Area
+				</div>
+				<div class="gauges col-sm-6">
+					Last Week decile
+					<section class="gauges">
+					  <div data-fill="0" class="step-gauge"></div>
+					  <div data-fill="10" class="step-gauge"></div>
+					  <div data-fill="20" class="step-gauge"></div>
+					
+					</section>
+					Fund Sector Area
+				</div>
+			</div>
+		</div>
+
+
 
 	</div>
 		<div id="map_container">
@@ -103,7 +172,7 @@
     			<div class="scrolltable">
 				
 
-					<table class="table-bordered header"  >
+					<table class="table-bordered header">
 					  <tr>
 					    <th width="30%">Name</th>
 					    <th width="15%">Rate Change(4)</th>
