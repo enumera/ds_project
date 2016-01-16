@@ -37,14 +37,14 @@ $(document.body).on("click", ".glyphicon-star-empty", function(){
     if($(this).hasClass("blank-star")){
         $(this).removeClass("blank-star");
         $(this).addClass("chosen-star");
-        $('#fund_details_show').slideDown();
+   
         // console.log($(this).closest('tr'));
         collectFund($(this).closest('tr'));
 
     }else{
         $(this).removeClass("chosen-star");
         $(this).addClass("blank-star");
-         $('#fund_details_show').slideUp();
+       
         collectFund($(this).closest('tr'));
     };
 });
@@ -84,9 +84,12 @@ $(document.body).on("click", ".fund_details_row a.fund_details_link", function()
         if($('#fund_details_show').hasClass("on_show")){
             $('#fund_details_show').removeClass("on_show");
             $('#fund_details_show').slideUp();
+             $('#map_container').fadeIn();
         }else{
             $('#fund_details_show').addClass("on_show");
             $('#fund_details_show').slideDown();
+            $('.fund_details_text').show();
+            $('#map_container').fadeOut();
         };
     })
 
@@ -164,7 +167,7 @@ if(viewItem == "Asia"){
   
 
     // Initiate the chart
-    $('#container').highcharts('Map', {
+    $('#map_container').highcharts('Map', {
 
         title : {
             text : mapTitle

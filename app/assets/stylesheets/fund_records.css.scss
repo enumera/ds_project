@@ -1,10 +1,10 @@
-#container {
+#map_container {
 	
     height: 500px; 
     min-width: 310px; 
     max-width: 800px; 
     margin: 0 auto; 
-    z-index: 0;
+ 
 }
 .loading {
     margin-top: 10em;
@@ -13,11 +13,22 @@
 }
 
 #fund_details_show{
-	position: absolute;
+
 	height: 500px;
 	width: 100%;  
     margin: 0 auto; 
 	background-color: red;
-	z-index: 10;
+
 	display: none;
+}
+
+.fund_details_text{
+
+	height: 250px;
+	width: 100%;
+	background-color: blue;
+	margin: 20px;
+
+
+
 }
