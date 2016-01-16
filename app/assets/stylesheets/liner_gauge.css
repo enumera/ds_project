@@ -1,0 +1,90 @@
+html{
+  font-family: helvetica, arial, 'sans-serif';
+  text-align: center;
+  background: #446;
+}
+html, body {
+  margin: 0; padding: 0;
+}
+h1 {
+  font-weight: 300;
+  background: white;
+  margin: 0; padding: 2em 0 1em;
+}
+section { 
+  padding: 1em 0;
+}
+.step-gauge {
+  position: relative;
+  width: .5em;
+  height: 10em;
+  margin: 0 .5em;
+  display: inline-block;
+  background: #114;
+  box-shadow: inset 1px 1px 0 0 black, 1px 0 0 0 #559;
+}
+.step-gauge,
+.step-gauge::before,
+.step-gauge::after {
+  box-sizing: border-box;  
+}
+
+.step-gauge::after, 
+.step-gauge::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.step-gauge::before {
+  background: #15a3ef;
+  box-shadow: inset 1px 0 0 0 rgba(255,255,255,0.35),
+    inset -1px 0 0 0 rgba(0,0,0,0.5);
+  background-size: 100% 10em;
+  background-image: linear-gradient(
+    rgba(255,255,255,0.35) 0%,
+    rgba(0,0,0,0) 1%,
+    rgba(0,0,0,0) 25%, 
+    rgba(255,255,255,0.35) 25%, 
+    rgba(255,255,255,0.35) 26%, 
+    rgba(0,0,0,0) 26%,
+    rgba(0,0,0,0) 50%, 
+    rgba(255,255,255,0.35) 50%, 
+    rgba(255,255,255,0.35) 51%, 
+    rgba(0,0,0,0) 51%,
+    rgba(0,0,0,0) 75%, 
+    rgba(255,255,255,0.35) 75%, 
+    rgba(255,255,255,0.35) 76%, 
+    rgba(0,0,0,0) 76%);
+}
+.step-gauge[data-fill='0']::before { top: 100%;}
+.step-gauge[data-fill='10']::before { top: 90%;}
+.step-gauge[data-fill='20']::before { top: 80%;}
+.step-gauge[data-fill='30']::before { top: 70%;}
+.step-gauge[data-fill='40']::before { top: 60%;}
+.step-gauge[data-fill='50']::before { top: 50%;}
+.step-gauge[data-fill='60']::before { top: 40%;}
+.step-gauge[data-fill='70']::before { top: 30%;}
+.step-gauge[data-fill='80']::before { top: 20%;}
+.step-gauge[data-fill='90']::before { top: 10%;}
+.step-gauge[data-fill='100']::before { top: 0%;}
+
+.step-gauge::after {
+  top: 0;
+  background-image: linear-gradient(
+    rgba(0,0,0,0) 23%, 
+    #559 23%, 
+    #114 25%, 
+    rgba(0,0,0,0) 25%, 
+    rgba(0,0,0,0) 48%, 
+    #559 48%, 
+    #114 50%, 
+    rgba(0,0,0,0) 50%, 
+    rgba(0,0,0,0) 73%, 
+    #559 73%, 
+    #114 75%, 
+    rgba(0,0,0,0) 75%);
+}

@@ -1,52 +1,94 @@
 
 $(function () {
 
+// var mapWidth = $('#container').css("width");
+// alert(mapWidth);
+// $('#show_fund_details').css('width', mapWidth);
 
+function collectFund(rowSelected){
+    
+    $this = rowSelected
+    console.log($this)
+    $this.toggleClass('selected');
 
+    // var  selectedRow = $this;
+    var td = $this.children('td');
+    console.log(td);
+    var fundDetails = [];
+
+       for (var i = 0; i < td.length; ++i) {
+        fundDetails.push(td[i].innerText);
+        // alert(i + ': ' + td[i].innerText);
+        }
+
+    if($this.hasClass('selected')){
+ 
+    $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
+
+    }else{
+     
+        var tableRow = $("table#selected_funds td").filter(function() {
+            return $(this).text() == fundDetails[0];
+            }).closest("tr").remove();       
+    };  
+};
 
 $(document.body).on("click", ".glyphicon-star-empty", function(){
     if($(this).hasClass("blank-star")){
         $(this).removeClass("blank-star");
         $(this).addClass("chosen-star");
+        $('#fund_details_show').slideDown();
+        // console.log($(this).closest('tr'));
+        collectFund($(this).closest('tr'));
 
     }else{
         $(this).removeClass("chosen-star");
         $(this).addClass("blank-star");
-
+         $('#fund_details_show').slideUp();
+        collectFund($(this).closest('tr'));
     };
 });
 
 
     // Manages the selection of funds by the user
 
-    $(document.body).on("click",'tr', function () {
-        $(this).toggleClass('selected');
-        var  selectedRow = $(this);
-        var td = $(selectedRow).children('td');
-        var fundDetails = [];
+    // $(document.body).on("click",'tr', function () {
 
-           for (var i = 0; i < td.length; ++i) {
-            fundDetails.push(td[i].innerText);
-            // alert(i + ': ' + td[i].innerText);
-            }
+    //     $(this).toggleClass('selected');
+    //     var  selectedRow = $(this);
+    //     var td = $(selectedRow).children('td');
+    //     var fundDetails = [];
 
-        if($(this).hasClass('selected')){
+    //        for (var i = 0; i < td.length; ++i) {
+    //         fundDetails.push(td[i].innerText);
+    //         // alert(i + ': ' + td[i].innerText);
+    //         }
+
+    //     if($(this).hasClass('selected')){
      
-        $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
+    //     $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
 
 
-        }else{
+    //     }else{
          
-            var tableRow = $("table#selected_funds td").filter(function() {
-                return $(this).text() == fundDetails[0];
-                }).closest("tr").remove();       
+    //         var tableRow = $("table#selected_funds td").filter(function() {
+    //             return $(this).text() == fundDetails[0];
+    //             }).closest("tr").remove();       
+    //     };
+    // });
+
+
+
+
+$(document.body).on("click", ".fund_details_row a.fund_details_link", function(){
+        if($('#fund_details_show').hasClass("on_show")){
+            $('#fund_details_show').removeClass("on_show");
+            $('#fund_details_show').slideUp();
+        }else{
+            $('#fund_details_show').addClass("on_show");
+            $('#fund_details_show').slideDown();
         };
-    });
-
-
-
-
-
+    })
 
 
 $(document.body).on("change", ".sl_group", function(){
