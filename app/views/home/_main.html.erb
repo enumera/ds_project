@@ -24,53 +24,115 @@
 	<div id="fund_details_show" >
 		<div class="col-sm-6">
 			<div class="fund_details_text">
+			
+				<h4 style="text-align: left;">Fund Details</h4>
 				<table class="table">
 					<tr>
 						<td>Name : </td>
-						<td><p style="text-align: left;"><%=@fund_records[0].fund_name%></p></td>
+						<td><p id="fund_name" style="text-align: left;"></p></td>
 					</tr>
 					<tr>
 						<td>Sector : </td>
-						<td><p style="text-align: left;"><%=@fund_records[0].sector %></p></td>
+						<td><p id="fund_sector" style="text-align: left;"></p></td>
 					</tr>
 					<tr>
 						<td>Area</td>
-						<td><p style="text-align: left;"><%=@fund_records[0].continent %></p></td>
+						<td><p id="fund_area" style="text-align: left;"></p></td>
 
 					</tr>
 				</table>
 				<br />
 					<h4 style="text-align: left;">Measures</h4>
-				</table>
+			
 
 				<table class="table-bordered header">
 				  <tr>
 				    <th width="15%" class="text-center">Measures</th>
-				    <th width="20%" class="text-center">Rate Change</th>
-				    <th width="25%" class="text-center">Decile</th>
+				    <th width="20%" class="text-center">% Price Change</th>
+				    <th width="25%" class="text-center">Decile Rank in Sector</th>
 				  </tr>
 				  <tr>
 				  	<td>Last 4 weeks</td>
-				  	<td><%=@fund_records[0].wr4 %></td>
-				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td id = "rate4"></td>
+				  	<td id = "decile4"></td>
 				  </tr>
 
 				   <tr>
 				  	<td>Last Quarter</td>
-				  	<td><%=@fund_records[0].wr4 %></td>
-				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td id="rate12"></td>
+				  	<td id="decile12"> </td>
 				  </tr>
 				  <tr>
 				  	<td>Last 1/2 Year</td>
-				  	<td><%=@fund_records[0].wr4 %></td>
-				  	<td><%=@fund_records[0].wr4 %></td>
+				  	<td id="rate26"></td>
+				  	<td id="decile26"></td>
 				  </tr>
 
 				</table>
 			</div>
+		
 		</div>
+		<button class="btn btn-info" id="close_fund_panel">Return to Map</button>
 		<div class= "col-sm-5">
-			<div class="fund_details_gauges">
+			<h4 style="text-align: left;">Last 12 weeks</h4>
+			<table class="table-bordered header">
+				  <tr>
+				    <th width="15%" class="text-center">Week No</th>
+				    <th width="80%" class="text-center">Decile Ranking in sector</th>
+				  </tr>
+				  <tr>
+				  	<td>1</td>
+				  	<td id="decile_1"></td>
+				  </tr>
+				   <tr>
+				  	<td>2</td>
+				  	<td id="decile_2"></td>
+				  </tr>
+				    <tr>
+				  	<td>3</td>
+				  	<td id="decile_3"></td>
+				  </tr>
+				   <tr>
+				  	<td>4</td>
+				  	<td id="decile_4"></td>
+				  </tr>
+
+				   <tr>
+				  	<td>5</td>
+				  	<td id="decile_5"></td>
+				  </tr>
+
+				   <tr>
+				  	<td>6</td>
+				  	<td id="decile_6"></td>
+				  </tr>
+
+				   <tr>
+				  	<td>7</td>
+				  	<td id="decile_7"></td>
+				  </tr>
+				   <tr>
+				  	<td>8</td>
+				  	<td id="decile_8"></td>
+				  </tr>
+				   <tr>
+				  	<td>9</td>
+				  	<td id="decile_9"></td>
+				  </tr>
+				   <tr>
+				  	<td>10</td>
+				  	<td id="decile_10"></td>
+				  </tr>
+				    <tr>
+				  	<td>11</td>
+				  	<td id="decile_11"></td>
+				  </tr>
+				    <tr>
+				  	<td>12</td>
+				  	<td id="decile_12"></td>
+				  </tr>
+				</table>
+			<!-- <div class="fund_details_gauges">
 				<div class="gauges col-sm-6">
 					This week decile
 					<section>
@@ -91,11 +153,11 @@
 					</section>
 					Fund Sector Area
 				</div>
-			</div>
+			</div> -->
+			
 		</div>
 
-
-
+		
 	</div>
 		<div id="map_container">
 		    <div class="loading">
@@ -203,7 +265,7 @@
 							
 							 <tr class= "<%=color %> fund_details_row" >
 							 	<td style="display:none;"><%=fr.fund_id %></td>
-							    <td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span><%= link_to fr.fund_name, "#", class: "fund_details_link", value: fr.fund_id %></td>
+							    <td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star pull-left"></span><%= link_to fr.fund_name, "#", class: "fund_details_link", value: fr.record_id %></td>
 							    <td class="text-center" width="15%"><%=fr.wr4 %>%</td>
 							    <td width="20%"><%= sec_text %></td>
 							    <td  width="25%"><%=fr.saltydog_group %></td>
@@ -250,7 +312,7 @@
 	</div>
 </div>
 
-	<h1>Vertical 4 steps gauge</h1>
+	<!-- <h1>Vertical 4 steps gauge</h1>
 	<section>
 	  <div data-fill="0" class="step-gauge"></div>
 	  <div data-fill="10" class="step-gauge"></div>
@@ -263,5 +325,5 @@
 	  <div data-fill="80" class="step-gauge"></div>
 	  <div data-fill="90" class="step-gauge"></div>
 	  <div data-fill="100" class="step-gauge"></div>
-	</section>
+	</section> -->
  </div>

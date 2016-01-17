@@ -77,21 +77,64 @@ $(document.body).on("click", ".glyphicon-star-empty", function(){
     //     };
     // });
 
-
+    $(document.body).on("click","#close_fund_panel", function(){
+            $('#fund_details_show').removeClass("on_show");
+            $('#fund_details_show').slideUp();
+            $('#map_container').fadeIn();
+    })
 
 
 $(document.body).on("click", ".fund_details_row a.fund_details_link", function(){
         if($('#fund_details_show').hasClass("on_show")){
-            $('#fund_details_show').removeClass("on_show");
-            $('#fund_details_show').slideUp();
-             $('#map_container').fadeIn();
+            // $('#fund_details_show').removeClass("on_show");
+            // $('#fund_details_show').slideUp();
+            //  $('#map_container').fadeIn();
+            var fundDetails = $(this).attr("value");
+          
+            updateTable(fundDetails);
         }else{
+            var fundDetails = $(this).attr("value");
+          
+            updateTable(fundDetails);
             $('#fund_details_show').addClass("on_show");
             $('#fund_details_show').slideDown();
             $('.fund_details_text').show();
             $('#map_container').fadeOut();
         };
+    });
+
+
+function updateTable(fundNo){
+    console.log(fundNo)
+    $.getJSON("/fund_records/"+fundNo, function(data){
+        console.log("found data")
+        console.log(data)
+        $('#fund_name').text(data.fund_name);
+        $('#fund_sector').text(data.sector);
+        $('#rate4').text(data.wr4);
+        $('#rate12').text(data.wr12);
+        $('#rate26').text(data.wr26);
+        $('#decile4').text(data.wd4);
+        $('#decile12').text(data.wd12);
+        $('#decile26').text(data.wd26);
+
+
+        $('#decile_1').text(data.d1)
+        $('#decile_2').text(data.d2)
+        $('#decile_3').text(data.d3)
+        $('#decile_4').text(data.d4)
+        $('#decile_5').text(data.d5)
+        $('#decile_6').text(data.d6)
+        $('#decile_7').text(data.d7)
+        $('#decile_8').text(data.d8)
+        $('#decile_9').text(data.d9)
+        $('#decile_10').text(data.d10)
+        $('#decile_11').text(data.d11)
+        $('#decile_12').text(data.d12)
     })
+
+
+}
 
 
 $(document.body).on("change", ".sl_group", function(){
