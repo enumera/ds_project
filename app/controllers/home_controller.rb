@@ -34,7 +34,8 @@ class HomeController < ApplicationController
         @stats = stuff[0]
         @things = stuff[1].to_json
         @things_view = stuff[1]
-        @sectors = get_sector_information(stuff[2])
+        @sectors = get_sector_information(stuff[2], @fund_records)
+        # binding.pry
         # @sectors = stuff[2]
         @continents = stuff[3]
         @countries = areas - @continents
@@ -130,7 +131,7 @@ class HomeController < ApplicationController
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
-       @sectors = get_sector_information(stuff[2])
+       @sectors = get_sector_information(stuff[2], @fund_records)
       # @sectors = stuff[2]
       @continents = stuff[3]
 
@@ -234,7 +235,7 @@ class HomeController < ApplicationController
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
-       @sectors = get_sector_information(stuff[2])
+       @sectors = get_sector_information(stuff[2], @fund_records)
       # @sectors = stuff[2]
       @continents = stuff[3]
 
@@ -459,15 +460,16 @@ def setdata(fund_records, world_or_continent)
 
     end
 
-    def get_sector_information(sectors)
+    def get_sector_information(sectors, fund_records)
 
         sector_info = []
         sectors.each do |sector|
-       
+        
           a = Sector.find_by_name(sector)
-          sector_info << [a.name, a.url_safe]
+          b = fund_records.where(group_performance: "Rising", sector: a.name).count
+          sector_info << [a.name, a.url_safe,  b]
         end
-        sector_info
+        sector_info.sort_by{|e| e[2]}.reverse
         # binding.pry
     end
 

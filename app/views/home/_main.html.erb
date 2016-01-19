@@ -10,14 +10,18 @@
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 
-		<h4 class="text-center">Investment Sectors</h3>
+		<h4 class="pull-left">Investment Sectors</h3>
 		<table class="table-bordered">
 			<tr>
 				<th>
 					Sector name
+					<p><small>(No. of funds)<small></p>
 				</th>
 				<th>
-					% mean change and range
+					Stats
+				</th>
+				<th>
+					Risers
 				</th>
 			</tr>
 			<% @sectors.each do |s| %>
@@ -28,6 +32,7 @@
 				
 				</td>
 				<td><%=@stats[s[0]][0]%></td>
+				<td><%=s[2]%></td>
 			</tr>
 				<% end %>
 		</table>
@@ -257,7 +262,7 @@
 					  <tr>
 					    <th width="30%">Name</th>
 					    <th width="15%">Rate Change(4)</th>
-					    <th width="20%">Sector Perf.</th>
+					    <th width="20%">Group Perf.</th>
 					    <th width="25%">SaltyDog Grp</th>
 					  </tr>
 					</table>
@@ -273,20 +278,12 @@
 							<% color = "down" %>
 							<% end %>
 
-							<% if fr.d1 < fr.d2 %>
-							<% sec_text = "Rising" %>
-							<% elsif fr.d1 == fr.d2 %>
-							<% sec_text = "Stable" %>
-							<% else %>
-							<% sec_text = "Falling" %>
-							<% end %>
-
 							
 							 <tr class= "<%=color %> fund_details_row" >
 							 	<td style="display:none;"><%=fr.fund_id %></td>
 							    <td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star pull-left"></span><%= link_to fr.fund_name, "#", class: "fund_details_link", value: fr.record_id %></td>
 							    <td class="text-center" width="15%"><%=fr.wr4 %>%</td>
-							    <td width="20%"><%= sec_text %></td>
+							    <td width="20%"><%= fr.group_per %></td>
 							    <td  width="25%"><%=fr.saltydog_group %></td>
 							  </tr>
 

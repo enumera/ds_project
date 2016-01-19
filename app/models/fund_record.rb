@@ -428,7 +428,7 @@ class FundRecord < ActiveRecord::Base
     file_stat = FileStat.last
    
     conditions_string = "file_stat_id=? and funds.saltydog_group_id in (?)"
-    select_string = select_string + " as wr4, fund_records.id as record_id,fund_name, funds.country_name as country_name, funds.sector as sector, funds.id as fund_id, funds.continent as continent, d1, d2,wr4 as rate4, wr12 as rate12, wr26 as rate26, wd4 as decile4, wd12 as decile12, wd26 as decile26,  saltydog_groups.name as saltydog_group"
+    select_string = select_string + " as wr4, fund_records.group_performance as group_per, fund_records.id as record_id,fund_name, funds.country_name as country_name, funds.sector as sector, funds.id as fund_id, funds.continent as continent, d1, d2,wr4 as rate4, wr12 as rate12, wr26 as rate26, wd4 as decile4, wd12 as decile12, wd26 as decile26,  saltydog_groups.name as saltydog_group"
 
 
     if region != "home" && sector != "All"
