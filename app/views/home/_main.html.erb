@@ -10,32 +10,45 @@
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 
-		<h4 class="pull-left">Investment Sectors</h3>
+		<h4>Investment Sectors</h3>
+	<div class="constrainer_sector">
+    	<div class="scrolltable">
 		<table class="table-bordered">
 			<tr>
-				<th>
+				<th width="60%">
 					Sector name
 					<p><small>(No. of funds)<small></p>
 				</th>
-				<th>
+				<!-- <th>
 					Stats
+				</th> -->
+				<th width="20%">
+					Decile Risers
 				</th>
-				<th>
-					Risers
+				<th width="10%">
+					Sector Perf.
 				</th>
 			</tr>
+		</table>
+		<div class="body">
+			<table class="table-bordered body">
 			<% @sectors.each do |s| %>
 			<tr>
-				<td>
+				<td width="60%" style="text-align:left;">
 					
-						<%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1],class: @stats[s[0]][2] %><span>(<%=@stats[s[0]][1]%>)</span>
+					
+				<%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1],class: @stats[s[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[s[0]][0]  %><span>(<%=@stats[s[0]][1]%>)</span>
 				
 				</td>
-				<td><%=@stats[s[0]][0]%></td>
-				<td><%=s[2]%></td>
+				<!-- <td><%=@stats[s[0]][0]%></td> -->
+				<td width="20%"><%=s[2]%></td>
+				<td width="10%"><%=s[3]%></td>
 			</tr>
 				<% end %>
 		</table>
+		</div>
+	</div>
+</div>
 			<!-- <ul>
 				<% @sectors.each do |s| %>
 					<li><%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1],class: @stats[s[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[s[0]][0]  %><span>(<%=@stats[s[0]][1]%>)</span></li>
@@ -66,14 +79,14 @@
 					</tr>
 				</table>
 				<br />
-					<h4 style="text-align: left;">Measures</h4>
+				<h4 style="text-align: left;">Measures</h4>
 			
 
 				<table class="table-bordered header">
 				  <tr>
 				    <th width="15%" class="text-center">Measures</th>
 				    <th width="20%" class="text-center">% Price Change</th>
-				    <th width="25%" class="text-center">Decile Rank in Sector</th>
+				    <th width="25%" class="text-center">Decile Rank in Group</th>
 				  </tr>
 				  <tr>
 				  	<td>Last 4 weeks</td>
@@ -102,7 +115,7 @@
 			<table class="table-bordered header">
 				  <tr>
 				    <th width="15%" class="text-center">Week No</th>
-				    <th width="80%" class="text-center">Decile Ranking in sector</th>
+				    <th width="80%" class="text-center">Decile Ranking in Group</th>
 				  </tr>
 				  <tr>
 				  	<td>1</td>
@@ -254,7 +267,7 @@
 	<div class= "col-sm-4" >
 		<h3>Funds and Performance last 4 weeks</h3>
 
-			<div id="constrainer">
+			<div class="constrainer">
     			<div class="scrolltable">
 				
 
@@ -297,7 +310,7 @@
 
 			<h3>Selected funds</h3>
 			
-			<div id="constrainer">
+			<div class="constrainer">
     			<div class="scrolltable">
 
 					<table class="table-bordered" >

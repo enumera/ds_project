@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   
       @sectors = Sector.all
       areas = Fund.uniq.pluck(:country_name)
+      filestat = FileStat.order(:id).pluck(:id).last
 
       basis_array = set_basis(params)
 
@@ -34,7 +35,8 @@ class HomeController < ApplicationController
         @stats = stuff[0]
         @things = stuff[1].to_json
         @things_view = stuff[1]
-        @sectors = get_sector_information(stuff[2], @fund_records)
+        sectors = get_sector_information(stuff[2], @fund_records)
+        @sectors = add_check_sector(sectors, filestat)
         # binding.pry
         # @sectors = stuff[2]
         @continents = stuff[3]
@@ -54,7 +56,7 @@ class HomeController < ApplicationController
   def show_area
      # binding.pry
     old_url = request.env["HTTP_REFERER"]
-
+    filestat = FileStat.order(:id).pluck(:id).last
     old_params = Rack::Utils.parse_query URI(old_url).query
 
     # binding.pry
@@ -131,7 +133,9 @@ class HomeController < ApplicationController
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
-       @sectors = get_sector_information(stuff[2], @fund_records)
+       # @sectors = get_sector_information(stuff[2], @fund_records)
+        sectors = get_sector_information(stuff[2], @fund_records)
+        @sectors = add_check_sector(sectors, filestat)
       # @sectors = stuff[2]
       @continents = stuff[3]
 
@@ -160,7 +164,7 @@ class HomeController < ApplicationController
     new_params = dedup_params(old_params, params)
 
     # binding.pry
-
+    filestat = FileStat.order(:id).pluck(:id).last
 
     @sectors = Sector.all
 
@@ -235,7 +239,9 @@ class HomeController < ApplicationController
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
-       @sectors = get_sector_information(stuff[2], @fund_records)
+       # @sectors = get_sector_information(stuff[2], @fund_records)
+        sectors = get_sector_information(stuff[2], @fund_records)
+        @sectors = add_check_sector(sectors, filestat)
       # @sectors = stuff[2]
       @continents = stuff[3]
 
@@ -541,8 +547,6 @@ def setdata(fund_records, world_or_continent)
     # binding.pry
     params
     
-
-
   end
 
   def select_sector(url_safe_param)
@@ -551,6 +555,29 @@ def setdata(fund_records, world_or_continent)
 
     sector_name[0].name
     
+  end
+
+  def add_check_sector(sectors, fs_id)
+    # wr4_rates = FundRecord.where(file_stat_id: fs_id, sector: sector[0]).pluck(:wr4)
+    # last_rate = FundRecord.where(file_stat_id: fs_id, sector: sector[0]).pluck(:last_week_change).delete(nil)
+    # binding.pry
+    sectors.each do |sector|
+
+      get_stats1 = DescriptiveStatistics::Stats.new(FundRecord.where(file_stat_id: fs_id, sector: sector[0]).pluck(:wr4))
+      get_stats2 = DescriptiveStatistics::Stats.new(FundRecord.where(file_stat_id: fs_id, sector: sector[0]).pluck(:last_week_change))
+
+      if get_stats1.mean > get_stats2.mean
+        sector << "Rising"
+      elsif get_stats1.mean < get_stats2.mean
+        sector << "Falling"
+      else
+        sector << "Stable"
+      end
+    end
+
+    sectors
+
+
   end
 
 end

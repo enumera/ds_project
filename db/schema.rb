@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160119074017) do
+ActiveRecord::Schema.define(:version => 20160119191740) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20160119074017) do
     t.float    "next_wd_four"
     t.float    "rate_change"
     t.string   "group_performance"
+    t.float    "last_week_change"
   end
 
   create_table "funds", :force => true do |t|
