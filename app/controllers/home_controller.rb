@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
+   http_basic_authenticate_with :name=>"enumera labs", :password => "momentum"
    def index
-
+  
     # if @things.nil?
   
       @sectors = Sector.all
@@ -28,7 +29,7 @@ class HomeController < ApplicationController
 
       @view_item = "home"
       @search_string = "/home/show_area?continent=home"
-      @title = "World View - All Funds"
+      @title = "World View - #{@fund_records.count} Funds"
 
       @subtitle = set_subtitle(@measure, @time)
       # @subtitle = "Average funds % price change for the last #{@time} weeks"
@@ -87,7 +88,7 @@ class HomeController < ApplicationController
          @groups_selectable = sl_group_details(@fund_records)
          @view_item = params["continent"]
          @search_string = "/home/show_area?continent="+params["continent"]
-         @title = "World View - All Funds"
+         @title = "World View - #{@fund_records.count} Funds"
         @subtitle = set_subtitle(@measure, @time)
 
          # world_or_continent =1
@@ -104,7 +105,7 @@ class HomeController < ApplicationController
         @groups_selectable = sl_group_details(@fund_records)
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
-         @title = "World View - All Funds"
+         @title = "World View - #{@fund_records.count} Funds"
          @subtitle = set_subtitle(@measure, @time)
 
           # world_or_continent =1
@@ -130,7 +131,7 @@ class HomeController < ApplicationController
         @groups_selectable = sl_group_details(@fund_records)
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
-         @title = "Fund in " + params["continent"]
+         @title = "#{@fund_records.count} funds in " + params["continent"]
         @subtitle = set_subtitle(@measure, @time)
 
 
@@ -215,7 +216,7 @@ class HomeController < ApplicationController
          if region == "home"
             @view_item = continents[0]
             @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
-          @title = "World View - " + params["investment_sector"]
+          @title = "World View - #{@fund_records.count} funds in" + params["investment_sector"]
        
          else
           # binding.pry
@@ -223,7 +224,7 @@ class HomeController < ApplicationController
            @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]+new_params["continent"]
          end
        
-          @title = "Funds in " + params["investment_sector"]
+          @title = "#{@fund_records.count} funds in " + params["investment_sector"]
          
           if new_params["continent"]
             stuff = setdata(@fund_records, 0)
@@ -242,7 +243,7 @@ class HomeController < ApplicationController
 
       end
 
-       @title = "Funds in " + params["investment_sector"]
+       @title = "#{@fund_records.count} funds in " + params["investment_sector"]
         @subtitle = set_subtitle(@measure, @time)
       @stats = stuff[0]
       @things = stuff[1].to_json

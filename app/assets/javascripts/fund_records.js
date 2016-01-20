@@ -111,6 +111,7 @@ function updateTable(fundNo){
         console.log(data)
         $('#fund_name').text(data.fund_name);
         $('#fund_sector').text(data.sector);
+      
         $('#rate4').text(data.wr4);
         $('#rate12').text(data.wr12);
         $('#rate26').text(data.wr26);
