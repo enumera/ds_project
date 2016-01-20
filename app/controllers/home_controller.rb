@@ -459,7 +459,7 @@ def setdata(fund_records, world_or_continent)
           color_class = "up"
         end
 
-        stats[f] = ["mean:#{get_stats.mean.round(2)} range:#{get_stats.range.round(2)} max:#{get_stats.max.round(2)} min:#{get_stats.min.round(2)}", count, color_class ]
+        stats[f] = ["mean gain:#{get_stats.mean.round(2)} range of gain:#{get_stats.range.round(2)} max gain:#{get_stats.max.round(2)} min gain:#{get_stats.min.round(2)}", count, color_class ]
 
     
         if c_or_s == 1 
