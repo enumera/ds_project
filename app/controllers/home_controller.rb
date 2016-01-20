@@ -47,6 +47,7 @@ class HomeController < ApplicationController
         @countries.delete("Global")
 
 
+
       # binding.pry
   	 respond_to do |format|
       format.html # index.html.erb
@@ -59,6 +60,7 @@ class HomeController < ApplicationController
   def show_area
      # binding.pry
     old_url = request.env["HTTP_REFERER"]
+    @back_url = old_url
     filestat = FileStat.order(:id).pluck(:id).last
     old_params = Rack::Utils.parse_query URI(old_url).query
 
@@ -204,9 +206,6 @@ class HomeController < ApplicationController
      countries = @fund_records.map {|t| t.country_name}.uniq
      
 
-
-
-
       if continents.count == 1
 
         # then show the world continent map 
@@ -216,7 +215,8 @@ class HomeController < ApplicationController
          if region == "home"
             @view_item = continents[0]
             @search_string = "/home/show_investment_sector?investment_sector="+params["investment_sector"]
-
+          @title = "World View - " + params["investment_sector"]
+       
          else
           # binding.pry
            @view_item = region
@@ -224,7 +224,7 @@ class HomeController < ApplicationController
          end
        
           @title = "Funds in " + params["investment_sector"]
-
+         
           if new_params["continent"]
             stuff = setdata(@fund_records, 0)
           else
@@ -243,6 +243,7 @@ class HomeController < ApplicationController
       end
 
        @title = "Funds in " + params["investment_sector"]
+        @subtitle = set_subtitle(@measure, @time)
       @stats = stuff[0]
       @things = stuff[1].to_json
        @things_view = stuff[1]
@@ -426,7 +427,9 @@ def setdata(fund_records, world_or_continent)
           elsif w_or_c == 0  
 
               data["country"] = f
-              data["hc-key"] = c.iso.downcase
+              unless c.iso.nil?
+                data["hc-key"] = c.iso.downcase
+              end
                 data["value"] = count
               #  binding.pry
               things[f] = data
@@ -499,7 +502,7 @@ def setdata(fund_records, world_or_continent)
       if params['measure']
         measure  = params['measure']
       else
-        measure = 'Rate'
+        measure = '%Price Change'
       end
 
       if params['groups']
@@ -589,7 +592,7 @@ def setdata(fund_records, world_or_continent)
 
   def set_subtitle(measure, time)
 
-    if measure == "Rate"
+    if measure == '%Price Change'
       measure_text = "% price change"
     else
        measure_text = "decile ranking"

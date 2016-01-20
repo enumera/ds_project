@@ -393,7 +393,7 @@ class FundRecord < ActiveRecord::Base
   
   case measure
 
-    when 'Rate'
+    when '%Price Change'
       order_string = 'wr'
     when 'Decile'
       order_string = 'wd'
@@ -421,9 +421,12 @@ class FundRecord < ActiveRecord::Base
          groups = SaltydogGroup.pluck(:id).drop(1)
       end
     end
-
+ 
     select_string = order_string
-    order_string = order_string+" DESC"
+    if order_string == "wr4" || order_string == "wr12" || order_string == "wr26"
+      order_string = order_string+" DESC"
+
+    end
 
     file_stat = FileStat.last
    
