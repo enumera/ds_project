@@ -166,6 +166,7 @@ $(document.body).on("change", ".sl_group", function(){
 var viewItem = $("#continent").val().toString();
 var searchString = $("#search_string").val().toString();
 var mapTitle = $("#map_title").val().toString();
+var mapSubTitle = $("#map_subtitle").val().toString();
 var things = $("#things").data('stats');
 
 
@@ -216,9 +217,9 @@ if(viewItem == "Asia"){
             text : mapTitle
         },
 
-        // subtitle : {
-        //     text : 'Source map: <a href="https://code.highcharts.com/mapdata/custom/world-continents.js">World continents</a>'
-        // },
+        subtitle : {
+            text : mapSubTitle
+        },
 
         mapNavigation: {
             enabled: true,

@@ -3,6 +3,7 @@
 	<div class= "col-sm-3">
 		<%= hidden_field_tag "search_string", @search_string  %>
 		<%= hidden_field_tag "map_title", @title  %>
+		<%= hidden_field_tag "map_subtitle", @subtitle  %>
 		<%= hidden_field_tag "continent", @view_item  %>
 	
 
@@ -10,7 +11,7 @@
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 
-		<h4>Investment Sectors</h3>
+		<h4 data-toggle="tooltip" data-placement= "top" title="Investment sectors provided by the IMA">Investment Sectors</h3>
 	<div class="constrainer_sector">
     	<div class="scrolltable">
 		<table class="table-bordered">
@@ -22,10 +23,10 @@
 				<!-- <th>
 					Stats
 				</th> -->
-				<th width="20%">
+				<th data-toggle="tooltip" data-placement= "top" title="Number of funds within the risk group in this sector that have moved up from last week" width="20%">
 					Decile Risers
 				</th>
-				<th width="10%">
+				<th data-toggle="tooltip" data-placement= "top" title="'Rising' means that the mean gain across all funds in the sector has gone up from last week, 'Falling' vice versa, 'Stable' no change." width="10%">
 					Sector Perf.
 				</th>
 			</tr>
@@ -247,7 +248,7 @@
 			<%=h t %>
 		<% end %>
 
-		<h4>Rate or decile</h4>
+		<h4>% price change or decile ranking</h4>
 		<% ["Rate", "Decile"].each do |c| %>
 
 			<% if @measure.to_s == c %>
@@ -274,9 +275,9 @@
 					<table class="table-bordered header">
 					  <tr>
 					    <th width="30%">Name</th>
-					    <th width="15%">Rate Change(4)</th>
-					    <th width="20%">Group Perf.</th>
-					    <th width="25%">SaltyDog Grp</th>
+					    <th width="15%" data-toggle="tooltip" data-placement= "top" title="Cumulative price change over the period.">% Price Change</th>
+					    <th width="20%" data-toggle="tooltip" data-placement= "top" title="'Rising' means the fund decile ranking has increased from last week, 'Falling' vice versa, 'Stable' no change.">Group Perf.</th>
+					    <th width="25%" data-toggle="tooltip" data-placement= "top" title="Risk group provided by a 3rd party" >Risk Group</th>
 					  </tr>
 					</table>
 					  <div class="body">

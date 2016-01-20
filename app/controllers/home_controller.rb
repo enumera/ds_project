@@ -30,6 +30,9 @@ class HomeController < ApplicationController
       @search_string = "/home/show_area?continent=home"
       @title = "World View - All Funds"
 
+      @subtitle = set_subtitle(@measure, @time)
+      # @subtitle = "Average funds % price change for the last #{@time} weeks"
+
 
         stuff = setdata(@fund_records, 1)
         @stats = stuff[0]
@@ -83,6 +86,7 @@ class HomeController < ApplicationController
          @view_item = params["continent"]
          @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
+        @subtitle = set_subtitle(@measure, @time)
 
          # world_or_continent =1
 
@@ -99,6 +103,7 @@ class HomeController < ApplicationController
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "World View - All Funds"
+         @subtitle = set_subtitle(@measure, @time)
 
           # world_or_continent =1
         stuff = setdata(@fund_records, 1)
@@ -110,7 +115,8 @@ class HomeController < ApplicationController
           if params["investment_sector"] != ""
             sector = sector = select_sector(params["investment_sector"])
             @search_string = "/home/show_area?continent="+params["continent"] + params["investment_sector"]
-
+            @title = "Fund in " + params["continent"] + params["investment_sector"]
+            @subtitle = set_subtitle(@measure, @time)
           else
             sector ="All"
           end
@@ -123,6 +129,7 @@ class HomeController < ApplicationController
         @view_item = params["continent"]
         @search_string = "/home/show_area?continent="+params["continent"]
          @title = "Fund in " + params["continent"]
+        @subtitle = set_subtitle(@measure, @time)
 
 
         stuff = setdata(@fund_records, 0)
@@ -578,6 +585,19 @@ def setdata(fund_records, world_or_continent)
     sectors
 
 
+  end
+
+  def set_subtitle(measure, time)
+
+    if measure == "Rate"
+      measure_text = "% price change"
+    else
+       measure_text = "decile ranking"
+    end
+
+
+    "Average funds #{measure_text} for the last #{time} weeks"
+    
   end
 
 end
