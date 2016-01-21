@@ -11,7 +11,7 @@
 		<div id="things", data-stats= "<%=@things%>" %></div>
 
 
-	<h4 data-toggle="tooltip" data-placement= "top" title="Investment sectors provided by the IMA"><span><%=link_to "<-back", @back_url%>  </span>Investment Sectors</h3>
+	<h4 data-toggle="tooltip" data-placement= "top" title="Investment sectors provided by the IMA"><span><%=link_to "back to main view",  "/home/show_area?continent=home" %>  </span>Investment Sectors</h3>
 	<div class="constrainer_sector">
     	<div class="scrolltable">
 		<table class="table-bordered">
@@ -34,11 +34,11 @@
 		<div class="body">
 			<table class="table-bordered body">
 			<% @sectors.each do |s| %>
-			<tr>
+			<tr class="<%=@stats[s[0]][2] %>">
 				<td width="60%" style="text-align:left;">
 					
 					
-				<%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1],class: @stats[s[0]][2], data:{toggle: "tooltip", placement: "right"}, title: @stats[s[0]][0]  %><span>(<%=@stats[s[0]][1]%>)</span>
+				<%=link_to s[0], "/home/show_investment_sector?investment_sector="+s[1], data:{toggle: "tooltip", placement: "right"}, title: @stats[s[0]][0]  %><span>(<%=@stats[s[0]][1]%>)</span>
 				
 				</td>
 				<!-- <td><%=@stats[s[0]][0]%></td> -->

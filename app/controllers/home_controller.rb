@@ -464,6 +464,7 @@ def setdata(fund_records, world_or_continent)
     
         if c_or_s == 1 
           data["mean"] = get_stats.mean.round(2)
+          data["value"] = get_stats.mean.round(2)
           things[f] = data
         end
       end

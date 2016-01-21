@@ -230,16 +230,59 @@ if(viewItem == "Asia"){
             enableDoubleClickZoomTo: false,
             enableDoubleClickZoom: false
         },
+        // colorAxis: {
+        //     max: 40,
+        //     type: 'logarithmic',
+        //     minColor: '#efecf3',
+        //     maxColor: '#990041'
+        // },
 
-        colorAxis: {
-            min: 0
-        },
+     
+
+
+         colorAxis: {
+                    dataClassColor: 'mean',
+                    dataClasses: [{
+                        to: -15
+                    }, {
+                        from: -15,
+                        to: -10
+                    }, {
+                        from: -10,
+                        to: -5
+                    }, {
+                        from: -5,
+                        to: 0
+                    }, {
+                        from: 0,
+                        to: 5
+                    }, {
+                        from: 5,
+                        to: 10
+                    }, {
+                        from: 10
+                    }],
+                    minColor: '#f2dede',
+                    maxColor: '#dff0d8'
+                },
+
+             colors: ['rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)',
+                    'rgba(217,237,247, 0.5)', 'rgba(217,237,247, 0.8)', 'rgba(223,240,216, 0.5)', 'rgba(223,240,216, 0.8)'],
+
+
+
+        // colorAxis: {
+        //     min: -15,
+        //     minColor: '#f2dede',
+        //     maxColor: '#dff0d8'
+
+        // },
 
         series : [{
             data : items,
             mapData: mapDataToUse,
             joinBy: matcherToUse,
-            name: 'No. of fund in area',
+            name: 'Mean',
             states: {
                 hover: {
                     color: '#BADA55'
