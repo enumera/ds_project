@@ -22,11 +22,15 @@ function collectFund(rowSelected){
         }
 
     if($this.hasClass('selected')){
- 
-    $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
+        
+        $.getJSON("/funds/set_fund_selection/"+fundDetails[0], function(data){
+           
+        })
 
+            $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
+       
     }else{
-     
+         $.getJSON("/funds/remove_fund_selection/"+fundDetails[0], function(data){})
         var tableRow = $("table#selected_funds td").filter(function() {
             return $(this).text() == fundDetails[0];
             }).closest("tr").remove();       

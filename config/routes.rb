@@ -13,6 +13,10 @@ DsInvest::Application.routes.draw do
   get "home/show_investment_sector"
   get "home/apply_filters"
 
+  get "funds/set_fund_selection/:fund_id", to: "funds#set_fund_selection"
+  get "funds/remove_fund_selection/:fund_id", to: "funds#remove_fund_selection"
+  get "funds/find_funds"
+
   resources :time_points
 
 

@@ -4,5 +4,12 @@ class FileStat < ActiveRecord::Base
   belongs_to :time_point
   has_many :fund_records, dependent: :destroy
 
+
+  def self.find_last
+
+  	order("id DESC").limit(1)
+  	
+  end
+
   
 end

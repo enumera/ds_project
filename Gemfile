@@ -26,6 +26,7 @@ end
 
 group :development, :test do
   gem "rspec-rails", ">= 2.8.1"
+  gem 'shoulda-matchers', '~> 2.7.0', require: false
 end
 
 gem 'chartkick'

@@ -2,6 +2,13 @@ class HomeController < ApplicationController
    http_basic_authenticate_with :name=>"enumera labs", :password => "momentum"
    def index
   
+
+    if cookies["fund_count"]
+
+      funds_map = cookies.map {|key| key }
+         @funds_selected = FundRecord.find_funds(funds_map)
+
+    end
     # if @things.nil?
   
       @sectors = Sector.all
@@ -59,6 +66,13 @@ class HomeController < ApplicationController
 
 
   def show_area
+
+      if cookies["fund_count"]
+
+          funds_map = cookies.map {|key| key }
+         @funds_selected = FundRecord.find_funds(funds_map)
+
+      end
      # binding.pry
     old_url = request.env["HTTP_REFERER"]
     @back_url = old_url
@@ -163,6 +177,14 @@ class HomeController < ApplicationController
 
 
   def show_investment_sector
+
+
+      if cookies["fund_count"]
+
+          funds_map = cookies.map {|key| key }
+         @funds_selected = FundRecord.find_funds(funds_map)
+
+      end
 
       old_url = request.env["HTTP_REFERER"]
 

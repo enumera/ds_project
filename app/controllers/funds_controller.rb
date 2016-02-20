@@ -2,6 +2,14 @@ class FundsController < ApplicationController
   # GET /funds
   # GET /funds.json
   def index
+
+    # if cookies["fund_count"]
+
+    #   funds_map = cookies.map {|key| key }
+    #      @funds_selected = Fund.find_funds(funds_map)
+
+    # end
+
    countries = ["Brazil", "China", "Hong Kong", "India", "Japan", "Russia", "UK", "USA"]
 
    regions = ["BRIC", "The Americas", "Asia", "Europe", "World"]
@@ -125,4 +133,44 @@ class FundsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def set_fund_selection
+
+    if cookies["fund_count"]
+
+      count = cookies["fund_count"]
+      count = count.to_i + 1
+      cookies["fund_count"] = count
+      cookies["funds_#{params[:fund_id]}"] = {:value => params[:fund_id].to_i, :expires => 30.minutes.from_now}
+
+    else
+      cookies["fund_count"] = {:value=> 0, :expires => 30.minutes.from_now}
+    end
+  end
+
+  def remove_fund_selection
+      count = cookies["fund_count"]
+      count = count.to_i - 1
+      cookies["fund_count"] = count
+      cookies.delete "funds_#{params[:fund_id]}"
+   
+      
+  end
+
+
+  # private
+  # def find_funds(funds_map)
+  #     # funds_map = cookies.map {|key| key}
+  #     funds_map.shift
+  #     fund_ids = []
+
+  #     unless funds_map.empty?
+  #       funds_map.each do |fund|
+  #         fund_ids << fund[1]
+  #       end
+  #        Fund.where("id in(?) ", fund_ids) 
+  #     end  
+  # end
+
+
 end

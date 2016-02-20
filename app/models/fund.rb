@@ -17,4 +17,20 @@ class Fund < ActiveRecord::Base
     end
   end
 
+
+  def self.find_funds(funds_map)
+      funds_map.shift
+      fund_ids = []
+
+      filestat = FileStat.find_last
+
+      unless funds_map.empty?
+        funds_map.each do |fund|
+          fund_ids << fund[1]
+        end
+         FundRecord.where("fund_id in(?) and file_stat_id = ? ", fund_ids, filestat.id) 
+      end
+  end
+
+
 end
