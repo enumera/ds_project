@@ -1,10 +1,13 @@
 class Fund < ActiveRecord::Base
-  attr_accessible :continent, :country_name, :name, :sector, :isin, :fund_record_ids, :country_id, :region_id, :saltydog_group_id
+  attr_accessible :continent, :country_name, :name, :sector, :isin, :fund_record_ids, :country_id, :region_id, :saltydog_group_id, :portfolio_record_ids
 
   has_many :fund_records
   belongs_to :country
   belongs_to :region
   belongs_to :saltydog_group
+  has_many :portfolio_records
+
+
 
   
     def self.to_csv
