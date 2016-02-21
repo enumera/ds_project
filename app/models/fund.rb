@@ -24,25 +24,36 @@ class Fund < ActiveRecord::Base
   end
 
 
-  def self.find_funds(funds_map)
-      funds_map.shift
-      fund_ids = []
+  # def self.find_funds(funds_map)
+  #     funds_map.shift
+  #     fund_ids = []
 
-      filestat = FileStat.find_last
+  #     filestat = FileStat.find_last
 
-      unless funds_map.empty?
-        funds_map.each do |fund|
-          fund_ids << fund[1]
-        end
-         FundRecord.where("fund_id in(?) and file_stat_id = ? ", fund_ids, filestat.id) 
-      end
-  end
+  #     unless funds_map.empty?
+  #       funds_map.each do |fund|
+  #         fund_ids << fund[1]
+  #       end
+  #        fund_records = FundRecord.where("fund_id in(?) and file_stat_id = ? ", fund_ids, filestat.id) 
+  #        funds = Fund.where("id in(?)", fund_ids)
+  #        [fund_recrods, funds]
+  #     end
+  # end
 
 
   def find_price(isin)
     stock = StockQuote::Stock.quote(isin)
 
-    stock.last_trade_price_only
+    if stock.last_trade_price_only.nil?
+
+      0.00
+
+    else
+
+      stock.last_trade_price_only
+
+    end
+
 
   end
 

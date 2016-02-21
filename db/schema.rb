@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160221005552) do
+ActiveRecord::Schema.define(:version => 20160221075326) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20160221005552) do
     t.datetime "updated_at",        :null => false
     t.integer  "country_id"
     t.integer  "saltydog_group_id"
+    t.float    "current_price"
   end
 
   create_table "portfolio_records", :force => true do |t|

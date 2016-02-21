@@ -17,9 +17,11 @@
 
 	<table class="table table-striped" id="portfolio_table">
 	<tr>
-	    <th width="33.33%">Fund Name</th>
-	    <th width="33.33%">Allocation (%)</th>
-	    <th width="33.33%">Funding (£)</th>
+	    <th width="20%">Fund Name</th>
+	    <th width="20%">Allocation (%)</th>
+	    <th width="20%">Funding (£)</th>
+	    <th width="20%">Price</th>
+	    <th width="20%">Remove</th>
 	 </tr>
 	 	
 	</table>
@@ -27,12 +29,22 @@
 
 
 	<table class="table table-striped">
+
 		<tr>
-			<td width="33.33%">Totals</td>
-			<td width="33.33%" id="allocation"></td>
-			<td width="33.33%" id="total_funding"></td>
+			<td width="20%">Cash Account</td>
+			<td width="20%" id="cash_allocation"></td>
+			<td width="20%" id="cash_funding"></td>
+			<td width="20%" id="cash_price">1.00</td>
+			<td width="20%"></td>
+		</tr>
+		<tr>
+			<td width="20%">Totals</td>
+			<td width="20%" id="allocation"></td>
+			<td width="20%" id="total_funding"></td>
+		
 		</tr>
 	</table>
+
 
 	<%= f.submit "Save portfolio", class: "btn btn-lg btn-success" %>
 

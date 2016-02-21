@@ -19,10 +19,9 @@
 		<div class="body">
 			 <table id="selected_funds">
 
-				<% unless @funds_selected.nil? %>
+				<% unless @funds_selected[0].nil? %>
 
-					<% @funds_selected.each do |fr| %>
-
+					<% @funds_selected[0].each do |fr| %>
 						<% if fr.wr4 > 0 %>
 						<% color = "up" %>
 						<% elsif fr.wr4 == 0 %>
@@ -38,6 +37,7 @@
 						    <td class="text-center" width="15%"><%=fr.wr4 %></td>
 						    <td width="20%"><%= fr.group_performance %></td>
 						    <td  width="25%"><%=fr.fund.saltydog_group.name %></td>
+						   
 						  </tr>
 
 					<% end %>
