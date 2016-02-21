@@ -2,7 +2,8 @@ class Fund < ActiveRecord::Base
 
   
 
-  attr_accessible :continent, :country_name, :name, :sector, :isin, :fund_record_ids, :country_id, :region_id, :saltydog_group_id, :portfolio_record_ids
+  attr_accessible :continent, :country_name, :name, :sector, :isin, :fund_record_ids, :country_id, :region_id, :saltydog_group_id, :portfolio_record_ids, :current_price
+  
 
   has_many :fund_records
   belongs_to :country
@@ -42,6 +43,7 @@ class Fund < ActiveRecord::Base
 
 
   def find_price(isin)
+    isin = isin + ".L"
     stock = StockQuote::Stock.quote(isin)
 
     if stock.last_trade_price_only.nil?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160221075326) do
+ActiveRecord::Schema.define(:version => 20160221123409) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(:version => 20160221075326) do
     t.datetime "updated_at", :null => false
     t.string   "iso"
     t.string   "continent"
+  end
+
+  create_table "current_portfolios", :force => true do |t|
+    t.integer  "portfolio_id"
+    t.float    "current_value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "file_stats", :force => true do |t|
@@ -86,19 +93,22 @@ ActiveRecord::Schema.define(:version => 20160221075326) do
     t.integer  "portfolio_id"
     t.integer  "fund_id"
     t.float    "allocation"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.float    "buy_price"
     t.float    "units"
     t.float    "total_fund"
+    t.float    "current_price"
   end
 
   create_table "portfolios", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.float    "total_funding"
+    t.float    "current_value"
+    t.integer  "current_portfolio_id"
   end
 
   create_table "saltydog_groups", :force => true do |t|
