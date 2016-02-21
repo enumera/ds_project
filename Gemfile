@@ -55,6 +55,8 @@ group :test do
 
 end
 
+gem "stock_quote"
+
 
 
 

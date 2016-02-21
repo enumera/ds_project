@@ -1,4 +1,7 @@
 class Fund < ActiveRecord::Base
+
+  
+
   attr_accessible :continent, :country_name, :name, :sector, :isin, :fund_record_ids, :country_id, :region_id, :saltydog_group_id, :portfolio_record_ids
 
   has_many :fund_records
@@ -35,5 +38,12 @@ class Fund < ActiveRecord::Base
       end
   end
 
+
+  def find_price(isin)
+    stock = StockQuote::Stock.quote(isin)
+
+    stock.last_trade_price_only
+
+  end
 
 end

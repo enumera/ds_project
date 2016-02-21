@@ -46,6 +46,22 @@ class PortfoliosController < ApplicationController
 
     respond_to do |format|
       if @portfolio.save
+
+        (1..(params.count-6)).each do |n|
+          fund = Fund.find(params["portfolio_record_#{n}"][:fund_id])
+          yahoo_isin = fund.isin + ".L"
+          price = fund.find_price(yahoo_isin)
+          allocation = params["portfolio_record_#{n}"][:allocation].to_i
+
+          units = (@portfolio.total_funding.to_f * allocation) / price
+
+          PortfolioRecord.create(portfolio_id: @portfolio.id, allocation: params["portfolio_record_#{n}"][:allocation], fund_id: params["portfolio_record_#{n}"][:fund_id], buy_price: price, units: units.round(3), total_fund: @portfolio.total_funding)
+
+        end
+
+        binding.pry
+
+
         format.html { redirect_to @portfolio, notice: 'Portfolio was successfully created.' }
         format.json { render json: @portfolio, status: :created, location: @portfolio }
       else
