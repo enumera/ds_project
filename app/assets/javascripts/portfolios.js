@@ -1,6 +1,22 @@
 $(function(){
 
 
+	function updateRecords(){
+
+		var total = parseInt($("#portfolio_total_funding").val());
+		var fund_rows = $("#portfolio_table tr");
+		var len = fund_rows.length
+
+		for (i = 0; i < len; i ++){
+			var fr = $(fund_rows[i]).attr("id");
+			var percent = parseFloat($("#" +fr + " .allocate").val());
+			var money_allocated = (percent * total)/100;
+			$("#"+ fr + " .allocate_money").text("£" + money_allocated);
+		};	
+	};
+
+
+
 	function updateCash(){
 		var totalAmount = parseInt($("#portfolio_total_funding").val());
 		var fund_rows = $("#portfolio_table tr");
@@ -75,7 +91,7 @@ $(function(){
 
 		funddetails = collectFund($(this).closest('tr'));
 
-		$("#portfolio_table").append("<tr id="+ funddetails[0] +"><td>"+funddetails[1] + "<input type='hidden' name='portfolio_record_" +fund_count+"[fund_id]' value="+funddetails[0] +"></td><td><input type='text' name='portfolio_record_" +fund_count+"[allocation]' size='10' class='allocate'></input>%</td><td class='allocate_money'>£ 0.00</td><td class='price'>" +funddetails[5] + "</td><td class='remove'><a href='#'> Remove</a></td></tr>");
+		$("#portfolio_table").append("<tr id="+ funddetails[0] +"><td>"+funddetails[1] + "<input type='hidden' name='portfolio_record_" +fund_count+"[fund_id]' value="+funddetails[0] +"></td><td><input type='text' name='portfolio_record_" +fund_count+"[allocation]' size='10' class='allocate'></input>%</td><td class='allocate_money'>£ 0.00</td><td class='price'>" +funddetails[5] + "</td><td class='remove'><a href='#' class='removeLink'> Remove</a></td></tr>");
 	});
 
 
@@ -98,18 +114,34 @@ $(function(){
 		 	$(".allocate_money").text("£-");
 		 	updateCash();
 		}else{
-			var total = parseInt($("#portfolio_total_funding").val());
-			var fund_rows = $("#portfolio_table tr");
-			var len = fund_rows.length
+			updateRecords();
+			// var total = parseInt($("#portfolio_total_funding").val());
+			// var fund_rows = $("#portfolio_table tr");
+			// var len = fund_rows.length
 
-			for (i = 0; i < len; i ++){
-				var fr = $(fund_rows[i]).attr("id");
-				var percent = parseFloat($("#" +fr + " .allocate").val());
-				var money_allocated = (percent * total)/100;
-				$("#"+ fr + " .allocate_money").text("£" + money_allocated);
-			};
+			// for (i = 0; i < len; i ++){
+			// 	var fr = $(fund_rows[i]).attr("id");
+			// 	var percent = parseFloat($("#" +fr + " .allocate").val());
+			// 	var money_allocated = (percent * total)/100;
+			// 	$("#"+ fr + " .allocate_money").text("£" + money_allocated);
+			// };
 			updateCash();
 		};
+
+	});
+
+
+	$(document.body).on("click", ".removeLink", function(){
+		var removeRow = $(this).closest('tr');
+		
+		$("#" + removeRow.attr("id") +" .allocate").val(0.00)
+		$("#" + removeRow.attr("id") +" .allocate_money").val(0.00)
+		removeRow.fadeOut();
+
+		// console.log($("#" + removeRow.attr("id") +" .allocate").val());
+		// console.log($("#" + removeRow.attr("id") +" .allocate_money").val());
+		updateRecords();
+		updateCash();
 
 	});
 });
