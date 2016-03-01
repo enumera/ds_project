@@ -1,7 +1,8 @@
 module PortfoliosHelper
 
 	def current_value(record)
-		(record.units * record.buy_price/100).round(2)
+		
+		(record.current_value/100).round(2)
 	end
 
 	def original_cost(record)
@@ -12,13 +13,13 @@ module PortfoliosHelper
 
 	def monetary_profit(record)
 		
-		current_value(record) - original_cost(record)
+		(current_value(record) - original_cost(record)).round(2)
 		
 	end
 	def percent_profit(record)
 		
-		(current_value(record) / original_cost(record))-1
-		
+		percent_value = ((current_value(record) / original_cost(record)-1)*100).round(2)
+		"#{percent_value} %"
 	end
 
 	def original_allocation(record)
@@ -35,7 +36,7 @@ module PortfoliosHelper
 
 	def current_portfolio_percent(record, portfolio)
 
-		percent_value = (current_value(record) / current_portfolio(portfolio)).round(2)*100
+		percent_value = ((current_value(record) / current_portfolio(portfolio))*100).round(2)
 
 		"#{percent_value} %"
 	end
@@ -49,6 +50,6 @@ module PortfoliosHelper
 			portfolio_value += current_value(record)
 
 		end
-		portfolio_value
+		portfolio_value.round(2)
 	end
 end

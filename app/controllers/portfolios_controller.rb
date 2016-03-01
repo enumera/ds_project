@@ -9,8 +9,14 @@ class PortfoliosController < ApplicationController
           if record.updated_at != Date.today
             if record.fund.name != "Cash"
               record.current_price = record.fund.find_price(record.fund.isin)
+              record.current_value = record.units * record.current_price
               record.save
+              else
+                record.current_price = 1.00
+                record.current_value = record.units * record.current_price
+                record.save
             end
+
           end
 
         end

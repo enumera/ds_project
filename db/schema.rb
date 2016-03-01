@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160221123409) do
+ActiveRecord::Schema.define(:version => 20160223222058) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20160221123409) do
     t.float    "units"
     t.float    "total_fund"
     t.float    "current_price"
+    t.float    "current_value"
   end
 
   create_table "portfolios", :force => true do |t|
