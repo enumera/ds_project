@@ -39,11 +39,25 @@
       </ul>
 
       <!-- searchbar start -->
-    <!--   <form class="navbar-form navbar-left" role="search">
+    <div class="col-xs-4 pull-right">
+      <%= form_tag home_index_path, class:"navbar-form navbar-right", role:"search", method: "get" do %>
+        <div class="input-group" >
+          <%= text_field_tag :search, nil, class:"form-control", placeholder:"Quick Fund Search"%><span class="input-group-btn"><%= submit_tag "Search", :name=> nil, class: "btn btn-success" %></span>
+
+        </div>
+      <% end %>
+    </div>
+      </ul>
+
+   
+
+
+     <!--  <form class="navbar-form navbar-left" role="search" action="/home/index" method="post">
+        <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="8Jzh5MWHi6J905H2mrMQAS9MNv6SDsEooZyhYZQm3og="></div>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Quick Fund Search">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </form> -->
 
       <!-- search bar end -->
@@ -61,5 +75,6 @@
         </li>
       </ul> -->
     </div><!-- /.navbar-collapse -->
+
   </div><!-- /.container-fluid -->
 </nav>

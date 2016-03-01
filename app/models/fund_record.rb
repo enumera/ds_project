@@ -386,7 +386,10 @@ class FundRecord < ActiveRecord::Base
 
 
 
-  def self.fund_records_search(time_period='4', measure='Rate', groups=[0], region="home", sector="All")
+
+
+
+  def self.fund_records_search(time_period='4', measure='Rate', groups=[0], region="home", sector="All", search_string="")
 
   # binding.pry
   order_string = ""
@@ -423,6 +426,7 @@ class FundRecord < ActiveRecord::Base
     end
  
     select_string = order_string
+
     if order_string == "wr4" || order_string == "wr12" || order_string == "wr26"
       order_string = order_string+" DESC"
 
@@ -471,7 +475,7 @@ class FundRecord < ActiveRecord::Base
 
       # binding.pry
 
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region ).select(select_string).order(order_string)
+        joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups, region ).select(select_string).order(order_string)
 
     elsif sector != "All" && region == "home"
 
@@ -483,12 +487,17 @@ class FundRecord < ActiveRecord::Base
 
     else
         
+        if search_string != ""
+          conditions_string ="file_stat_id=? and funds.name LIKE ? "
+          search_string = "%" + search_string + "%"
+       
+          joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, search_string ).select(select_string).order(order_string)
+        
+        else
+          joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups ).select(select_string).order(order_string)
+        end
 
-    # binding.pry
-
-      joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups ).select(select_string).order(order_string)
     end
-
   end
 
 

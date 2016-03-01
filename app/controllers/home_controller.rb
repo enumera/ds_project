@@ -2,13 +2,17 @@ class HomeController < ApplicationController
    http_basic_authenticate_with :name=>"enumera labs", :password => "momentum"
    def index
   
+    # code to introduce creating a portfolio - start
 
-    if cookies["fund_count"]
+    # if cookies["fund_count"]
 
-      funds_map = cookies.map {|key| key }
-         @funds_selected = FundRecord.find_funds(funds_map)
+    #   funds_map = cookies.map {|key| key }
+    #      @funds_selected = FundRecord.find_funds(funds_map)
 
-    end
+    # end
+      # code to introduce creating a portfolio - end
+
+
     # if @things.nil?
   
       @sectors = Sector.all
@@ -26,7 +30,16 @@ class HomeController < ApplicationController
       @groups =  basis_array[2]
 
 
-    	@fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+
+      if params[:search]
+
+        @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector, params[:search])
+      else
+
+        @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+      
+      end
+
 
 
       @groups_selectable = sl_group_details(@fund_records)
