@@ -36,13 +36,16 @@
           </ul>
         </li> -->
         <!-- admin and portfolio end -->
+
+
       </ul>
 
       <!-- searchbar start -->
     <div class="col-xs-4 pull-right">
+
       <%= form_tag home_index_path, class:"navbar-form navbar-right", role:"search", method: "get" do %>
         <div class="input-group" >
-          <%= text_field_tag :search, nil, class:"form-control", placeholder:"Quick Fund Search"%><span class="input-group-btn"><%= submit_tag "Search", :name=> nil, class: "btn btn-success" %></span>
+          <%= text_field_tag :search, nil, class:"form-control", placeholder:"Quick Fund Search"%><span class="input-group-btn"><%= submit_tag "Search", :name=> nil, class: "btn btn-success" %></span><span><%=@search_message %></span>
 
         </div>
       <% end %>

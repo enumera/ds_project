@@ -493,6 +493,11 @@ class FundRecord < ActiveRecord::Base
        
           joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, search_string ).select(select_string).order(order_string)
         
+        
+
+
+
+
         else
           joins(:fund, {fund: :saltydog_group}).where(conditions_string, file_stat.id, groups ).select(select_string).order(order_string)
         end

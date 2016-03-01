@@ -31,9 +31,18 @@ class HomeController < ApplicationController
 
 
 
-      if params[:search]
+      if !params[:search].nil?
 
         @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector, params[:search])
+
+        if @fund_records.empty?
+          @search_message = "No records found."
+
+          @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
+        end
+
+        params[:search] = ""
+
       else
 
         @fund_records = FundRecord.fund_records_search( @time,  @measure,  @groups, region, sector)
