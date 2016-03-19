@@ -49,5 +49,5 @@ production:
   encoding: unicode
   database: ds_invest_production
   pool: 5
-  username: ds_invest
-  password:
+  username: ds_invest1
+  password: password

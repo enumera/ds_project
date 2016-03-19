@@ -1,4 +1,4 @@
-root = "/var/www/sites/andy/current"
+root = "/var/www/sites/momentum/current"
 working_directory root
 pid "#{root}/tmp/pids/unicorn.pid"
 stderr_path "#{root}/log/unicorn.log"
