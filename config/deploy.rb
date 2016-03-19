@@ -13,7 +13,7 @@ set :branch, 'development'
 
 set :scm, :git
 
-set :linked_files, fetch(:linked_files, []).push('config/unicorn/production.rb')
+set :linked_files, fetch(:linked_files, []).push('config/unicorn/production.rb', 'config/database.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/sockets', 'vendor/bundle', 'public/system', 'config/unicorn')
 
 set :deploy_to, '/var/www/sites/momentum'
