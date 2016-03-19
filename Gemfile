@@ -58,6 +58,13 @@ group :test do
 end
 
 
+gem 'capistrano', '~> 3.4'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano3-unicorn', '~> 0.2.1'
+gem 'capistrano-rvm'
+gem 'capistrano-rails'
+
+
 
 
 gem 'jquery-rails'
