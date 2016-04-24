@@ -1,17 +1,18 @@
 class HomeController < ApplicationController
    http_basic_authenticate_with :name=>"enumera labs", :password => "momentum"
+
    def index
-  
+    get_funds_selected
     # code to introduce creating a portfolio - start
+   
+    # if cookies["fund_count"]
 
-    if cookies["fund_count"]
+    #   funds_map = cookies.map {|key| key }
+    #      @funds_selected = FundRecord.find_funds(funds_map)
+    # else
 
-      funds_map = cookies.map {|key| key }
-         @funds_selected = FundRecord.find_funds(funds_map)
-    else
-
-      @funds_selected = []
-    end
+    #   @funds_selected = []
+    # end
       # code to introduce creating a portfolio - end
 
 
@@ -81,7 +82,7 @@ class HomeController < ApplicationController
 
 
   def show_area
-
+    get_funds_selected
       if cookies["fund_count"]
 
           funds_map = cookies.map {|key| key }
@@ -192,7 +193,7 @@ class HomeController < ApplicationController
 
 
   def show_investment_sector
-
+    get_funds_selected
 
       if cookies["fund_count"]
 
@@ -639,6 +640,20 @@ def setdata(fund_records, world_or_continent)
 
 
     "Average funds #{measure_text} for the last #{time} weeks"
+    
+  end
+
+
+  def get_funds_selected
+
+    if cookies["fund_count"]
+
+      funds_map = cookies.map {|key| key }
+         @funds_selected = FundRecord.find_funds(funds_map)
+    else
+
+      @funds_selected = []
+    end
     
   end
 
