@@ -4,9 +4,6 @@ class Portfolio < ActiveRecord::Base
   belongs_to :current_portfolio, dependent: :destroy
 
 		def get_current_value(portfolio)
-
-		
-  			
   			if portfolio.current_portfolio.current_value.nil? || portfolio.current_portfolio.updated_at != Date.today
 
 		  		portfolio_value = 0

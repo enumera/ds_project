@@ -49,7 +49,8 @@ class Fund < ActiveRecord::Base
 
     if stock.last_trade_price_only.nil?
 
-      0.00
+      fund_to_update.current_price = 0.00
+      fund_to_update.save
 
     else
 

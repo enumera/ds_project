@@ -31,7 +31,11 @@
 						    <td width="30%"><%= fr.fund_name %></td>
 						    <td width="20%"><%= fr.group_performance %></td>
 						    <td  width="25%"><%=fr.fund.saltydog_group.name %></td>
-						    <td width="25%"><%= link_to "Add", "#", value: fr.fund_id, class: "add_fund_link" %></td>
+						    <% if @funds_selected[1][count].current_price == 0.00 %>
+						    	<td width="25%">No price on Yahoo!</td>
+						    <% else %>
+						    	<td width="25%"><%= link_to "Add", "#", value: fr.fund_id, class: "add_fund_link" %></td>
+						    <% end %>
 						     <td style="display:none;"><%= @funds_selected[1][count].current_price %></td>
 						  </tr>
 						  <% count += 1 %>

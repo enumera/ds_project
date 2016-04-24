@@ -4,12 +4,12 @@ class HomeController < ApplicationController
   
     # code to introduce creating a portfolio - start
 
-    # if cookies["fund_count"]
+    if cookies["fund_count"]
 
-    #   funds_map = cookies.map {|key| key }
-    #      @funds_selected = FundRecord.find_funds(funds_map)
+      funds_map = cookies.map {|key| key }
+         @funds_selected = FundRecord.find_funds(funds_map)
 
-    # end
+    end
       # code to introduce creating a portfolio - end
 
 
