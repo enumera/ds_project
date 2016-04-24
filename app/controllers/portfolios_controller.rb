@@ -6,11 +6,13 @@ class PortfoliosController < ApplicationController
 
       @portfolios.each do |portfolio|
         portfolio.portfolio_records.each do |record|
-          if record.updated_at != Date.today
+          if record.price_updated_last != Date.today
             if record.fund.name != "Cash"
-              record.current_price = record.fund.find_price(record.fund.isin)
-              record.current_value = record.units * record.current_price
-              record.save
+                record.current_price = record.fund.find_price(record.fund.isin)
+                record.current_value = record.units * record.current_price
+                record.price_updated_last = Date.today
+                record.save
+                puts "updating price for #{record.fund.name}"
               else
                 record.current_price = 1.00
                 record.current_value = record.units * record.current_price

@@ -23,6 +23,7 @@
 		<table class="table table-striped" id="portfolio_table">
 			<tr>
 				<th width="5%">Initial Trade Date</th>
+				<th width="10%">ISIN</th>
 			    <th width="20%">Fund Name</th>
 			    <th width="5%">Units</th>
 			    <th width="5%">Original Price</th>
@@ -40,6 +41,7 @@
 			 <% portfolio.portfolio_records.each do |portfolio_record| %>
 				 <tr>
 				 	<td><%=portfolio_record.created_at.strftime("%d/%m/%y") %></td>
+				 	<td><%= isin(portfolio_record.fund) %></td>
 				 	<td><%=portfolio_record.fund.name %></td>
 				 	<td><%=portfolio_record.units %></td>
 				 	<td><%=portfolio_record.buy_price %></td>

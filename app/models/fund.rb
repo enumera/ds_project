@@ -43,6 +43,7 @@ class Fund < ActiveRecord::Base
 
 
   def find_price(isin)
+    fund_to_update = Fund.find_by_isin(isin)
     isin = isin + ".L"
     stock = StockQuote::Stock.quote(isin)
 
@@ -52,10 +53,12 @@ class Fund < ActiveRecord::Base
 
     else
 
-      stock.last_trade_price_only
+      fund_to_update.current_price = stock.last_trade_price_only
+      fund_to_update.save
 
     end
 
+      fund_to_update.current_price
 
   end
 

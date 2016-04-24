@@ -52,4 +52,6 @@ module PortfoliosHelper
 		end
 		portfolio_value.round(2)
 	end
+
+
 end
