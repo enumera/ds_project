@@ -57,12 +57,14 @@ group :test do
 
 end
 
+gem "stock_quote"
 
-gem 'capistrano', '~> 3.4'
-gem 'capistrano-bundler', '~> 1.1.2'
-gem 'capistrano3-unicorn', '~> 0.2.1'
-gem 'capistrano-rvm'
-gem 'capistrano-rails'
+
+# gem 'capistrano', '~> 3.4'
+# gem 'capistrano-bundler', '~> 1.1.2'
+# gem 'capistrano3-unicorn', '~> 0.2.1'
+# gem 'capistrano-rvm'
+# gem 'capistrano-rails'
 
 
 
@@ -76,7 +78,7 @@ gem 'jquery-rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-gem 'unicorn' 
+# gem 'unicorn' 
 
 # Deploy with Capistrano
 # gem 'capistrano'

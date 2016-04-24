@@ -1,0 +1,44 @@
+
+<div class="constrainer">
+	<div class="scrolltable">
+
+		<table class="table-bordered" >
+		  <tr>
+		    <th width="30%">Name</th>
+		    <th width="20%">Sector Perf.</th>
+		    <th width="25%">SaltyDog Grp</th>
+		    <th width="25%">Add to Portfolio</th>
+		  </tr>
+		 </table>
+		
+		<div class="body">
+			 <table id="selected_funds">
+
+				<% unless @funds_selected[0].nil? %>
+					<% count =0 %>
+					<% @funds_selected[0].each do |fr| %>
+						<% if fr.wr4 > 0 %>
+						<% color = "up" %>
+						<% elsif fr.wr4 == 0 %>
+						<% color = "stable" %>
+						<% else %>
+						<% color = "down" %>
+						<% end %>
+
+						
+						 <tr class= "<%=color %> fund_details_row" >
+						 	<td style="display:none;"><%=fr.fund_id %></td>
+						    <td width="30%"><%= fr.fund_name %></td>
+						    <td width="20%"><%= fr.group_performance %></td>
+						    <td  width="25%"><%=fr.fund.saltydog_group.name %></td>
+						    <td width="25%"><%= link_to "Add", "#", value: fr.fund_id, class: "add_fund_link" %></td>
+						     <td style="display:none;"><%= @funds_selected[1][count].current_price %></td>
+						  </tr>
+						  <% count += 1 %>
+					<% end %>
+				<% end %>		 
+				<!-- </ul> -->
+			</table>
+		</div>
+	</div>
+</div>

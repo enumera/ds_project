@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160119191740) do
+ActiveRecord::Schema.define(:version => 20160424155636) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(:version => 20160119191740) do
     t.datetime "updated_at", :null => false
     t.string   "iso"
     t.string   "continent"
+  end
+
+  create_table "current_portfolios", :force => true do |t|
+    t.integer  "portfolio_id"
+    t.float    "current_value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "file_stats", :force => true do |t|
@@ -79,6 +86,31 @@ ActiveRecord::Schema.define(:version => 20160119191740) do
     t.datetime "updated_at",        :null => false
     t.integer  "country_id"
     t.integer  "saltydog_group_id"
+    t.float    "current_price"
+  end
+
+  create_table "portfolio_records", :force => true do |t|
+    t.integer  "portfolio_id"
+    t.integer  "fund_id"
+    t.float    "allocation"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.float    "buy_price"
+    t.float    "units"
+    t.float    "total_fund"
+    t.float    "current_price"
+    t.float    "current_value"
+    t.date     "price_updated_last"
+  end
+
+  create_table "portfolios", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.float    "total_funding"
+    t.float    "current_value"
+    t.integer  "current_portfolio_id"
   end
 
   create_table "saltydog_groups", :force => true do |t|
@@ -93,6 +125,13 @@ ActiveRecord::Schema.define(:version => 20160119191740) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "url_safe"
+  end
+
+  create_table "selections", :force => true do |t|
+    t.integer  "portfolio_id"
+    t.integer  "fund_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "time_points", :force => true do |t|

@@ -8,12 +8,10 @@ $(function () {
 function collectFund(rowSelected){
     
     $this = rowSelected
-    console.log($this)
     $this.toggleClass('selected');
 
     // var  selectedRow = $this;
     var td = $this.children('td');
-    console.log(td);
     var fundDetails = [];
 
        for (var i = 0; i < td.length; ++i) {
@@ -27,7 +25,7 @@ function collectFund(rowSelected){
            
         })
 
-            $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
+            $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[1] +'<input type="hidden" name="fund_id"></td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
        
     }else{
          $.getJSON("/funds/remove_fund_selection/"+fundDetails[0], function(data){})
@@ -54,32 +52,6 @@ $(document.body).on("click", ".glyphicon-star-empty", function(){
 });
 
 
-    // Manages the selection of funds by the user
-
-    // $(document.body).on("click",'tr', function () {
-
-    //     $(this).toggleClass('selected');
-    //     var  selectedRow = $(this);
-    //     var td = $(selectedRow).children('td');
-    //     var fundDetails = [];
-
-    //        for (var i = 0; i < td.length; ++i) {
-    //         fundDetails.push(td[i].innerText);
-    //         // alert(i + ': ' + td[i].innerText);
-    //         }
-
-    //     if($(this).hasClass('selected')){
-     
-    //     $("table#selected_funds").append('<tr><td style="display:none;">' + fundDetails[0] +'</td><td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star"></span>' + fundDetails[1] +'</td><td width="25%" class="text-center">' + fundDetails[2] +'</td><td>' + fundDetails[3] +'</td><td width="20%">' + fundDetails[4] +'</td></tr>)')
-
-
-    //     }else{
-         
-    //         var tableRow = $("table#selected_funds td").filter(function() {
-    //             return $(this).text() == fundDetails[0];
-    //             }).closest("tr").remove();       
-    //     };
-    // });
 
     $(document.body).on("click","#close_fund_panel", function(){
             $('#fund_details_show').removeClass("on_show");
@@ -169,24 +141,26 @@ $(document.body).on("change", ".sl_group", function(){
 
   $('[data-toggle="tooltip"]').tooltip()
 
-var viewItem = $("#continent").val().toString();
-var searchString = $("#search_string").val().toString();
-var mapTitle = $("#map_title").val().toString();
-var mapSubTitle = $("#map_subtitle").val().toString();
-var things = $("#things").data('stats');
+
+  if($("#continent").val() != undefined || $("#continent").val() != null ){
+    var viewItem = $("#continent").val().toString();
+    var searchString = $("#search_string").val().toString();
+    var mapTitle = $("#map_title").val().toString();
+    var mapSubTitle = $("#map_subtitle").val().toString();
+    var things = $("#things").data('stats');
 
 
-var items=[];
-var maps = [
-{"map": Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
-{"map": Highcharts.maps['custom/world'], "matcher": "hc-key"},
-{"map": Highcharts.maps['custom/asia'], "matcher": "hc-key"},
-{"map": Highcharts.maps['custom/europe'], "matcher": "hc-key"},
-{"map": Highcharts.maps['custom/north-america-no-central'], "matcher": "hc-key"}]
+    var items=[];
+    var maps = [
+    {"map": Highcharts.maps['custom/world-continents'], "matcher": "hc-key"},
+    {"map": Highcharts.maps['custom/world'], "matcher": "hc-key"},
+    {"map": Highcharts.maps['custom/asia'], "matcher": "hc-key"},
+    {"map": Highcharts.maps['custom/europe'], "matcher": "hc-key"},
+    {"map": Highcharts.maps['custom/north-america-no-central'], "matcher": "hc-key"}]
 
 
 
-var items=[];
+    var items=[];
 
 
        $.each(things, function(i, item){
@@ -198,108 +172,108 @@ var items=[];
        });
        console.log(items);
        // alert(viewItem);
-if(viewItem == "Asia"){
-    // debugger;
-        var mapDataToUse = maps[2]["map"];
-        var matcherToUse = maps[2]["matcher"];
-    }else if(viewItem == "Europe"){
-        var mapDataToUse = maps[3]["map"];
-        var matcherToUse = maps[3]["matcher"]
-    }else if(viewItem == "North America") {
-        var mapDataToUse = maps[4]["map"];
-        var matcherToUse = maps[4]["matcher"]
-    }else{
+    if(viewItem == "Asia"){
+        // debugger;
+            var mapDataToUse = maps[2]["map"];
+            var matcherToUse = maps[2]["matcher"];
+        }else if(viewItem == "Europe"){
+            var mapDataToUse = maps[3]["map"];
+            var matcherToUse = maps[3]["matcher"]
+        }else if(viewItem == "North America") {
+            var mapDataToUse = maps[4]["map"];
+            var matcherToUse = maps[4]["matcher"]
+        }else{
 
-        var mapDataToUse = maps[0]["map"];
-        var matcherToUse = maps[0]["matcher"]
-    };
+            var mapDataToUse = maps[0]["map"];
+            var matcherToUse = maps[0]["matcher"]
+        };
 
-  
+      
 
-    // Initiate the chart
-    $('#map_container').highcharts('Map', {
+        // Initiate the chart
+        $('#map_container').highcharts('Map', {
 
-        title : {
-            text : mapTitle
-        },
-
-        subtitle : {
-            text : mapSubTitle
-        },
-
-        mapNavigation: {
-            enabled: true,
-            enableButtons: false,
-            enableMouseWheelZoom: false,
-            enableTouchZoom: false,
-            enableDoubleClickZoomTo: false,
-            enableDoubleClickZoom: false
-        },
-        // colorAxis: {
-        //     max: 40,
-        //     type: 'logarithmic',
-        //     minColor: '#efecf3',
-        //     maxColor: '#990041'
-        // },
-
-     
-
-
-         colorAxis: {
-                    dataClassColor: 'mean',
-                    dataClasses: [{
-                        to: -15
-                    }, {
-                        from: -15,
-                        to: -10
-                    }, {
-                        from: -10,
-                        to: -5
-                    }, {
-                        from: -5,
-                        to: 0
-                    }, {
-                        from: 0,
-                        to: 5
-                    }, {
-                        from: 5,
-                        to: 10
-                    }, {
-                        from: 10
-                    }],
-                    minColor: '#f2dede',
-                    maxColor: '#dff0d8'
-                },
-
-             colors: ['rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)',
-                    'rgba(217,237,247, 0.5)', 'rgba(217,237,247, 0.8)', 'rgba(223,240,216, 0.5)', 'rgba(223,240,216, 0.8)'],
-
-
-
-        // colorAxis: {
-        //     min: -15,
-        //     minColor: '#f2dede',
-        //     maxColor: '#dff0d8'
-
-        // },
-
-        series : [{
-            data : items,
-            mapData: mapDataToUse,
-            joinBy: matcherToUse,
-            name: 'Mean',
-            states: {
-                hover: {
-                    color: '#BADA55'
-                }
+            title : {
+                text : mapTitle
             },
-            dataLabels: {
-                enabled: true,
-                format: '{point.mean}'
-            }
-        }]
-    });
 
+            subtitle : {
+                text : mapSubTitle
+            },
+
+            mapNavigation: {
+                enabled: true,
+                enableButtons: false,
+                enableMouseWheelZoom: false,
+                enableTouchZoom: false,
+                enableDoubleClickZoomTo: false,
+                enableDoubleClickZoom: false
+            },
+            // colorAxis: {
+            //     max: 40,
+            //     type: 'logarithmic',
+            //     minColor: '#efecf3',
+            //     maxColor: '#990041'
+            // },
+
+         
+
+
+             colorAxis: {
+                        dataClassColor: 'mean',
+                        dataClasses: [{
+                            to: -15
+                        }, {
+                            from: -15,
+                            to: -10
+                        }, {
+                            from: -10,
+                            to: -5
+                        }, {
+                            from: -5,
+                            to: 0
+                        }, {
+                            from: 0,
+                            to: 5
+                        }, {
+                            from: 5,
+                            to: 10
+                        }, {
+                            from: 10
+                        }],
+                        minColor: '#f2dede',
+                        maxColor: '#dff0d8'
+                    },
+
+                 colors: ['rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)', 'rgba(242,222,222, 0.8)',
+                        'rgba(217,237,247, 0.5)', 'rgba(217,237,247, 0.8)', 'rgba(223,240,216, 0.5)', 'rgba(223,240,216, 0.8)'],
+
+
+
+            // colorAxis: {
+            //     min: -15,
+            //     minColor: '#f2dede',
+            //     maxColor: '#dff0d8'
+
+            // },
+
+            series : [{
+                data : items,
+                mapData: mapDataToUse,
+                joinBy: matcherToUse,
+                name: 'Mean',
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.mean}'
+                }
+            }]
+        });
+    };
 });
 
 
