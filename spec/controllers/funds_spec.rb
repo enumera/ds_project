@@ -12,7 +12,7 @@ RSpec.describe FundsController, :type => :controller do
 
 	describe "GET set_fund_selection" do
 	    it "has a 200 status code" do
-	      get :set_fund_selection
+	      get :set_fund_selection, :fund_id => 1
 	      expect(response.status).to eq(200)
 	    end
   	end
@@ -44,7 +44,7 @@ RSpec.describe FundsController, :type => :controller do
 
 				expect(search_string).to eq("#{fund.id}")
 
-				expect(response.cookies["#{fund.id}"]).to eq(fund.id.to_s)
+				expect(response.cookies["funds_#{fund.id}"]).to eq(fund.id.to_s)
 
 			end
 		end
@@ -66,12 +66,12 @@ RSpec.describe FundsController, :type => :controller do
 				get :set_fund_selection, :fund_id => fund.id
 				count1 = response.cookies["fund_count"].to_i
 				expect(count1).to eq(1)
-				expect(response.cookies["#{fund.id}"]).to eq(fund.id.to_s)
+				expect(response.cookies["funds_#{fund.id}"]).to eq(fund.id.to_s)
 
 				get :remove_fund_selection, :fund_id => fund.id
 
 				count = response.cookies["fund_count"]
-				expect(response.cookies["#{fund.id}"]).to eq(nil)
+				expect(response.cookies["funds_#{fund.id}"]).to eq(nil)
 				expect(count).to eq("0")
 
 			end

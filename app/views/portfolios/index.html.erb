@@ -1,0 +1,72 @@
+<div class ="row">
+	<div class="col-sm-offset-1 col-sm-10">
+
+	<% @portfolios.each do |portfolio| %>
+
+		<div>
+			<h4>Portfolio Name: <span><%= portfolio.name %></span></h4>
+		
+			
+		</div>
+
+		<div>
+			<h4>Funding : <span><%= portfolio.total_funding %></span></h4></br>
+			
+		</div>
+
+		<div>
+			<h4>Current Value : <span><%= current_portfolio(portfolio) %></span></h4></br>
+			
+		</div>
+
+
+		<table class="table table-striped" id="portfolio_table">
+			<tr>
+				<th width="5%">Initial Trade Date</th>
+				<th width="10%">ISIN</th>
+			    <th width="20%">Fund Name</th>
+			    <th width="5%">Units</th>
+			    <th width="5%">Original Price</th>
+			    <th width="5%">Current Price</th>
+			    <th width="10%">Current Value</th>
+			    <th width="10%">Original Cost</th>
+			    <th width="10%">Profit/Loss (£)</th>
+			    <th width="5%">Profit/Loss (%)</th>
+
+			    <th width="5%">Original Allocation</th>
+			    <th width="5%">Current % of Portfolio</th>
+			 
+			 </tr>
+
+			 <% portfolio.portfolio_records.each do |portfolio_record| %>
+				 <tr>
+				 	<td><%=portfolio_record.created_at.strftime("%d/%m/%y") %></td>
+				 	<td><%= isin(portfolio_record.fund) %></td>
+				 	<td><%=portfolio_record.fund.name %></td>
+				 	<td><%=portfolio_record.units %></td>
+				 	<td><%=portfolio_record.buy_price %></td>
+				 	<td><%=portfolio_record.current_price %></td>
+				 	<td><%=current_value(portfolio_record) %></td>
+				 	<td><%=original_cost(portfolio_record) %></td>
+				 	<td><%=monetary_profit(portfolio_record) %></td>
+				 	<td><%=percent_profit(portfolio_record) %></td>
+				 	<td><%=original_allocation(portfolio_record) %></td>
+				 	<td><%=current_portfolio_percent(portfolio_record, portfolio) %></td>
+				 	
+				 </tr>
+			 <% end %>
+	 		
+		</table>
+
+
+
+
+	<% end %>
+
+	</div>
+
+
+
+		
+</div>
+

@@ -1,0 +1,61 @@
+<div class ="row">
+	<div class="col-sm-offset-1 col-sm-7">
+
+
+	<%=form_for @portfolio do |f| %>
+
+		<div class="form-controls">
+			<%= f.label :name, "Porfolio Name:" %></br>
+			<%= f.text_field :name , :autofocus=> true  %>
+		</div>
+
+		<div class="form-controls">
+			<%= f.label :total_funding, "Total funding" %></br>
+			<%= f.text_field :total_funding %>
+		</div>
+		<br/>
+
+	<table class="table table-striped" id="portfolio_table">
+	<tr>
+	    <th width="20%">Fund Name</th>
+	    <th width="20%">Allocation (%)</th>
+	    <th width="20%">Funding (£)</th>
+	    <th width="20%">Price</th>
+	    <th width="20%">Remove</th>
+	 </tr>
+	 	
+	</table>
+
+
+
+	<table class="table table-striped">
+
+		<tr>
+			<td width="20%">Cash Account</td>
+			<td width="20%" id="cash_allocation"></td>
+			<td width="20%" id="cash_funding"></td>
+			<td width="20%" id="cash_price">1.00</td>
+			<td width="20%"></td>
+		</tr>
+		<tr>
+			<td width="20%">Totals</td>
+			<td width="20%" id="allocation"></td>
+			<td width="20%" id="total_funding"></td>
+		
+		</tr>
+	</table>
+
+
+	<%= f.submit "Save portfolio", class: "btn btn-lg btn-success" %>
+
+	<% end %>
+
+	</div>
+
+	<div class="col-sm-4">
+		<h3>Selected funds</h3>
+		<%= render "selection_box" %>
+	</div>	
+</div>
+
+

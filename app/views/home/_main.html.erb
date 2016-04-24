@@ -315,7 +315,7 @@
 							 <tr class= "<%=color %> fund_details_row" >
 							 	<td style="display:none;"><%=fr.fund_id %></td>
 							    <td width="30%">
-							    <!-- 	<span class="glyphicon glyphicon-star-empty clickable-div blank-star pull-left"></span> -->
+							    	<span class="glyphicon glyphicon-star-empty clickable-div blank-star pull-left"></span>
 							    	<%= link_to fr.fund_name, "#", class: "fund_details_link", value: fr.record_id %></td>
 							    <td class="text-center" width="15%"><%=fr.wr4 %></td>
 							    <td width="20%"><%= fr.group_per %></td>
@@ -329,63 +329,17 @@
 					</div>
 				</div>
 			</div>
-<!-- 
+
 			<h3>Selected funds
-			<% unless @funds_selected.nil? || @funds_selected.empty? %>
+				<% unless @funds_selected.nil? || @funds_selected.empty? %>
 
-				<span><small>Build Portfolio</small></span>
+				<span><small><%= link_to "Build Portfolio", new_portfolio_path %></small></span>
 
-			<% end %>
+				<% end %>
 			</h3>
-			<div class="constrainer">
-    			<div class="scrolltable">
 
-					<table class="table-bordered" >
-					  <tr>
-					    <th width="30%">Name</th>
-					     <% if @measure=="%Price Change" %>
-					    	<th width="15%" data-toggle="tooltip" data-placement= "top" title="Cumulative price change over the period.">% Price Change</th>
-					    <% else %>
-
-					    	<th width="15%" data-toggle="tooltip" data-placement= "top" title="Decile ranking for period">Decile Ranking</th>
-					    <% end %>
-					    <th width="20%">Sector Perf.</th>
-					    <th width="25%">SaltyDog Grp</th>
-					  </tr>
-					 </table>
-					  <div class="body">
-					 <table id="selected_funds">
-
-					 <% unless @funds_selected.nil? %>
-
-						<% @funds_selected.each do |fr| %>
-
-							<% if fr.wr4 > 0 %>
-							<% color = "up" %>
-							<% elsif fr.wr4 == 0 %>
-							<% color = "stable" %>
-							<% else %>
-							<% color = "down" %>
-							<% end %>
-
-							
-							 <tr class= "<%=color %> fund_details_row" >
-							 	<td style="display:none;"><%=fr.fund_id %></td>
-							    <td width="30%"><span class="glyphicon glyphicon-star-empty clickable-div blank-star pull-left"></span><%= link_to fr.fund_name, "#", class: "fund_details_link", value: fr.id %></td>
-							    <td class="text-center" width="15%"><%=fr.wr4 %></td>
-							    <td width="20%"><%= fr.group_performance %></td>
-							    <td  width="25%"><%=fr.fund.saltydog_group.name %></td>
-							  </tr>
-
-						<% end %>
-					<% end %>		 
-
-					
-				
-						<!-- </ul> -->
-					</table>
-				</div>
-				</div>
+			<%= render "selected_funds" %>
+			
 			</div>
 
 	
