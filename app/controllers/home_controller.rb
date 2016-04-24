@@ -8,7 +8,9 @@ class HomeController < ApplicationController
 
       funds_map = cookies.map {|key| key }
          @funds_selected = FundRecord.find_funds(funds_map)
+    else
 
+      @funds_selected = []
     end
       # code to introduce creating a portfolio - end
 

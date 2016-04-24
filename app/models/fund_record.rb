@@ -513,6 +513,10 @@ class FundRecord < ActiveRecord::Base
             fund_ids << fund[1]
           end
         end
+
+        binding.pry
+
+
          fund_records = FundRecord.where("fund_id in(?) and file_stat_id = ? ", fund_ids, filestat[0].id) 
          funds = Fund.where("id in(?)", fund_ids)
          [fund_records, funds]
